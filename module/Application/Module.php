@@ -9,10 +9,12 @@
 
 namespace Application;
 
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
-class Module
+class Module implements AutoloaderProviderInterface, ConfigProviderInterface
 {
     public function onBootstrap(MvcEvent $e)
     {
@@ -34,6 +36,21 @@ class Module
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
+        );
+    }
+    
+    public function getServiceConfig(){
+        return array(
+            'factories' =>  array(
+                'ObjectManager' => function($sm) {
+                    $objectManager = $sm->get('Doctrine\ORM\EntityManager');
+                    return $objectManager;
+                },
+                'cadastro-form' => function($sm){
+                    $form = new \Application\Form\Cadastro\TitularForm($sm);
+                    return $form;
+                },
+            )
         );
     }
 }
