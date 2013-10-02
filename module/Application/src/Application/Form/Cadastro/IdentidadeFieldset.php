@@ -4,15 +4,17 @@ namespace Application\Form\Cadastro;
 
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Application\Entity\Identidade;
-use Zend\Stdlib\Hydrator\ClassMethods;
+
+use Doctrine\Common\Persistence\ObjectManager;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class IdentidadeFieldset extends Fieldset implements InputFilterProviderInterface{
 
-    public function __construct() {
-        parent::__construct('Identidade');
-        $this->setObject(new Identidade())
-             ->setHydrator(new ClassMethods());
+    public function __construct(ObjectManager $objectManager) {
+        parent::__construct('IdentidadeFieldset');
+        
+        $this->setHydrator(new DoctrineHydrator($objectManager, 
+                                                'Application\Entity\Identidade'));
         
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Text',

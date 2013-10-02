@@ -8,16 +8,16 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
-class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
-  
+class DependenteFieldset extends Fieldset implements InputFilterProviderInterface{
+    
     public function __construct(ObjectManager $objectManager) {
-        parent::__construct('ConjugueFieldset');
+        parent::__construct("DependendeFieldset");
         
         $this->setHydrator(new DoctrineHydrator($objectManager, 
-                                                'Application\Entity\Conjuge'));
+                                                'Application\Entity\Dependente'));
         
         $this->add(array(
-                'type'  =>  'Zend\Form\Element\Text',
+            'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'nome',
                 'options'   =>  array(
                     'label' =>  'Nome:',
@@ -25,23 +25,45 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                 'attributes'    =>  array(
                     'id'    =>  'nome',
                 )
-            )
-        );
+        ));
         
         $this->add(array(
-                'type'  =>  'Zend\Form\Element\Text',
+            'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'cpf',
                 'options'   =>  array(
-                    'label' =>  'CPF:',
+                    'label' =>  'Cpf:',
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'cpf',
                 )
-            )
-        );
+        ));
         
         $this->add(array(
-                'type'  =>  'Zend\Form\Element\Date',
+            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+            'name' => 'grauDeParentesco',
+            'options' => array(
+                'label' =>  'Grau de parentesco:',
+                'object_manager' => $objectManager,
+                'empty_option'    => '--- Escolha um grau de parentesco ---',
+                'target_class'   => 'Application\Entity\TipoGrauDeParentesco',
+                'property'       => 'descricao',
+                'is_method'      => true,
+                'find_method'    => array(
+                    'name'   => 'findBy',
+                    'params' => array(
+                        'criteria' => array(),
+                        'orderBy'  => array('descricao' => 'ASC'),
+                    ),
+                ),
+
+            ),
+            'attributes'    =>  array(
+                'id'    =>  'grauDeParentesco',
+            ),
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Date',
                 'name'  =>  'dataNascimento',
                 'options'   =>  array(
                     'label' =>  'Data de nascimento:',
@@ -49,67 +71,6 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                 'attributes'    =>  array(
                     'id'    =>  'dataNascimento',
                 )
-            )
-        );
-        
-        $this->add(array(
-                'type'  =>  'Zend\Form\Element\Text',
-                'name'  =>  'nis',
-                'options'   =>  array(
-                    'label' =>  'NIS:',
-                ),
-                'attributes'    =>  array(
-                    'id'    =>  'nis',
-                )
-            )
-        );
-         
-        $this->add(array(
-            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            'name' => 'naturalidade',
-            'options' => array(
-                'label' =>  'Naturalidade:',
-                'object_manager' => $objectManager,
-                'empty_option'    => '--- Escolha uma cidade ---',
-                'target_class'   => 'Application\Entity\Cidade',
-                'property'       => 'nome',
-                'is_method'      => true,
-                'find_method'    => array(
-                    'name'   => 'findBy',
-                    'params' => array(
-                        'criteria' => array(),
-                        'orderBy'  => array('nome' => 'ASC'),
-                    ),
-                ),
-
-            ),
-            'attributes'    =>  array(
-                'id'    =>  'naturalidade',
-            ),
-        ));
-        
-        $this->add(array(
-            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            'name' => 'tipoSexo',
-            'options' => array(
-                'label' =>  'Sexo:',
-                'object_manager' => $objectManager,
-                'empty_option'    => '--- Escolha um sexo ---',
-                'target_class'   => 'Application\Entity\TipoSexo',
-                'property'       => 'nome',
-                'is_method'      => true,
-                'find_method'    => array(
-                    'name'   => 'findBy',
-                    'params' => array(
-                        'criteria' => array(),
-                        'orderBy'  => array('nome' => 'ASC'),
-                    ),
-                ),
-
-            ),
-            'attributes'    =>  array(
-                'id'    =>  'sexo',
-            ),
         ));
         
         $this->add(array(

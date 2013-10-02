@@ -11,10 +11,12 @@ namespace Application;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
-class Module implements AutoloaderProviderInterface, ConfigProviderInterface
+class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
+                        FormElementProviderInterface
 {
     public function onBootstrap(MvcEvent $e)
     {
@@ -39,6 +41,38 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
         );
     }
     
+    public function getFormElementConfig() {
+        return array(
+            'factories' =>  array(
+                'TitularFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\TitularFieldset($objectManager);
+                    return $fieldset;
+                },
+                'EnderecoFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\EnderecoFieldset($objectManager);
+                    return $fieldset;
+                },
+                'IdentidadeFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\IdentidadeFieldset($objectManager);
+                    return $fieldset;
+                },
+                'ConjugeFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\ConjugeFieldset($objectManager);
+                    return $fieldset;
+                },
+                'DependenteFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\DependenteFieldset($objectManager);
+                    return $fieldset;
+                },
+            )
+        );
+    }
+
     public function getServiceConfig(){
         return array(
             'factories' =>  array(
@@ -46,8 +80,8 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
                     $objectManager = $sm->get('Doctrine\ORM\EntityManager');
                     return $objectManager;
                 },
-                'cadastro-form' => function($sm){
-                    $form = new \Application\Form\Cadastro\TitularForm($sm);
+                'cadastro-form' => function(){
+                    $form = new \Application\Form\Cadastro\TitularForm();
                     return $form;
                 },
             )

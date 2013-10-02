@@ -3,20 +3,84 @@
 namespace Application\Form\Cadastro;
 
 use Zend\Form\Form;
-use Zend\ServiceManager\ServiceManager;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 
 class TitularForm extends Form{
-    public function __construct(ServiceManager $sm) {
-        parent::__construct('CadastroForm');
+    
+    public function init() {
+        $this->add(array(
+            'name' => 'Titular',
+            'type' => 'TitularFieldset',
+            'options' => array(
+                'use_as_base_fieldset' => true,
+                'label' => 'Formulário de cadastro',
+            )
+        ));
+       
+        $this->add(array(
+            'name' => 'IdentidadeTitular',
+            'type' => 'IdentidadeFieldset',
+            'options' => array(
+                'label' => 'Identidade do titular',
+            ),
+        ));
         
-        $objectManager = $sm->get('Doctrine\ORM\EntityManager');
+        $this->add(array(
+            'name' => 'Conjuge',
+            'type' => 'ConjugeFieldset',
+            'options' => array(
+                'label' => 'Conjuge',
+            ),
+        ));
         
-        $this->setHydrator(new DoctrineObject($objectManager,
-                                              'Application\Entity\Titular'));
-        $fieldset = new TitularFieldset($sm);
-        $fieldset->setUseAsBaseFieldset(TRUE);
+        $this->add(array(
+            'name' => 'IdentidadeConjuge',
+            'type' => 'IdentidadeFieldset',
+            'options' => array(
+                'label' => 'Identidade do conjuge',
+            ),
+        ));
         
-        $this->add($fieldset);
+        $this->add(array(
+            'name' => 'Endereco',
+            'type' => 'EnderecoFieldset',
+            'options' => array(
+                'label' => 'Endereço',
+            ),
+        ));
+        
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'dependentes',
+            'options' => array(
+                'label' => 'Dependetes',
+                'count' => 1,
+                'should_create_template' => true,
+                'template_placeholder' => '__placeholder__',
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'DependenteFieldset'
+                ),
+            ),
+        ));
+        
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Button',
+            'name' => 'adicionarDependente',
+            'options' => array(
+                'label' => 'Adicionar Dependente'
+            ),
+            'attributes' => array(
+                'onclick' => 'return add_dependente()',
+                'value' => 'adicionarDependente',
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'submit',
+            'attributes' => array(
+                'type' => 'submit',
+                'value' => 'Enviar'
+            )
+        ));
     }
 }

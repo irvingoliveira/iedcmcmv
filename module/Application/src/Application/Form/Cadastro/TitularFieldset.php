@@ -4,17 +4,18 @@ namespace Application\Form\Cadastro;
 
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\ServiceManager\ServiceManager;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+
+use Doctrine\Common\Persistence\ObjectManager;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
     
-    public function __construct(ServiceManager $sm) {
-        parent::__construct('Titular');
-        $objectManager = $sm->get('Doctrine\ORM\EntityManager');
-        $this->setHydrator(new DoctrineObject($objectManager,
-                                              'Application\Entity\Titular'));
+    public function __construct(ObjectManager $objectManager) {
+        parent::__construct('TitularFieldset');
         
+        $this->setHydrator(new DoctrineHydrator($objectManager, 
+                                                'Application\Entity\Titular'));
+               
         $this->add(array(
                 'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'nome',
@@ -35,7 +36,8 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'dataNascimento',
-                    'disabled' => 'disabled'
+                    'value' => date("d/m/Y"),
+                    'disabled' => 'disabled',
                 )
             )
         );
@@ -75,7 +77,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 )
             )
         );
-       /* 
+        
         $this->add(array(
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
             'name' => 'naturalidade',
@@ -84,7 +86,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 'object_manager' => $objectManager,
                 'empty_option'    => '--- Escolha uma cidade ---',
                 'target_class'   => 'Application\Entity\Cidade',
-                'property'       => 'naturalidade',
+                'property'       => 'nome',
                 'is_method'      => true,
                 'find_method'    => array(
                     'name'   => 'findBy',
@@ -102,13 +104,13 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
         
         $this->add(array(
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            'name' => 'sexo',
+            'name' => 'tipoSexo',
             'options' => array(
                 'label' =>  'Sexo:',
                 'object_manager' => $objectManager,
                 'empty_option'    => '--- Escolha um sexo ---',
                 'target_class'   => 'Application\Entity\TipoSexo',
-                'property'       => 'sexo',
+                'property'       => 'nome',
                 'is_method'      => true,
                 'find_method'    => array(
                     'name'   => 'findBy',
@@ -123,38 +125,20 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 'id'    =>  'sexo',
             ),
         ));
-        */
+
         $this->add(array(
-            'type' => 'Application\Form\Cadastro\IdentidadeFieldset',
-            'name' => 'identidade',
-            'options' => array(
-                'label' => 'Identidade do titular'
-            ),
-            'attributes'    =>  array(
-                'id'    =>  'identidade',
-            ),
-        ));
-        
-        $this->add(array(
-            'type' => 'Application\Form\Cadastro\ConjugeFieldset',
-            'name' => 'conjuge',
-            'options' => array(
-                'label' => 'Cônjuge'
-            ),
-            'attributes'    =>  array(
-                'id'    =>  'conjuge',
-            ),
-        ));
-        
-        $this->add(array(
-            'type' => 'Application\Form\Cadastro\EnderecoFieldset',
-            'name' => 'endereco',
-            'options' => array(
-                'label' => 'Endereço'
-            ),
-            'attributes'    =>  array(
-                'id'    =>  'endereco',
-            ),
+            'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'deficienteFisico',
+                'options'   =>  array(
+                    'label' =>  'Possui algum tipo de deficiência?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'id'    =>  'deficienteFisico',
+                )
         ));
         
         $this->add(array(
@@ -168,9 +152,9 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 )
             )
         );
-        
+
     }
-    
+
     public function getInputFilterSpecification() {
         return array();
     }

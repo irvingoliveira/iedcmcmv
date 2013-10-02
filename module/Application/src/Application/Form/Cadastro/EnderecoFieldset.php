@@ -4,26 +4,27 @@ namespace Application\Form\Cadastro;
 
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Application\Entity\Endereco;
-use Zend\Stdlib\Hydrator\ClassMethods;
+
+use Doctrine\Common\Persistence\ObjectManager;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
     
-    public function __construct() {
-        parent::__construct('Endereco');
+    public function __construct(ObjectManager $objectManager) {
+        parent::__construct('EnderecoFieldset');
         
-        $this->setObject(new Endereco())
-             ->setHydrator(new ClassMethods());
-        /*
+        $this->setHydrator(new DoctrineHydrator($objectManager, 
+                                                'Application\Entity\Endereco'));
+
         $this->add(array(
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            'name' => 'naturalidade',
+            'name' => 'tipoLogradouro',
             'options' => array(
-                'label' =>  'Naturalidade:',
+                'label' =>  'Tipo de logradouro:',
                 'object_manager' => $objectManager,
-                'empty_option'    => '--- Escolha uma cidade ---',
+                'empty_option'    => '--- Escolha um tipo de logradouro ---',
                 'target_class'   => 'Application\Entity\TipoLogradouro',
-                'property'       => 'tipoLogradouro',
+                'property'       => 'nome',
                 'is_method'      => true,
                 'find_method'    => array(
                     'name'   => 'findBy',
@@ -38,7 +39,7 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                 'id'    =>  'tipoLogradouro',
             ),
         ));
-        */
+        
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'nomeLogradouro',
@@ -94,22 +95,22 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                 )
         ));
         
-        /*
+        
         $this->add(array(
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
             'name' => 'distrito',
             'options' => array(
                 'label' =>  'Distrito:',
                 'object_manager' => $objectManager,
-                'empty_option'    => '--- Escolha uma cidade ---',
+                'empty_option'    => '--- Escolha um distrito ---',
                 'target_class'   => 'Application\Entity\Distrito',
-                'property'       => 'distrito',
+                'property'       => 'nome',
                 'is_method'      => true,
                 'find_method'    => array(
                     'name'   => 'findBy',
                     'params' => array(
                         'criteria' => array(),
-                        'orderBy'  => array('nome' => 'ASC'),
+                        'orderBy'  => array('codigoDistrito' => 'ASC'),
                     ),
                 ),
 
@@ -118,7 +119,7 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                 'id'    =>  'distrito',
             ),
         ));
-        */
+        
         
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Text',

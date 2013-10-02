@@ -11,4 +11,9 @@ return array(
           'user'     => 'iedcmcmv',
           'password' => '@$iedcmcmvq1w2e3r4#%',
           'dbname'   => 'iedcmcmv',
-)))));
+          'charset'  => 'utf8',
+        )
+      )
+    ),
+  )
+);

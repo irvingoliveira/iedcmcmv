@@ -26,7 +26,10 @@ class IndexController extends AbstractActionController
     {
         //$objectManager = $this->getObjectManager();
         
-        $form = $this->getServiceLocator()->get('cadastro-form');
+        //$form = $this->getServiceLocator()->get('cadastro-form');
+        
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Application\Form\Cadastro\TitularForm');
         return array('form' =>  $form);
     }
 }
