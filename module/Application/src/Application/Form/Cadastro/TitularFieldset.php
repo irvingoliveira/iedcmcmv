@@ -23,7 +23,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     'label' =>  'Nome:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'nome',
+                    'id'    =>  'titularNome',
                 )
             )
         );
@@ -35,7 +35,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     'label' =>  'Data de inscrição:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'dataNascimento',
+                    'id'    =>  'titularDataNascimento',
                     'value' => date("d/m/Y"),
                     'disabled' => 'disabled',
                 )
@@ -49,7 +49,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     'label' =>  'CPF:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'cpf',
+                    'id'    =>  'titularCpf',
                 )
             )
         );
@@ -61,7 +61,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     'label' =>  'Data de nascimento:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'dataNascimento',
+                    'id'    =>  'titularDataNascimento',
                 )
             )
         );
@@ -73,7 +73,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     'label' =>  'NIS:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'nis',
+                    'id'    =>  'titularNis',
                 )
             )
         );
@@ -98,7 +98,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
 
             ),
             'attributes'    =>  array(
-                'id'    =>  'naturalidade',
+                'id'    =>  'titularNaturalidade',
             ),
         ));
         
@@ -122,7 +122,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
 
             ),
             'attributes'    =>  array(
-                'id'    =>  'sexo',
+                'id'    =>  'titularSexo',
             ),
         ));
 
@@ -137,7 +137,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     )
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'deficienteFisico',
+                    'id'    =>  'titularDeficienteFisico',
                 )
         ));
         
@@ -148,7 +148,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     'label' =>  'Renda:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'renda',
+                    'id'    =>  'titularRenda',
                 )
             )
         );
@@ -156,6 +156,70 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
     }
 
     public function getInputFilterSpecification() {
-        return array();
+        return array(
+            'nome' => array(
+                'required' => 'true',
+                'validators' => array(
+                    array(
+                        'name' => 'not_empty',
+                    ),
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 3,
+                            'max' => 200,
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripToUpper'),
+                ),
+            ),
+            
+            'dataInscricao' => array(
+                'required' => 'true',
+                'validators' => array(
+                    array(
+                        'name' => 'not_empty',
+                    ),
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 10,
+                            'max' => 10,
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripToUpper'),
+                ),
+            ),
+            
+            'cpf' => array(
+                'required' => 'true',
+                'validators' => array(
+                    array(
+                        'name' => 'not_empty',
+                    ),
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 14,
+                            'max' => 14,
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripToUpper'),
+                ),
+            ),
+            
+        );
     }
 }
