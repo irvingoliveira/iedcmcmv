@@ -95,7 +95,6 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                         'orderBy'  => array('nome' => 'ASC'),
                     ),
                 ),
-
             ),
             'attributes'    =>  array(
                 'id'    =>  'titularNaturalidade',
@@ -174,7 +173,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 'filters' => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
-                    array('name' => 'StripToUpper'),
+                    array('name' => 'StringToUpper'),
                 ),
             ),
             
@@ -195,7 +194,6 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 'filters' => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
-                    array('name' => 'StripToUpper'),
                 ),
             ),
             
@@ -216,7 +214,57 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 'filters' => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
-                    array('name' => 'StripToUpper'),
+                    array('name' => 'StringToUpper'),
+                ),
+            ),
+            
+            'dataNascimento' => array(
+                'required' => 'true',
+                'validators' => array(
+                    array(
+                        'name' => 'not_empty',
+                    ),
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 10,
+                            'max' => 10,
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+            ),
+            
+            'nis' => array(
+                'required' => 'false',
+                'validators' => array(
+                    array(
+                        'name' => 'not_empty',
+                    ),
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 12,
+                            'max' => 12,
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StringToUpper'),
+                ),
+            ),
+            
+            'naturalidade' => array(
+                'required' => 'true',
+                'validators' => array(
+                    array(
+                        'name' => 'not_empty',
+                    ),
                 ),
             ),
             
