@@ -7,6 +7,8 @@ use Zend\Form\Form;
 class TitularForm extends Form{
     
     public function init() {
+        parent::__construct('cadastro-form');
+        
         $this->add(array(
             'name' => 'Titular',
             'type' => 'TitularFieldset',
