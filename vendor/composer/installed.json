@@ -116,69 +116,6 @@
         ]
     },
     {
-        "name": "zendframework/zend-developer-tools",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-            "reference": "9b9311311fdb562494f89e62eb4649d687b58364"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/9b9311311fdb562494f89e62eb4649d687b58364",
-            "reference": "9b9311311fdb562494f89e62eb4649d687b58364",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "zendframework/zend-debug": "2.*",
-            "zendframework/zend-eventmanager": "2.*",
-            "zendframework/zend-mvc": "2.*",
-            "zendframework/zend-servicemanager": "2.*",
-            "zendframework/zend-stdlib": "2.*",
-            "zendframework/zend-version": "2.*"
-        },
-        "suggest": {
-            "bjyoungblood/bjy-profiler": "Version: dev-master, allows the usage of the (Zend) Db collector.",
-            "ocramius/ocra-service-manager": "OcraServiceManager can help you track dependencies within your application."
-        },
-        "time": "2013-07-08 19:52:34",
-        "type": "zf-module",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "ZendDeveloperTools": "src/"
-            },
-            "classmap": [
-                "./Module.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Evan Coury",
-                "email": "me@evancoury.com",
-                "homepage": "http://blog.evan.pro/"
-            },
-            {
-                "name": "Eric Boh",
-                "email": "cossish@gmail.com"
-            }
-        ],
-        "description": "Module for developer and debug tools for working with the ZF2 MVC layer.",
-        "homepage": "https://github.com/zendframework/ZendDeveloperTools",
-        "keywords": [
-            "debug",
-            "developer",
-            "module",
-            "zf2"
-        ]
-    },
-    {
         "name": "doctrine/inflector",
         "version": "v1.0",
         "version_normalized": "1.0.0.0",
@@ -440,77 +377,6 @@
         ]
     },
     {
-        "name": "doctrine/cache",
-        "version": "v1.1",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/doctrine/cache.git",
-            "reference": "2c9761ff1d13e188d5f7378066c1ce2882d7a336"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/cache/zipball/2c9761ff1d13e188d5f7378066c1ce2882d7a336",
-            "reference": "2c9761ff1d13e188d5f7378066c1ce2882d7a336",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.2"
-        },
-        "conflict": {
-            "doctrine/common": ">2.2,<2.4"
-        },
-        "time": "2013-08-07 16:04:25",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Doctrine\\Common\\Cache\\": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Jonathan Wage",
-                "email": "jonwage@gmail.com",
-                "homepage": "http://www.jwage.com/"
-            },
-            {
-                "name": "Guilherme Blanco",
-                "email": "guilhermeblanco@gmail.com",
-                "homepage": "http://www.instaclick.com"
-            },
-            {
-                "name": "Roman Borschel",
-                "email": "roman@code-factory.org"
-            },
-            {
-                "name": "Benjamin Eberlei",
-                "email": "kontakt@beberlei.de"
-            },
-            {
-                "name": "Johannes Schmitt",
-                "email": "schmittjoh@gmail.com",
-                "homepage": "http://jmsyst.com",
-                "role": "Developer of wrapped JMSSerializerBundle"
-            }
-        ],
-        "description": "Caching library offering an object-oriented API for many cache backends",
-        "homepage": "http://www.doctrine-project.org",
-        "keywords": [
-            "cache",
-            "caching"
-        ]
-    },
-    {
         "name": "doctrine/common",
         "version": "v2.4.1",
         "version_normalized": "2.4.1.0",
@@ -652,61 +518,6 @@
             "persistence",
             "queryobject"
         ]
-    },
-    {
-        "name": "symfony/console",
-        "version": "v2.3.4",
-        "version_normalized": "2.3.4.0",
-        "target-dir": "Symfony/Component/Console",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/Console.git",
-            "reference": "db78f8ff7fc9e28d25ff9a0bf6ddf9f0e35fbbe3"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Console/zipball/db78f8ff7fc9e28d25ff9a0bf6ddf9f0e35fbbe3",
-            "reference": "db78f8ff7fc9e28d25ff9a0bf6ddf9f0e35fbbe3",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "symfony/event-dispatcher": "~2.1"
-        },
-        "suggest": {
-            "symfony/event-dispatcher": ""
-        },
-        "time": "2013-08-17 16:34:49",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.3-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Symfony\\Component\\Console\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "http://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Console Component",
-        "homepage": "http://symfony.com"
     },
     {
         "name": "doctrine/orm",
@@ -950,6 +761,195 @@
             "doctrine",
             "module",
             "orm",
+            "zf2"
+        ]
+    },
+    {
+        "name": "doctrine/cache",
+        "version": "v1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/doctrine/cache.git",
+            "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/doctrine/cache/zipball/d0e4447707a064a5814b18cb0dcc2f24185f6179",
+            "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "conflict": {
+            "doctrine/common": ">2.2,<2.4"
+        },
+        "time": "2013-09-26 19:23:25",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Doctrine\\Common\\Cache\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jonathan Wage",
+                "email": "jonwage@gmail.com",
+                "homepage": "http://www.jwage.com/"
+            },
+            {
+                "name": "Guilherme Blanco",
+                "email": "guilhermeblanco@gmail.com",
+                "homepage": "http://www.instaclick.com"
+            },
+            {
+                "name": "Roman Borschel",
+                "email": "roman@code-factory.org"
+            },
+            {
+                "name": "Benjamin Eberlei",
+                "email": "kontakt@beberlei.de"
+            },
+            {
+                "name": "Johannes Schmitt",
+                "email": "schmittjoh@gmail.com",
+                "homepage": "http://jmsyst.com",
+                "role": "Developer of wrapped JMSSerializerBundle"
+            }
+        ],
+        "description": "Caching library offering an object-oriented API for many cache backends",
+        "homepage": "http://www.doctrine-project.org",
+        "keywords": [
+            "cache",
+            "caching"
+        ]
+    },
+    {
+        "name": "symfony/console",
+        "version": "v2.3.5",
+        "version_normalized": "2.3.5.0",
+        "target-dir": "Symfony/Component/Console",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Console.git",
+            "reference": "f880062d56edefb25b36f2defa65aafe65959dc7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/Console/zipball/f880062d56edefb25b36f2defa65aafe65959dc7",
+            "reference": "f880062d56edefb25b36f2defa65aafe65959dc7",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "symfony/event-dispatcher": "~2.1"
+        },
+        "suggest": {
+            "symfony/event-dispatcher": ""
+        },
+        "time": "2013-09-25 06:04:15",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Console\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Console Component",
+        "homepage": "http://symfony.com"
+    },
+    {
+        "name": "zendframework/zend-developer-tools",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zendframework/ZendDeveloperTools.git",
+            "reference": "9b9311311fdb562494f89e62eb4649d687b58364"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/9b9311311fdb562494f89e62eb4649d687b58364",
+            "reference": "9b9311311fdb562494f89e62eb4649d687b58364",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "zendframework/zend-debug": "2.*",
+            "zendframework/zend-eventmanager": "2.*",
+            "zendframework/zend-mvc": "2.*",
+            "zendframework/zend-servicemanager": "2.*",
+            "zendframework/zend-stdlib": "2.*",
+            "zendframework/zend-version": "2.*"
+        },
+        "suggest": {
+            "bjyoungblood/bjy-profiler": "Version: dev-master, allows the usage of the (Zend) Db collector.",
+            "ocramius/ocra-service-manager": "OcraServiceManager can help you track dependencies within your application."
+        },
+        "time": "2013-07-08 19:52:34",
+        "type": "zf-module",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "ZendDeveloperTools": "src/"
+            },
+            "classmap": [
+                "./Module.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Evan Coury",
+                "email": "me@evancoury.com",
+                "homepage": "http://blog.evan.pro/"
+            },
+            {
+                "name": "Eric Boh",
+                "email": "cossish@gmail.com"
+            }
+        ],
+        "description": "Module for developer and debug tools for working with the ZF2 MVC layer.",
+        "homepage": "https://github.com/zendframework/ZendDeveloperTools",
+        "keywords": [
+            "debug",
+            "developer",
+            "module",
             "zf2"
         ]
     }
