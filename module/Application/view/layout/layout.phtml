@@ -19,6 +19,8 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/jquery.mask.min.js')
+            ->prependFile($this->basePath() . '/js/additional-methods.min.js')
             ->prependFile($this->basePath() . '/js/jquery.validate.min.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '/js/jquery.min.js')
