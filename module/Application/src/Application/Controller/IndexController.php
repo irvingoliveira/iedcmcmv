@@ -32,4 +32,24 @@ class IndexController extends AbstractActionController
         $form = $formManager->get('Application\Form\Cadastro\TitularForm');
         return array('form' =>  $form);
     }
+    
+    public function cadastroAction()
+    {
+        $request = $this->getRequest();
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Application\Form\Cadastro\TitularForm');
+        
+        if(!$request->isPost()){
+            return array('form' =>  $form);
+            
+        }  else {
+            $postData = $request->getPost();
+            $form->setData($postData);
+            
+            if($form->isValid())
+                die(var_dump($postData));
+            else 
+               die(var_dump ($form->getMessages()));
+        }
+    }
 }

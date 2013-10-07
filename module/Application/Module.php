@@ -49,19 +49,24 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
                     $fieldset = new \Application\Form\Cadastro\TitularFieldset($objectManager);
                     return $fieldset;
                 },
-                'EnderecoFieldset' => function ($sm){
+                'IdentidadeTitularFieldset' => function ($sm){
                     $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-                    $fieldset = new \Application\Form\Cadastro\EnderecoFieldset($objectManager);
-                    return $fieldset;
-                },
-                'IdentidadeFieldset' => function ($sm){
-                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-                    $fieldset = new \Application\Form\Cadastro\IdentidadeFieldset($objectManager);
+                    $fieldset = new \Application\Form\Cadastro\IdentidadeTitularFieldset($objectManager);
                     return $fieldset;
                 },
                 'ConjugeFieldset' => function ($sm){
                     $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
                     $fieldset = new \Application\Form\Cadastro\ConjugeFieldset($objectManager);
+                    return $fieldset;
+                },
+                'IdentidadeConjugeFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\IdentidadeConjugeFieldset($objectManager);
+                    return $fieldset;
+                },
+                'EnderecoFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\EnderecoFieldset($objectManager);
                     return $fieldset;
                 },
                 'DependenteFieldset' => function ($sm){

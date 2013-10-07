@@ -9,6 +9,9 @@ class TitularForm extends Form{
     public function init() {
         parent::__construct('cadastro-form');
         
+        $this->setAttribute('method', 'post');
+        $this->setAttribute('action', '/application/index/cadastro');
+        
         $this->add(array(
             'name' => 'Titular',
             'type' => 'TitularFieldset',
@@ -20,7 +23,7 @@ class TitularForm extends Form{
        
         $this->add(array(
             'name' => 'IdentidadeTitular',
-            'type' => 'IdentidadeFieldset',
+            'type' => 'IdentidadeTitularFieldset',
             'options' => array(
                 'label' => 'Identidade do titular',
             ),
@@ -36,7 +39,7 @@ class TitularForm extends Form{
         
         $this->add(array(
             'name' => 'IdentidadeConjuge',
-            'type' => 'IdentidadeFieldset',
+            'type' => 'IdentidadeConjugeFieldset',
             'options' => array(
                 'label' => 'Identidade do conjuge',
             ),
@@ -55,7 +58,7 @@ class TitularForm extends Form{
             'name' => 'dependentes',
             'options' => array(
                 'label' => 'Dependetes',
-                'count' => 1,
+                'count' => 0,
                 'should_create_template' => true,
                 'template_placeholder' => '__placeholder__',
                 'allow_add' => true,
@@ -64,7 +67,7 @@ class TitularForm extends Form{
                 ),
             ),
         ));
-        
+
         $this->add(array(
             'type' => 'Zend\Form\Element\Button',
             'name' => 'adicionarDependente',
