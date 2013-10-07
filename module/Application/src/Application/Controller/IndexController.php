@@ -10,7 +10,7 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-//use Zend\View\Model\ViewModel;
+use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
@@ -24,13 +24,8 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        //$objectManager = $this->getObjectManager();
         
-        //$form = $this->getServiceLocator()->get('cadastro-form');
-        
-        $formManager = $this->serviceLocator->get('FormElementManager');
-        $form = $formManager->get('Application\Form\Cadastro\TitularForm');
-        return array('form' =>  $form);
+        return new ViewModel();
     }
     
     public function cadastroAction()

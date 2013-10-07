@@ -160,6 +160,7 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'enderecoAreaDeRisco',
+                    'value' =>  '0',
                 )
         ));
         

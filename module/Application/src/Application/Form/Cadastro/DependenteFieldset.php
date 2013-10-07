@@ -89,6 +89,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'dependenteDeficienteFisico',
+                    'value' =>  '0',
                 )
         ));
         

@@ -60,14 +60,23 @@ class TitularForm extends Form{
                 'label' => 'Dependetes',
                 'count' => 0,
                 'should_create_template' => true,
-                'template_placeholder' => '__placeholder__',
+                'template_placeholder' => '__index__',
                 'allow_add' => true,
                 'target_element' => array(
                     'type' => 'DependenteFieldset'
                 ),
             ),
         ));
-
+        
+        $this->add(array(
+            'name' => 'countDependentes',
+            'type' => 'Zend\Form\Element\Hidden',
+            'attributes' => array(
+                'id' => 'countDependentes',
+                'value' => 0,
+            )
+        ));
+        
         $this->add(array(
             'type' => 'Zend\Form\Element\Button',
             'name' => 'adicionarDependente',
@@ -77,6 +86,7 @@ class TitularForm extends Form{
             'attributes' => array(
                 'onclick' => 'return add_dependente()',
                 'value' => 'adicionarDependente',
+                'id' => 'adicionarDependente',
             ),
         ));
         
@@ -84,7 +94,8 @@ class TitularForm extends Form{
             'name' => 'submit',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Enviar'
+                'value' => 'Enviar',
+                'id' => 'submit',
             )
         ));
     }

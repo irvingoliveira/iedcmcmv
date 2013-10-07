@@ -1,62 +1,70 @@
-<script>
-    function add_dependente() {
-        var currentCount = $('form > fieldset > fieldset').length;
-        var template = $('form > fieldset > span').data('template');
-        template = template.replace(/__index__/g, currentCount);
+<div class="content-wrapper">
+    <h2>Programa Minha Casa Minha Vida – Faixa 01</h2>
 
-        $('form > fieldset').append(template);
+<h4>Leia atentamente para saber como ter acesso ao Programa Minha Casa Minha Vida – Faixa 01</h4>
 
-        return false;
-    }
-</script>
+<p>Para participar do Programa Minha Casa Minha Vida – Faixa 1, no município de 
+Duque de Caxias, o candidato deve atender as seguintes condições:
+<ul>
+    <li>Ter acima de 18 anos de idade;</li>
+    <li>Ter renda familiar bruta total até R$ 1.600,00;</li>
+    <li>Não possuir imóvel próprio;</li>
+    <li>Não ter sido beneficiado anteriormente por programas de habitação de 
+        interesse social;</li>
+    <li>Residir no município de Duque de Caxias.</li>
+</ul>
 
-<div class="jumbotron">
-    <?
-    $form = $this->form;
-    $form->prepare();
-    
-    echo $this->form()->openTag($form);
-    echo $this->formCollection($form);
-    echo $this->form()->closeTag();    
-?>
+<b>OS CANDIDATOS QUE NÃO ATENDEREM AS EXIGÊNCIAS ACIMA NÃO SERÃO BENEFICIADOS</b>
+
+</p>
+
+<p>Sobre a inscrição no Programa Minha Casa, Minha Vida:
+
+<ul>
+    <li>O candidato deverá preencher apenas um cadastro por família, 
+        preferencialmente pelo responsável do núcleo familiar, utilizando o formulário 
+        online, informando todos os campos solicitados;</li>
+    <li>Quem se inscreveu no Programa Minha Casa Minha Vida, no município de 
+        Duque de Caxias <b>a partir de agosto de 2013, com a ficha de inscrição 
+        numerada com o protocolo, não precisa se inscrever novamente</b>;</li>
+
+    <li>Quem se inscreveu no Programa Minha Casa Minha Vida, <b>antes de agosto 
+        de 2013 e não possui número de protocolo, deve atualizar a sua inscrição por 
+        meio da inscrição online</b>;</li>
+
+    <li>As inscrições ocorrem periodicamente, em prazos e datas que são divulgados 
+        pela Prefeitura de Duque de Caxias;</li>
+</p>
+
+<p>Sobre o Contrato com o Agente Financeiro do Programa Minha Casa Minha Vida:
+
+    <li>A família, quando beneficiada pelo Programa Minha Casa Minha Vida, 
+        assina um Contrato de financiamento, com prazo de 120 meses, com o 
+        Agente Financeiro (Caixa Econômica Federal ou Banco do Brasil);</li>
+    <li>Durante a vigência do contrato não é permitido vender, ceder, trocar 
+        ou alugar o imóvel, que deve ser destinado, exclusivamente, para fins 
+        de moradia do beneficiário e sua família;</li>
+    <li>Os beneficiários do PMCMV pagam prestações correspondentes a 5% da 
+        renda bruta familiar mensal, durante dez anos. O valor mínimo da 
+        prestação é de R$25,00 por mês (valores correspondentes a legislação 
+        vigente em agosto de 2013);</li>
+    <li>Para quitação do contrato, antecipadamente, o mutuário perde o direito 
+        ao subsídio (desconto) que ele recebe mensalmente.</li>
+    <li>A partir da assinatura do contrato, o mutuário assume o compromisso de 
+        se mudar para o imóvel no prazo máximo de 30 dias.</li>
+    <li>As informações constantes no presente termo de adesão referem-se à 
+        legislação existente em julho de 2013. Havendo mudança na legislação, 
+        os critérios podem ser alterados.</li>
+</ul>    
+
+<b>OS CANDIDATOS DEVERÃO ATENDER A TODAS AS EXIGÊNCIAS DOS AGENTES FINANCEIROS.</b>
+</p>
+
+<input type='checkbox' /> Declaro, sob as penas do Artigo 299 do Código Penal, 
+que as informações que aqui presto são verdadeiras e que aceito as condições 
+para ter acesso ao Programa Minha Casa Minha Vida, Faixa 01, Duque de Caxias, RJ.
 </div>
-<!--
-<div class="row">
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Follow Development') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!'), '<a href="http://framework.zend.com/wiki/display/ZFDEV2/Home">', '</a>', '<a href="http://framework.zend.com/zf2/blog">', '</a>', '<a href="https://github.com/zendframework/zf2/issues">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://framework.zend.com/zf2" target="_blank"><?php echo $this->translate('ZF2 Development Portal') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
+<br />
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Discover Modules') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2.'), '<a href="https://github.com/zendframework/modules.zendframework.com">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://modules.zendframework.com/" target="_blank"><?php echo $this->translate('Explore ZF2 Modules') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Help &amp; Support') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We\'d love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s.'), '<a href="irc://irc.freenode.net/zftalk">', '</a>', '<a href="http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://webchat.freenode.net?channels=zftalk" target="_blank"><?php echo $this->translate('Ping us on IRC') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
-</div>
--->
+<a href="/application/index/cadastro">Inscreva-se</a>

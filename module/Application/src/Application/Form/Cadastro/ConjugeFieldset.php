@@ -134,6 +134,7 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'conjugeDeficienteFisico',
+                    'value' => '0',
                 )
         ));
         

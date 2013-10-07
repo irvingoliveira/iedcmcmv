@@ -170,6 +170,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'titularDeficienteFisico',
+                    'value' => '0',
                 )
         ));
         
