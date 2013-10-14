@@ -27,7 +27,10 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'label' =>  'Nome:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'dependenteNome',
+                    'class'    =>  'dependenteNome',
+                    'size' => '50',
+                    'maxlength' => '200',
+                    'onKeyDown' => 'validarDependenteNome()',
                 )
         ));
         
@@ -38,7 +41,10 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'label' =>  'Cpf:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'dependenteCpf',
+                    'class'    =>  'dependenteCpf',
+                    'size' => '14',
+                    'maxlength' => '14',
+                    'onKeyDown' => 'validarDependenteCpf()',
                 )
         ));
         
@@ -62,7 +68,8 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
 
             ),
             'attributes'    =>  array(
-                'id'    =>  'dependenteGrauDeParentesco',
+                'class'    =>  'dependenteGrauDeParentesco',
+                'onKeyDown' => 'validarDependenteGrauDeParentesco()',
             ),
         ));
         
@@ -73,7 +80,8 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'label' =>  'Data de nascimento:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'dependenteDataNascimento',
+                    'class'    =>  'dependenteDataNascimento',
+                    'onKeyDown' => 'validarDependenteDataNascimento()',
                 )
         ));
         
@@ -88,8 +96,9 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     )
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'dependenteDeficienteFisico',
+                    'class'    =>  'dependenteDeficienteFisico',
                     'value' =>  '0',
+                    'onKeyDown' => 'validarDependenteDeficienteFisico()',
                 )
         ));
         
@@ -100,8 +109,9 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'label' =>  'Renda:',
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'dependenteRenda',
+                    'class'    =>  'dependenteRenda',
                     'value' => 0.0,
+                    'onKeyDown' => 'validarDependenteRenda()',
                 )
             )
         );
