@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    $('#cadastro-form').validate();
+    $('#cadastro-form').validate({
+        debug: true
+    });
 
     /*
      * Validação Fieldset Titular
@@ -17,8 +19,8 @@ $(document).ready(function() {
         
         messages: {
             required: "O nome do Titular é obrigatório.",
-            minlength: "O nome do Titular deve haver no mínimo três caracteres.",
-            maxLength: "O nome do Titular deve haver no máximo duzentos caracteres."
+            minlength: "O nome do Titular deve ter no mínimo três caracteres.",
+            maxLength: "O nome do Titular deve ter no máximo duzentos caracteres."
 
         }
     });
@@ -90,7 +92,7 @@ $(document).ready(function() {
         minlength: 01,
         maxLength: 10,
         messages: {
-            required: "A renda do titular é obrigatório.",
+            required: "A renda do titular é obrigatória.",
             minlength: "O NIS do titular não é valido.",
             maxLength: "O NIS do titular não é valido."
 
@@ -327,7 +329,7 @@ $(document).ready(function() {
     });
 
 
-    $("#distritoNome").rules("add", {
+    $("#enderecoDistrito").rules("add", {
         required: true,
         messages: {
             required: "Informe o distrito."
@@ -373,7 +375,7 @@ $(document).ready(function() {
     });
 
 
-    $("#dependenteCpf").rules("add", {
+    $("#dependenteCpf").mask('000.000.000-00').rules("add", {
         required: true,
         minlength: 14,
         maxLength: 14,
@@ -427,11 +429,5 @@ $(document).ready(function() {
 
         }
     });
-
-
-
-
-
-
 
 });
