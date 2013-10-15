@@ -146,9 +146,8 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'conjugeRenda',
-                    'value' => 0.0,
-                    'size' => '11',
-                    'maxlength' => '11',
+                    'size' => '10',
+                    'maxlength' => '10',
                 )
             )
         );
@@ -174,6 +173,7 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                     array(
                         'name' => 'Alpha',
                         'options' => array(
+                            'allowWhiteSpace' => true,
                             'messages' => array(
                                 \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'Não são permitidos números no campo "Nome"',
                             ),
@@ -215,6 +215,7 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                     array(
                         'name' => 'Date',
                         'options' => array(
+                            'format' => 'd/m/Y',
                             'messages' => array(
                                 \Zend\Validator\Date::FALSEFORMAT => 'O campo "Data de nascimento" foi preenchido de forma inválida.',
                                 \Zend\Validator\Date::INVALID => 'O campo "Data de nascimento" foi preenchido de forma inválida.' ,
@@ -329,14 +330,6 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!', 
                                 'stringLengthTooLong' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!' 
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'Float',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Float::NOT_FLOAT => 'O campo "Renda" está preenchido de forma inválida!',
                             ),
                         ),
                     ),

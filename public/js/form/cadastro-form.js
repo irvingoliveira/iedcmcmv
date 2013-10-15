@@ -1,6 +1,34 @@
 $(document).ready(function() {
+    $("#err").hide();
+    $("#help").hide();
+    
+    $('legend').each(function(){
+        if(($(this).text() === "Conjuge") || ($(this).text() === "Identidade do conjuge"))
+            $(this).parent().hide();
+    });
+    
     $('#cadastro-form').validate({
-        debug: true
+        debug: true,
+        errorLabelContainer: "#limbo",
+        wrapper: "li",
+        invalidHandler: function(event, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                $("#err").fadeIn("fast")
+                if(errors === 1)
+                    $("#err").text("Existe "+ errors +" campo preenchido de forma inválida.");
+                else
+                    $("#err").text("Existem "+ errors +" campos preenchidos de forma inválida.");
+            } else {
+                $("#err").fadeOut("fast");
+            }
+        },
+         highlight: function(element, errorClass) {
+            $(element).fadeOut(function() {
+                $(element).fadeIn();
+            });
+        }
+        
     });
 
     /*
@@ -9,95 +37,267 @@ $(document).ready(function() {
 
     $('input[type=text]').blur(function() {
         $(this).val($(this).val().toUpperCase());
+        $('#help').fadeOut("fast");
     });
 
-    $("#titularNome").rules("add", {
+    $("#titularNome")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o nome completo do solicitande do Minha Casa, minha vida.");
+        })
+       .rules("add", {
         
-        required: true,
-        minlength: 3,
-        maxLength: 200,
+            required: true,
+            minlength: 3,
+            maxlength: 200,
         
-        messages: {
-            required: "O nome do Titular é obrigatório.",
-            minlength: "O nome do Titular deve ter no mínimo três caracteres.",
-            maxLength: "O nome do Titular deve ter no máximo duzentos caracteres."
+            messages: {
+                required: "O nome do Titular é obrigatório.",
+                minlength: "O nome do Titular deve ter no mínimo três caracteres.",
+                maxlength: "O nome do Titular deve ter no máximo duzentos caracteres."
 
-        }
-    });
+            }
+        });
 
 
     $("#titularCpf").mask('000.000.000-00')
-            .rules("add", {
-        required: true,
-        minlength: 14,
-        maxLength: 14,
-        messages: {
-            required: "O CPF do Titular é obrigatório.",
-            minlength: "O CPF do Titular não é valido.",
-            maxLength: "O CPF do Titular não é valido."
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o CPF do solicitande. (Somente números)");
+        })
+        .rules("add", {
+            required: true,
+            minlength: 14,
+            maxlength: 14,
+            messages: {
+                required: "O CPF do Titular é obrigatório.",
+                minlength: "O CPF do Titular não é valido.",
+                maxlength: "O CPF do Titular não é valido."
 
+            }
+        });
+
+    $("#titularDataNascimento")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha a data de nascimento do solicitante. (Somente números)");
+        })
+        
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        
+        .mask('00/00/0000')
+        
+        .rules("add", {
+            required: true,
+            minlength: 10,
+            maxlength: 10,
+            messages: {
+                required: "A data de nascimento do Titular é obrigatório.",
+                minlength: "A data de nascimento do Titular não é valida.",
+                maxlength: "A data de nascimento do Titular não é valida."
+
+            }
+        });
+
+    $('#titularEstadoCivil').change(function(){
+        if(($(this).val() === "2") || ($(this).val() === "5")){
+            $('legend').each(function(){
+                if(($(this).text() === "Conjuge") || ($(this).text() === "Identidade do conjuge"))
+                    $(this).parent().fadeIn("fast");
+            });
+        }else{
+            $('legend').each(function(){
+                if(($(this).text() === "Conjuge") || ($(this).text() === "Identidade do conjuge"))
+                    $(this).parent().fadeOut("fast");
+            });
         }
+        $("#help").fadeOut("fast")
+    })
+    .focus(function (){
+            $("#help").fadeIn("fast")
+                .text("Selecione em que estado cívil o solicitante se encontra.");
+    })
+    .blur(function (){
+        $("#help").fadeOut("fast");
     });
 
+    $("#titularNaturalidade")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                .text("Selecione em que cidade o solicitante nasceu.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        });
 
-    $("#titularDataNascimento").mask('00/00/0000').rules("add", {
-        required: true,
-        minlength: 10,
-        maxLength: 10,
-        messages: {
-            required: "A data de nascimento do Titular é obrigatório.",
-            minlength: "A data de nascimento do Titular não é valida.",
-            maxLength: "A data de nascimento do Titular não é valida."
+    $("#titularSexo")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Selecione o sexo do solicitante se encontra.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        });
 
-        }
-    });
+    $(".titularMembroFamiliaPreso")
+        .focus(function (){
+            var msg = "<p>Informe se existe algum membro da família em abrigo ";
+            msg+= "institucional. </p>";
+            msg+= "<p>Considera-se a situação de acolhimento institucional ";
+            msg+= " àquelas famílias que possuem algum de seus membros acolhidos";
+            msg+= " pela rede socioassistencial ou por instituições prisionais.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se possui deficiência física"
+            }
+        });
+
+    $(".titularBolsaFamilia")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Informe se o solicitante recebe Bolsa Familia.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se possui deficiência física"
+            }
+        });
+
+    $(".titularImovel")
+        .focus(function (){
+            var msg = "<p>Informe se o solicitante tem ou já teve algum financiamento";
+            msg+= " de casa/apartamento.</p>";
+            msg+= " <p>Quem tem imóvel (terreno, casa, apartamento) em seu nome não";
+            msg+= " tem direito ao Minha Casa Minha Vida. Os Agentes Financeiros";
+            msg+= " fazem pesquisa para identificar os candidatos que pagam IPTU";
+            msg+= " e tem imóveis em seu nome.</p>";
+            msg+= "<p>Quem já teve imóvel financiado pelo antigo Sistema Financeiro";
+            msg+= " de Habitação, Banco Nacional da Habitação - BNH, ou recebeu";
+            msg+= " imóvel do sistema de COHAB, mesmo que em outro estado da Federação";
+            msg+= " não será atendido, conforme os critério do Programa Minha Casa";
+            msg+= " Minha Vida, ficando assim incompatível ao programa.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se possui deficiência física"
+            }
+        });
 
 
-    $("#titularDeficienteFisico").rules("add", {
-        required: true,
-        messages: {
-            required: "É necessário informar se possui deficiência física"
-
-        }
-    });
+    $(".titularDeficienteFisico")
+        .focus(function (){
+            var msg = "<p>Informe se o solicitante possui algum tipo de deficiência ";
+            msg+= "física, visual, mental, auditiva ou multipla. </p>";
+            msg+= "<p>O candidado deverá apresentar laudo médico qua comprove";
+            msg+= " a deficiência e que indique a Classificação Internacional";
+            msg+= " de Doenças - CID</p>";
+            msg+= "<p>Deverá ser observado o enquadramento na Portaria 610 de 26 de";
+            msg+= " dezembro de 2011 do Ministério das Cidades, item 5.6, bem";
+            msg+= " como as deliberações do Conselho Nacional da Pessoa com";
+            msg+= " Deficiência";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se possui deficiência física"
+            }
+        });
 
 
     $("#titularDataInscricao").rules("add", {
         required: true,
         minlength: 10,
-        maxLength: 10,
+        maxlength: 10,
         messages: {
             required: "A data de inscrição é obrigatório.",
             minlength: "A data de inscrição não é valida.",
-            maxLength: "A data de inscrição não é valida."
+            maxlength: "A data de inscrição não é valida."
 
         }
     });
 
 
-    $("#titularNis").mask('0000000000-0').rules("add", {
-        required: false,
-        minlength: 12,
-        maxLength: 12,
-        messages: {
-            minlength: "O NIS do titular não é valido.",
-            maxLength: "O NIS do titular não é valido."
+    $("#titularNis")
+        .focus(function (){
+            var msg = "<p>Informe o NIS do solicitante. </p>";
+            msg+= "<p> O NIS é o Número de Identificação Social. Aqueles que";
+            msg+= " tem acesso a qualquer programa do Governo Federal, como";
+            msg+= " Bolsa Família, devem preencher esse número na ficha de";
+            msg+= " inscrição. Aqueles que ainda não possuem o NIS e trabalham";
+            msg+= " com carteira assinada, devem utilizar o número do PIS.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        
+        .mask('0000000000-0')
+        
+        .rules("add", {
+            required: false,
+            minlength: 12,
+            maxlength: 12,
+            messages: {
+                minlength: "O NIS do titular não é valido.",
+                maxlength: "O NIS do titular não é valido."
 
-        }
-    });
+            }
+        });
 
 
-    $("#titularRenda").mask("#.##0,00", {reverse: true, maxlength: false}).rules("add", {
-        required: true,
-        minlength: 01,
-        maxLength: 10,
-        messages: {
-            required: "A renda do titular é obrigatória.",
-            minlength: "O NIS do titular não é valido.",
-            maxLength: "O NIS do titular não é valido."
-
-        }
-    });
+    $("#titularRenda")
+        .mask("##0,00", {reverse: true, maxlength: false})
+        
+        .focus(function (){
+            var msg = "<p>Informe a renda total do solicitante.</p>";
+            msg+= "<p>A renda familiar deve considerar a renda formal (por exemplo,";
+            msg+= " de ganhos salariais com carteira assinada) e ganhos informais";
+            msg+= " (por exemplo, de ganhos de trabalho como ambulante). Os agentes";
+            msg+= " financeiros pesquisam a renda dos membros das famílias em seus";
+            msg+= " bancos de dados</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            minlength: 01,
+            maxlength: 10,
+            messages: {
+                required: "A renda do titular é obrigatória.",
+                minlength: "O NIS do titular não é valido.",
+                maxlength: "O NIS do titular não é valido."
+            }
+        });
 
 
     /*
@@ -105,155 +305,286 @@ $(document).ready(function() {
      */
 
 
-    $("#conjugeNome").rules("add", {
-        required: true,
-        minlength: 3,
-        maxLength: 200,
-        messages: {
-            required: "O nome do Titular é obrigatório.",
-            minlength: "O nome do Titular deve haver no mínimo três caracteres.",
-            maxLength: "O nome do Titular deve haver no máximo duzentos caracteres."
-
-        }
-    });
-
-
-    $("#conjugeCpf").mask('000.000.000-00').rules("add", {
-        required: true,
-        minlength: 14,
-        maxLength: 14,
-        messages: {
-            required: "O CPF do Titular é obrigatório.",
-            minlength: "O CPF do Titular não é valido.",
-            maxLength: "O CPF do Titular não é valido."
-
-        }
-    });
+    $("#conjugeNome")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                .text("Preencha o nome completo do conjuge do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: false,
+            minlength: 3,
+            maxlength: 200,
+            messages: {
+                minlength: "O nome do Conjuge deve haver no mínimo três caracteres.",
+                maxlength: "O nome do Conjuge deve haver no máximo duzentos caracteres."
+            }
+        });
 
 
-    $("#conjugeDataNascimento").mask('00/00/0000').rules("add", {
-        required: true,
-        minlength: 10,
-        maxLength: 10,
-        messages: {
-            required: "A data de nascimento do Titular é obrigatório.",
-            minlength: "A data de nascimento do Titular não é valida.",
-            maxLength: "A data de nascimento do Titular não é valida."
+    $("#conjugeCpf")
+        .mask('000.000.000-00')
+        
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o CPF do conjuge. (Somente números!)");
+        })
 
-        }
-    });
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        
+        .rules("add", {
+            required: false,
+            minlength: 14,
+            maxlength: 14,
+            messages: {
+                minlength: "O CPF do conjuge não é valido.",
+                maxlength: "O CPF do conjuge não é valido."
 
-
-    $("#conjugeDeficienteFisico").rules("add", {
-        required: true,
-        messages: {
-            required: "É necessário informar se possui deficiência física"
-
-        }
-    });
-
-
-    $("#conjugeNis").mask('0000000000-0').rules("add", {
-        required: false,
-        minlength: 12,
-        maxLength: 12,
-        messages: {
-            minlength: "O NIS do titular não é valido.",
-            maxLength: "O NIS do titular não é valido."
-
-        }
-    });
+            }
+        });
 
 
-    $("#conjugeRenda").mask("#.##0,00", {reverse: true, maxlength: false}).rules("add", {
-        required: true,
-        minlength: 10,
-        maxLength: 10,
-        messages: {
-            required: "A renda do titular é obrigatório.",
-            minlength: "O NIS do titular não é valido.",
-            maxLength: "O NIS do titular não é valido."
+    $("#conjugeDataNascimento")
+        .mask('00/00/0000')
 
-        }
-    });
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                .text("Preencha a data de nascimento do conjuge.");
+        })
+        
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+
+        .rules("add", {
+            required: false,
+            minlength: 10,
+            maxlength: 10,
+            messages: {
+                minlength: "A data de nascimento do conjuge não é valida.",
+                maxlength: "A data de nascimento do conjuge não é valida."
+
+            }
+        });
+
+
+    $("#conjugeDeficienteFisico")
+        .focus(function (){
+            var msg = "<p>Informe se o conjuge possui algum tipo de deficiência ";
+            msg+= "física, visual, mental, auditiva ou multipla. </p>";
+            msg+= "<p>O candidado deverá apresentar laudo médico qua comprove";
+            msg+= " a deficiência e que indique a Classificação Internacional";
+            msg+= " de Doenças - CID</p>";
+            msg+= "<p>Deverá ser observado o enquadramento na Portaria 610 de 26 de";
+            msg+= " dezembro de 2011 do Ministério das Cidades, item 5.6, bem";
+            msg+= " como as deliberações do Conselho Nacional da Pessoa com";
+            msg+= " Deficiência";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: false,
+        });
+
+
+    $("#conjugeNis")
+        .mask('0000000000-0')
+        
+        .focus(function (){
+            var msg = "<p>Informe o NIS do solicitante. </p>";
+            msg+= "<p> O NIS é o Número de Identificação Social. Aqueles que";
+            msg+= " tem acesso a qualquer programa do Governo Federal, como";
+            msg+= " Bolsa Família, devem preencher esse número na ficha de";
+            msg+= " inscrição. Aqueles que ainda não possuem o NIS e trabalham";
+            msg+= " com carteira assinada, devem utilizar o número do PIS.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        
+        .rules("add", {
+            required: false,
+            minlength: 12,
+            maxlength: 12,
+            messages: {
+                minlength: "O NIS do conjuge não é valido.",
+                maxlength: "O NIS do conjuge não é valido."
+
+            }
+        });
+
+
+    $("#conjugeRenda")
+        .mask("##0,00", {reverse: true, maxlength: false})
+        
+        .focus(function (){
+            var msg = "<p>Informe a renda total do conjuge.</p>";
+            msg+= "<p>A renda familiar deve considerar a renda formal (por exemplo,";
+            msg+= " de ganhos salariais com carteira assinada) e ganhos informais";
+            msg+= " (por exemplo, de ganhos de trabalho como ambulante). Os agentes";
+            msg+= " financeiros pesquisam a renda dos membros das famílias em seus";
+            msg+= " bancos de dados</p>";
+            
+            $("#help").fadeIn("fast")
+                      .text(msg);
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        
+        .rules("add", {
+            required: false,
+            minlength: 1,
+            maxlength: 10,
+            messages: {
+                minlength: "A renda do conjuge não é valida.",
+                maxlength: "A renda do conjuge não é valida."
+
+            }
+        });
 
 
     /*
      * Validação Fieldset Identidade Titular
      */
 
-    $("#identidadeTitularNumero").rules("add", {
-        required: true,
-        minlength: 09,
-        maxLength: 15,
-        messages: {
-            required: "A renda do titular é obrigatório.",
-            minlength: "numero da identidade não é valido.",
-            maxLength: "numero da identidade não é valido."
+    $("#identidadeTitularNumero")
+    
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o número da carteira de identidade do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        
+        .rules("add", {
+            required: true,
+            minlength: 9,
+            maxlength: 15,
+            messages: {
+                required: "A identidade do titular é obrigatório.",
+                minlength: "O numero da identidade do titular não é valido.",
+                maxlength: "O numero da identidade do titular não é valido."
 
-        }
-    });
+            }
+        });
 
 
-    $("#identidadeTitularDataEmissao").mask('00/00/0000').rules("add", {
-        required: true,
-        minlength: 10,
-        maxLength: 10,
-        messages: {
-            required: "A data de emissão da Identidade é obrigatório.",
-            minlength: "A data de emissão da Identidade não é valido.",
-            maxLength: "A data de emissão da Identidade não é valido."
+    $("#identidadeTitularDataEmissao")
+        .mask('00/00/0000')
+        
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha a data de emissão da identidade do titular.");
+        })
+        
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+                
+        .rules("add", {
+            required: true,
+            minlength: 10,
+            maxlength: 10,
+            messages: {
+                required: "A data de emissão da Identidade é obrigatório.",
+                minlength: "A data de emissão da Identidade não é valida.",
+                maxlength: "A data de emissão da Identidade não é valida."
 
-        }
-    });
+            }
+        });
 
-    $("#identidadeTitularOrgaoEmissor").rules("add", {
-        required: true,
-        minlength: 05,
-        maxLength: 200,
-        messages: {
-            required: "O orgão emissor da Identidade é obrigatório.",
-            minlength: "O orgão emissor da Identidade não é valido.",
-            maxLength: "O orgão emissor da Identidade não é valido."
-
-        }
-    });
+    $("#identidadeTitularOrgaoEmissor")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o orgão emissor da carteira de identidade do titular.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            minlength: 5,
+            maxlength: 200,
+            messages: {
+                required: "O orgão emissor da Identidade é obrigatório.",
+                minlength: "O orgão emissor da Identidade não é valido.",
+                maxlength: "O orgão emissor da Identidade não é valido."
+            }
+        });
 
 
     /*
      * Validação Fieldset Identidade Conjuge
      */
 
-    $("#identidadeConjugeNumero").rules("add", {
-        required: false,
-        minlength: 12,
-        maxLength: 12,
-        messages: {
-            minlength: "numero da identidade não é valido.",
-            maxLength: "numero da identidade não é valido."
+    $("#identidadeConjugeNumero")
+    
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o número da carteira de identidade do conjuge.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
 
-        }
-    });
+        .rules("add", {
+            required: false,
+            minlength: 12,
+            maxlength: 12,
+            messages: {
+                minlength: "O numero da identidade do conjuge não é valido.",
+                maxlength: "O numero da identidade do conjuge não é valido."
+            }
+        });
 
 
-    $("#identidadeConjugeDataEmissao").mask('00/00/0000').rules("add", {
+    $("#identidadeConjugeDataEmissao")
+        .mask('00/00/0000')
+        
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha a data de emissão da identidade do conjuge.");
+        })
+        
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        
+        .rules("add", {
         required: false,
         minlength: 10,
-        maxLength: 10,
+        maxlength: 10,
         messages: {
-            minlength: "A data de emissão da Identidade não é valido.",
-            maxLength: "A data de emissão da Identidade não é valido."
-
+            minlength: "A data de emissão da identidade do conjuge não é valida.",
+            maxlength: "A data de emissão da Identidade do conjuge não é valida."
         }
     });
 
-    $("#identidadeConjugeOrgaoEmissor").rules("add", {
+    $("#identidadeConjugeOrgaoEmissor")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o orgão emissor da carteira de identidade do conjuge.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
         required: false,
-        minlength: 05,
-        maxLength: 200,
+        minlength: 5,
+        maxlength: 200,
         messages: {
-            minlength: "O orgão emissor da Identidade não é valido.",
-            maxLength: "O orgão emissor da Identidade não é valido."
+            minlength: "O orgão emissor da identidade do conjuge não é valido.",
+            maxlength: "O orgão emissor da identidade do conjuge não é valido."
 
         }
     });
@@ -263,30 +594,54 @@ $(document).ready(function() {
      * Validação Fieldset endereço
      */
 
-    $("#enderecoTipoLogradouro").rules("add", {
+    $("#enderecoTipoLogradouro")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Selecione o tipo de logradouro do endereço do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "Informe o tipo de logradouro."
+            }
+        });
+
+
+    $("#enderecoNomeLogradouro")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o endereço do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            minlength: 2,
+            maxlength: 200,
+            messages: {
+                required: "Informe o tipo de logradouro.",
+                minlength: "O nome do logradouro não é valido.",
+                maxlength: "O nome do logradouro não é valido."
+            }
+        });
+
+    $("#enderecoNumero")
+        .mask('#', {maxlength: false})
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o número da residência do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
         required: true,
-        messages: {
-            required: "Informe o tipo de logradouro."
-
-        }
-    });
-
-
-    $("#enderecoNomeLogradouro").rules("add", {
-        required: true,
-        minlength: 02,
-        maxlength: 200,
-        messages: {
-            required: "Informe o tipo de logradouro.",
-            minlength: "O nome do logradouro não é valido.",
-            maxlength: "O nome do logradouro não é valido."
-        }
-    });
-
-    $("#enderecoNumero").mask('#', {maxlength: false}).rules("add", {
-        required: true,
-        minlength: 01,
-        maxlength: 05,        
+        minlength: 1,
+        maxlength: 5,        
         messages: {
             required: "Informe o numero.",
             minlength: "O número não é valido.",
@@ -295,140 +650,265 @@ $(document).ready(function() {
     });
 
 
-    $("#enderecoComplemento").rules("add", {
-        required: false,
-        minlength: 05,
-        maxlength: 200,
-        messages: {
-            minlength: "O complemento do logradouro não é valido.",
-            maxlength: "O complemento do logradouro não é valido."
-        }
+    $("#enderecoComplemento")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Caso exista, preencha o complemento do endereço do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: false,
+            minlength: 5,
+            maxlength: 200,
+            messages: {
+                minlength: "O complemento do logradouro não é valido.",
+                maxlength: "O complemento do logradouro não é valido."
+            }
+        });
+
+
+    $("#enderecoBairro")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o bairro do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            minlength: 3,
+            maxlength: 200,
+            messages: {
+                required: "Informe o bairro.",
+                minlength: "O bairro não é valido.",
+                maxlength: "O bairro não é valido."
+            }
+        });
+
+
+    $("#enderecoComunidade")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Caso resida em alguma comunidade, preencha o nome da mesma.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: false,
+            minlength: 3,
+            maxlength: 200,
+            messages: {
+                minlength: "A comunidade não é valida.",
+                maxlength: "A comunidade não é valida."
+            }
+        });
+
+
+    $("#enderecoDistrito")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Selecione o distrito onde reside o solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "Informe o distrito."
+            }
+        });
+
+
+    $("#enderecoCep")
+        .mask('00000-000')
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                      .text("Preencha o CEP do solicitante.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            minlength: 9,
+            maxlength: 9,
+            messages: {
+                required: "Informe o CEP.",
+                minlength: "O CEP não é valido.",
+                maxlength: "O CEP não é valido."
+            }
+        });
+
+
+    $("#enderecoAreaDeRisco")
+        .focus(function (){
+            var msg = "<p>Informe se o endereço que o solicitante reside é área de risco.</p>";
+            msg+= "<p>Considera-se como família residente em área de risco aquelas";
+            msg+= " que moram em áreas que apresentam risco geológico ou de insalubridade,";
+            msg+= " tais como erosão, solapamento, queda e rolamento de blocos de";
+            msg+= " rocha, eventos de inundação, taludes, barrancos, áreas declivosas,";
+            msg+= " encostas sujeitas a desmoronamento e lixões, áreas que margeam";
+            msg+= " rios, córrego ou quaisquer cursos d'água, áreas contaminadas ou";
+            msg+= " poluídas, observando-se legislação ambiental específica, de";
+            msg+= " acordo com o Plano Municipal de Redução de Riscos, Plano Diretor";
+            msg+= " ou determinação da Defesa Civil de Duque de Caxias.";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "Informe se é área de risco."
+            }
+        });
+
     });
 
+/*
+ * Validação Fieldset Dependente
+ */
 
-    $("#enderecoBairro").rules("add", {
-        required: true,
-        minlength: 03,
-        maxlength: 200,
-        messages: {
-            required: "Informe o bairro.",
-            minlength: "O bairro não é valido.",
-            maxlength: "O bairro não é valido."
-        }
-    });
+function helpDependenteNome() {
+        $("#help").fadeIn("fast")
+                  .text("Preencha o nome completo do dependente do solicitante.");
+}
 
-
-    $("#enderecoComunidade").rules("add", {
-        required: false,
-        minlength: 03,
-        maxlength: 200,
-        messages: {
-            minlength: "A comunidade não é valida.",
-            maxlength: "A comunidade não é valida."
-        }
-    });
-
-
-    $("#enderecoDistrito").rules("add", {
-        required: true,
-        messages: {
-            required: "Informe o distrito."
-        }
-    });
-
-
-    $("#enderecoCep").mask('00000-000').rules("add", {
-        required: true,
-        minlength: 09,
-        maxlength: 09,
-        messages: {
-            required: "Informe o CEP.",
-            minlength: "O CEP não é valido.",
-            maxlength: "O CEP não é valido."
-        }
-    });
-
-
-    $("#enderecoAreaDeRisco").rules("add", {
-        required: true,
-        messages: {
-            required: "Informe se é área de risco."
-        }
-    });
-
-
-    /*
-     * Validação Fieldset Dependente
-     */
-
-
-    $("#dependenteNome").rules("add", {
+function validarDependenteNome() {
+    $(".dependenteNome")
+        .rules("add", {
         required: true,
         minlength: 3,
-        maxLength: 200,
+        maxlength: 200,
         messages: {
             required: "O nome do Dependente é obrigatório.",
             minlength: "O nome do Dependente deve haver no mínimo três caracteres.",
-            maxLength: "O nome do Dependente deve haver no máximo duzentos caracteres."
+            maxlength: "O nome do Dependente deve haver no máximo duzentos caracteres."
 
         }
     });
+    
+    $("#help").fadeOut("fast");
+}
 
+function helpDependenteCpf() {
+        $("#help").fadeIn("fast")
+                  .text("Preencha o cpf do dependente do solicitante.");
+}
 
-    $("#dependenteCpf").mask('000.000.000-00').rules("add", {
+function validarDependenteCpf() {
+    $('.dependenteCpf').mask('000.000.000-00',{reverse: true}).rules("add", {
         required: true,
         minlength: 14,
-        maxLength: 14,
+        maxlength: 14,
         messages: {
             required: "O CPF do Dependente é obrigatório.",
             minlength: "O CPF do Dependente não é valido.",
-            maxLength: "O CPF do Dependente não é valido."
+            maxlength: "O CPF do Dependente não é valido."
 
         }
     });
+    
+    $("#help").fadeOut("fast");
+}
 
+function helpDependenteGrauDeParentesco() {
+        $("#help").fadeIn("fast")
+                  .text("Selecione o grau de parentesco entre dependente e o solicitante.");
+}
 
-    $("#dependenteGrauDeParentesco").rules("add", {
+function validarDependenteGrauDeParentesco(){
+    $(".dependenteGrauDeParentesco").rules("add", {
         required: true,
         messages: {
-            required: "Iforme o grau de parentesco do dependente."
+            required: "Informe o grau de parentesco do dependente."
         }
     });
+    
+    $("#help").fadeOut("fast");
+}
 
+function helpDependenteDataNascimento() {
+        $("#help").fadeIn("fast")
+                  .text("Preencha a data de nascimento do dependente.");
+}
 
-    $("#dependenteDataNascimento").rules("add", {
+function validarDependenteDataNascimento(){
+    $(".dependenteDataNascimento")
+        .mask('00/00/0000')
+        .rules("add", {
+            required: true,
+            minlength: 10,
+            maxlength: 10,
+            messages: {
+                required: "A data de nascimento do Dependente é obrigatória.",
+                minlength: "A data de nascimento do Dependente não é valida.",
+                maxlength: "A data de nascimento do Dependente não é valida."
+
+            }
+    });
+    $("#help").fadeOut("fast");        
+}
+
+function helpDependenteDeficienteFisico(){
+        var msg = "<p>Informe se o dependente possui algum tipo de deficiência ";
+            msg+= "física, visual, mental, auditiva ou multipla. </p>";
+            msg+= "<p>O candidado deverá apresentar laudo médico qua comprove";
+            msg+= " a deficiência e que indique a Classificação Internacional";
+            msg+= " de Doenças - CID</p>";
+            msg+= "<p>Deverá ser observado o enquadramento na Portaria 610 de 26 de";
+            msg+= " dezembro de 2011 do Ministério das Cidades, item 5.6, bem";
+            msg+= " como as deliberações do Conselho Nacional da Pessoa com";
+            msg+= " Deficiência";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+}
+
+function validarDependenteDeficienteFisico(){
+    $(".dependenteDeficienteFisico").rules("add", {
         required: true,
-        minlength: 10,
-        maxLength: 10,
         messages: {
-            required: "A data de nascimento do Dependente é obrigatório.",
-            minlength: "A data de nascimento do Dependente não é valida.",
-            maxLength: "A data de nascimento do Dependente não é valida."
+            required: "É necessário informar se os dependentes possuem deficiência física"
 
         }
     });
+    
+    $("#help").fadeOut("fast");
+}
 
+function helpDependenteRenda(){
+        var msg = "<p>Informe a renda total do dependente.</p>";
+            msg+= "<p>A renda familiar deve considerar a renda formal (por exemplo,";
+            msg+= " de ganhos salariais com carteira assinada) e ganhos informais";
+            msg+= " (por exemplo, de ganhos de trabalho como ambulante). Os agentes";
+            msg+= " financeiros pesquisam a renda dos membros das famílias em seus";
+            msg+= " bancos de dados</p>";
+            
+        $("#help").fadeIn("fast")
+                  .text(msg);
+}
 
-    $("#dependenteDeficienteFisico").rules("add", {
+function validarDependenteRenda(){
+    $(".dependenteRenda").mask("#.##0,00", {reverse: true, maxlength: false}).rules("add", {
         required: true,
+        minlength: 1,
+        maxlength: 10,
         messages: {
-            required: "É necessário informar se possui deficiência física"
+            required: "A renda do dependende é obrigatória.",
+            minlength: 'O campo "renda do dependente" não é valido.',
+            maxlength: 'O campo "renda do dependente" não é valido.'
 
         }
     });
-
-
-    $("#dependenteRenda").rules("add", {
-        required: true,
-        minlength: 01,
-        maxLength: 10,
-        messages: {
-            required: "A renda do titular é obrigatório.",
-            minlength: "O NIS do titular não é valido.",
-            maxLength: "O NIS do titular não é valido."
-
-        }
-    });
-
-
-});
+    
+    $("#help").fadeOut("fast");
+}

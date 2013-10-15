@@ -76,7 +76,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
         
          $this->add(array(
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            'name' => 'estadoCicil',
+            'name' => 'estadoCivil',
             'options' => array(
                 'label' =>  'Estado civil:',
                 'object_manager' => $objectManager,
@@ -157,7 +157,55 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 'id'    =>  'titularSexo',
             ),
         ));
-
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'membroFamiliaPreso',
+                'options'   =>  array(
+                    'label' =>  'Algum membro da família está em acolhimento institucional?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'titularMembroFamiliaPreso',
+                    'value' => '0',
+                )
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'bolsaFamilia',
+                'options'   =>  array(
+                    'label' =>  'O solicitante possui Bolsa Familia?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'titularBolsaFamilia',
+                    'value' => '0',
+                )
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'imovel',
+                'options'   =>  array(
+                    'label' =>  'Você já tem ou teve financiamento de casa/apartamento?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'titularImovel',
+                    'value' => '0',
+                )
+        ));
+        
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Radio',
                 'name'  =>  'deficienteFisico',
@@ -169,7 +217,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     )
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'titularDeficienteFisico',
+                    'class'    =>  'titularDeficienteFisico',
                     'value' => '0',
                 )
         ));
@@ -182,7 +230,8 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'titularRenda',
-                    'value' => 0.0,
+                    'size' => '10',
+                    'maxlength' => '10',
                 )
             )
         );
@@ -217,6 +266,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     array(
                         'name' => 'Alpha',
                         'options' => array(
+                            'allowWhiteSpace' => true,
                             'messages' => array(
                                 \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'Não são permitidos números no campo "Nome"',
                             ),
@@ -236,8 +286,9 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     array(
                         'name' => 'Date',
                         'options' => array(
+                            'format' => 'd/m/Y',
                             'messages' => array(
-                                \Zend\Validator\Date::FALSEFORMAT => 'O campo "Data de emissão" foi preenchido de forma inválida.',
+                                \Zend\Validator\Date::FALSEFORMAT => 'O campo "Data de inscricao" foi preenchido de forma inválida.',
                                 \Zend\Validator\Date::INVALID => 'O campo "Data de inscrição" foi preenchido de forma inválida.' ,
                             ),
                         ),
@@ -306,6 +357,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     array(
                         'name' => 'Date',
                         'options' => array(
+                            'format' => 'd/m/Y',
                             'messages' => array(
                                 \Zend\Validator\Date::FALSEFORMAT => 'O campo "Data de nascimento" foi preenchido de forma inválida.',
                                 \Zend\Validator\Date::INVALID => 'O campo "Data de nascimento" foi preenchido de forma inválida.' ,
@@ -434,6 +486,75 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
             ),
             
+            'membroFamiliaPreso' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "Algum membro da família está em acolhimento institucional?" não pode ser vazio.' 
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack'  => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "Algum membro da família está em acolhimento institucional?" inválida!' ,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
+            'bolsaFamilia' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "O solicitante possui Bolsa Familia?" não pode ser vazio.' 
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack'  => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "O solicitante possui Bolsa Familia?" inválida!' ,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
+            'imovel' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "Você já tem ou teve financiamento de casa/apartamento?" não pode ser vazio.' 
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack'  => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "Você já tem ou teve financiamento de casa/apartamento?" inválida!' ,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
             'deficienteFisico' => array(
                 'required' => true,
                 'validators' => array(
@@ -477,14 +598,6 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!', 
                                 'stringLengthTooLong' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!' 
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'Float',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Float::NOT_FLOAT => 'O campo "Renda" está preenchido de forma inválida!',
                             ),
                         ),
                     ),
