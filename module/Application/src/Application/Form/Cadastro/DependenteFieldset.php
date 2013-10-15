@@ -91,6 +91,25 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
         
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'acolhimentoInstitucional',
+                'options'   =>  array(
+                    'label' =>  'O familiar se encontra em acolhimento institucional?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'dependenteAcolhimentoInstitucional',
+                    'value' => '0',
+                    'onMouseOver' => 'helpDependenteAbrigoInstitucional()',
+                    'onMouseOut' => 'helpDependenteAbrigoInstitucionalOut()',
+                    'onBlur' => 'validarDependenteAbrigoInstitucional()',
+                )
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
                 'name'  =>  'deficienteFisico',
                 'options'   =>  array(
                     'label' =>  'Possui algum tipo de deficiência?',
@@ -103,7 +122,8 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'class'    =>  'dependenteDeficienteFisico',
                     'value' =>  '0',
                     'onBlur' => 'validarDependenteDeficienteFisico()',
-                    'onFocus' => 'helpDependenteDeficienteFisico()',
+                    'onMouseOver' => 'helpDependenteDeficienteFisico()',
+                    'onMouseOut' => 'helpDependenteDeficienteFisicoOut()',
                 )
         ));
         
@@ -257,6 +277,29 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 'filters' => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
+                ),
+            ),
+            
+            'acolhimentoInstitucional' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "O familiar se encontra em acolhimento institucional?" não pode ser vazio.' 
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack' => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "O familiar se encontra em acolhimento institucional?" inválida!' ,
+                            ),
+                        ),
+                    ),
                 ),
             ),
             

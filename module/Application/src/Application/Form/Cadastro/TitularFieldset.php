@@ -35,7 +35,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
         );
         
         $this->add(array(
-                'type'  =>  'Zend\Form\Element\Date',
+                'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'dataInscricao',
                 'options'   =>  array(
                     'label' =>  'Data de inscrição:',
@@ -160,16 +160,32 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
         
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Radio',
-                'name'  =>  'membroFamiliaPreso',
+                'name'  =>  'mulherChefeDeFamilia',
                 'options'   =>  array(
-                    'label' =>  'Algum membro da família está em acolhimento institucional?',
+                    'label' =>  'Você é mulher chefe de família com dependentes?',
                     'value_options' => array(
                         '0' => 'Não',
                         '1' => 'Sim'
                     )
                 ),
                 'attributes'    =>  array(
-                    'class'    =>  'titularMembroFamiliaPreso',
+                    'class'    =>  'titularMulherChefeDeFamilia',
+                    'value' => '0',
+                )
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'acolhimentoInstitucional',
+                'options'   =>  array(
+                    'label' =>  'Se encontra em acolhimento institucional?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'titularAcolhimentoInstitucional',
                     'value' => '0',
                 )
         ));
@@ -486,14 +502,14 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
             ),
             
-            'membroFamiliaPreso' => array(
+            'mulherChefeDeFamilia' => array(
                 'required' => true,
                 'validators' => array(
                     array(
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "Algum membro da família está em acolhimento institucional?" não pode ser vazio.' 
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "Você é mulher chefe de família?" não pode ser vazio.' 
                             ),
                         ),
                     ),
@@ -502,7 +518,30 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                         'options' => array(
                             'haystack'  => array('0','1'),
                             'messages' => array(
-                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "Algum membro da família está em acolhimento institucional?" inválida!' ,
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "Você é mulher chefe de família?" inválida!' ,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
+            'acolhimentoInstitucional' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "Se encontra em acolhimento institucional?" não pode ser vazio.' 
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack'  => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "Se encontra em acolhimento institucional?" inválida!' ,
                             ),
                         ),
                     ),

@@ -7,10 +7,19 @@ $(document).ready(function() {
             $(this).parent().hide();
     });
     
+    $('legend').each(function(){
+        if($(this).text() === "Você é mulher chefe de família com dependentes?")
+            $(this).parent().hide();
+    });
+    
     $('#cadastro-form').validate({
         debug: true,
+        errorClass: "invalid-input",
         errorLabelContainer: "#limbo",
         wrapper: "li",
+        errorPlacement: function(error,element) {
+            return true;
+        },
         invalidHandler: function(event, validator) {
             var errors = validator.numberOfInvalids();
             if (errors) {
@@ -22,13 +31,7 @@ $(document).ready(function() {
             } else {
                 $("#err").fadeOut("fast");
             }
-        },
-         highlight: function(element, errorClass) {
-            $(element).fadeOut(function() {
-                $(element).fadeIn();
-            });
-        }
-        
+        },        
     });
 
     /*
@@ -121,7 +124,15 @@ $(document).ready(function() {
     })
     .blur(function (){
         $("#help").fadeOut("fast");
-    });
+    })
+    .rules("add", {
+        
+            required: true,
+           
+            messages: {
+                required: "O estado civil do Titular é obrigatório.",
+            }
+        });
 
     $("#titularNaturalidade")
         .focus(function (){
@@ -130,20 +141,71 @@ $(document).ready(function() {
         })
         .blur(function (){
             $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+        
+            required: true,
+           
+            messages: {
+                required: "A naturalidade do Titular é obrigatório.",
+           
+            }
         });
 
     $("#titularSexo")
         .focus(function (){
             $("#help").fadeIn("fast")
-                      .text("Selecione o sexo do solicitante se encontra.");
+                      .text("Selecione o sexo do solicitante.");
         })
         .blur(function (){
             $("#help").fadeOut("fast");
+        })
+        .change(function(){
+            if($(this).val() === "2"){
+                $('legend').each(function(){
+                    if($(this).text() === "Você é mulher chefe de família com dependentes?")
+                        $(this).parent().fadeIn("fast");
+                });
+            }else{
+                $('legend').each(function(){
+                    if($(this).text() === "Você é mulher chefe de família com dependentes?")
+                        $(this).parent().fadeOut("fast");
+                });
+            }
+        })
+        .rules("add", {
+        
+            required: true,
+        
+            messages: {
+                required: "O sexo do Titular é obrigatório.",
+            }
         });
 
-    $(".titularMembroFamiliaPreso")
-        .focus(function (){
-            var msg = "<p>Informe se existe algum membro da família em abrigo ";
+    $(".titularMulherChefeDeFamilia")
+        .mouseover(function (){
+            var msg = "<p>Informe se o solicitante é mulher chefe de família</p>";
+            msg+= "<p>Considera-se mulher chefe de família com dependentes, a mulher";
+            msg+= " que é responsável pelo sustento de família e que possui crianças";
+            msg+= " e adolescentes ou incapazes, que dependem diretamente dos rendimentos";
+            msg+= " e cuidados da mesma.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .mouseout(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se o titular se encontra em abrigo institucional."
+            }
+        });
+
+    $(".titularAcolhimentoInstitucional")
+        .mouseover(function (){
+            var msg = "<p>Informe se o solicitante se encontra em abrigo ";
             msg+= "institucional. </p>";
             msg+= "<p>Considera-se a situação de acolhimento institucional ";
             msg+= " àquelas famílias que possuem algum de seus membros acolhidos";
@@ -152,22 +214,22 @@ $(document).ready(function() {
             $("#help").fadeIn("fast")
                       .html(msg);
         })
-        .blur(function (){
+        .mouseout(function (){
             $("#help").fadeOut("fast");
         })
         .rules("add", {
             required: true,
             messages: {
-                required: "É necessário informar se possui deficiência física"
+                required: "É necessário informar se o titular se encontra em abrigo institucional."
             }
         });
 
     $(".titularBolsaFamilia")
-        .focus(function (){
+        .mouseover(function (){
             $("#help").fadeIn("fast")
                       .text("Informe se o solicitante recebe Bolsa Familia.");
         })
-        .blur(function (){
+        .mouseout(function (){
             $("#help").fadeOut("fast");
         })
         .rules("add", {
@@ -178,7 +240,7 @@ $(document).ready(function() {
         });
 
     $(".titularImovel")
-        .focus(function (){
+        .mouseover(function (){
             var msg = "<p>Informe se o solicitante tem ou já teve algum financiamento";
             msg+= " de casa/apartamento.</p>";
             msg+= " <p>Quem tem imóvel (terreno, casa, apartamento) em seu nome não";
@@ -194,7 +256,7 @@ $(document).ready(function() {
             $("#help").fadeIn("fast")
                       .html(msg);
         })
-        .blur(function (){
+        .mouseout(function (){
             $("#help").fadeOut("fast");
         })
         .rules("add", {
@@ -206,7 +268,7 @@ $(document).ready(function() {
 
 
     $(".titularDeficienteFisico")
-        .focus(function (){
+        .mouseover(function (){
             var msg = "<p>Informe se o solicitante possui algum tipo de deficiência ";
             msg+= "física, visual, mental, auditiva ou multipla. </p>";
             msg+= "<p>O candidado deverá apresentar laudo médico qua comprove";
@@ -220,7 +282,7 @@ $(document).ready(function() {
             $("#help").fadeIn("fast")
                       .html(msg);
         })
-        .blur(function (){
+        .mouseout(function (){
             $("#help").fadeOut("fast");
         })
         .rules("add", {
@@ -371,9 +433,29 @@ $(document).ready(function() {
             }
         });
 
+    $(".conjugeAcolhimentoInstitucional")
+        .mouseover(function (){
+            var msg = "<p>Informe se o conjuge se encontra em abrigo ";
+            msg+= "institucional. </p>";
+            msg+= "<p>Considera-se a situação de acolhimento institucional ";
+            msg+= " àquelas famílias que possuem algum de seus membros acolhidos";
+            msg+= " pela rede socioassistencial ou por instituições prisionais.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .mouseout(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se o titular se encontra em abrigo institucional."
+            }
+        });
 
     $("#conjugeDeficienteFisico")
-        .focus(function (){
+        .mouseover(function (){
             var msg = "<p>Informe se o conjuge possui algum tipo de deficiência ";
             msg+= "física, visual, mental, auditiva ou multipla. </p>";
             msg+= "<p>O candidado deverá apresentar laudo médico qua comprove";
@@ -387,7 +469,7 @@ $(document).ready(function() {
             $("#help").fadeIn("fast")
                       .html(msg);
         })
-        .blur(function (){
+        .mouseout(function (){
             $("#help").fadeOut("fast");
         })
         .rules("add", {
@@ -745,8 +827,8 @@ $(document).ready(function() {
         });
 
 
-    $("#enderecoAreaDeRisco")
-        .focus(function (){
+    $(".enderecoAreaDeRisco")
+        .mouseover(function (){
             var msg = "<p>Informe se o endereço que o solicitante reside é área de risco.</p>";
             msg+= "<p>Considera-se como família residente em área de risco aquelas";
             msg+= " que moram em áreas que apresentam risco geológico ou de insalubridade,";
@@ -761,7 +843,7 @@ $(document).ready(function() {
             $("#help").fadeIn("fast")
                       .html(msg);
         })
-        .blur(function (){
+        .mouseout(function (){
             $("#help").fadeOut("fast");
         })
         .rules("add", {
@@ -858,6 +940,31 @@ function validarDependenteDataNascimento(){
     $("#help").fadeOut("fast");        
 }
 
+function helpDependenteAbrigoInstitucional(){
+    var msg = "<p>Informe se o familiar se encontra em abrigo ";
+            msg+= "institucional. </p>";
+            msg+= "<p>Considera-se a situação de acolhimento institucional ";
+            msg+= " àquelas famílias que possuem algum de seus membros acolhidos";
+            msg+= " pela rede socioassistencial ou por instituições prisionais.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+}
+
+function helpDependenteAbrigoInstitucionalOut(){
+    $("#help").fadeOut("fast");
+}
+
+function validarDependenteAbrigoInstitucional(){
+    $(".titularAcolhimentoInstitucional")
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se o dependente se encontra em abrigo institucional."
+            }
+        });
+}
+
 function helpDependenteDeficienteFisico(){
         var msg = "<p>Informe se o dependente possui algum tipo de deficiência ";
             msg+= "física, visual, mental, auditiva ou multipla. </p>";
@@ -871,6 +978,10 @@ function helpDependenteDeficienteFisico(){
             
             $("#help").fadeIn("fast")
                       .html(msg);
+}
+
+function helpDependenteDeficienteFisicoOut(){           
+            $("#help").fadeOut("fast");
 }
 
 function validarDependenteDeficienteFisico(){
@@ -894,7 +1005,7 @@ function helpDependenteRenda(){
             msg+= " bancos de dados</p>";
             
         $("#help").fadeIn("fast")
-                  .text(msg);
+                  .html(msg);
 }
 
 function validarDependenteRenda(){
@@ -911,4 +1022,13 @@ function validarDependenteRenda(){
     });
     
     $("#help").fadeOut("fast");
+}
+
+function helpDependente(){
+        $("#help").fadeIn("fast")
+                  .text("Clique aqui para adicionar um familiar que mora com você.");
+}
+
+function helpDependenteOut(){
+        $("#help").fadeOut("fast");
 }

@@ -1,5 +1,5 @@
 body {
-    padding-top: 60px;
+    padding-top: 5px;
     padding-bottom: 40px;
 }
 
@@ -67,16 +67,22 @@ select{
 }
 
 #err{
-    top: 10px;
+    top: 50px;
     left: 530px;
     min-height: 10px;
-    min-width: 400px;
+    width: 400px;
     background-color: tomato;
     position: fixed;
     padding: 20px;
 }
 
+.invalid-input{
+    border-color: #f00;
+    background-color: #f99;
+}
+
 #help{
+    top: 135px;
     left: 530px;
     min-height: 10px;
     width: 400px;

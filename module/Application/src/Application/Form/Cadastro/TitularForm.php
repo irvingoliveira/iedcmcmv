@@ -57,7 +57,7 @@ class TitularForm extends Form{
             'type' => 'Zend\Form\Element\Collection',
             'name' => 'dependentes',
             'options' => array(
-                'label' => 'Dependetes',
+                'label' => 'Dados familiares',
                 'count' => 0,
                 'should_create_template' => true,
                 'template_placeholder' => '__index__',
@@ -87,6 +87,8 @@ class TitularForm extends Form{
                 'onclick' => 'return add_dependente()',
                 'value' => 'adicionarDependente',
                 'id' => 'adicionarDependente',
+                'onMouseOver' => 'helpDependente()',
+                'onMouseOut' => 'helpDependenteOut()',
             ),
         ));
         
