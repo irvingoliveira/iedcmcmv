@@ -13,7 +13,7 @@ $(document).ready(function() {
     });
     
     $('#cadastro-form').validate({
-        debug: true,
+        debug: false,
         errorClass: "invalid-input",
         errorLabelContainer: "#limbo",
         wrapper: "li",
@@ -516,7 +516,7 @@ $(document).ready(function() {
             msg+= " bancos de dados</p>";
             
             $("#help").fadeIn("fast")
-                      .text(msg);
+                      .html(msg);
         })
         .blur(function (){
             $("#help").fadeOut("fast");
@@ -712,7 +712,7 @@ $(document).ready(function() {
         });
 
     $("#enderecoNumero")
-        .mask('#', {maxlength: false})
+        .mask('#', {maxlength: 10})
         .focus(function (){
             $("#help").fadeIn("fast")
                       .text("Preencha o número da residência do solicitante.");
@@ -722,8 +722,8 @@ $(document).ready(function() {
         })
         .rules("add", {
         required: true,
-        minlength: 1,
-        maxlength: 5,        
+        minlength: 0,
+        maxlength: 10,        
         messages: {
             required: "Informe o numero.",
             minlength: "O número não é valido.",

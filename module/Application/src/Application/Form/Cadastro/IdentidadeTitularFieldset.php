@@ -73,11 +73,11 @@ class IdentidadeTitularFieldset extends Fieldset implements InputFilterProviderI
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 12,
+                            'min' => 10,
                             'max' => 12,
                             'messages' => array(
-                                'stringLengthTooShort' => 'O campo "Número da identidade" deve ter entre exatamente 12 caracteres!', 
-                                'stringLengthTooLong' => 'O campo "Número da identidade" deve ter entre exatamente 12 caracteres!', 
+                                'stringLengthTooShort' => 'O campo "Número da identidade" deve ter exatamente 12 caracteres!', 
+                                'stringLengthTooLong' => 'O campo "Número da identidade" deve ter exatamente 12 caracteres!', 
                             ),
                         ),
                     ),
@@ -148,15 +148,6 @@ class IdentidadeTitularFieldset extends Fieldset implements InputFilterProviderI
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Orgão emissor" deve ter entre 3 e 200 caracteres!', 
                                 'stringLengthTooLong' => 'O campo "Orgão emissor" deve ter entre 3 e 200 caracteres!' 
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'Alpha',
-                        'options' => array(
-                            'allowWhiteSpace' => true,
-                            'messages' => array(
-                                \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'Não são permitidos números no campo "Nome"',
                             ),
                         ),
                     ),

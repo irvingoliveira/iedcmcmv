@@ -84,7 +84,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 ),
                 'attributes'    =>  array(
                     'class'    =>  'dependenteDataNascimento',
-                    'onBlur' => 'validarDependenteDataNascimento()',
+                    'onChange' => 'validarDependenteDataNascimento()',
                     'onFocus' => 'helpDependenteDataNascimento()',
                 )
         ));
