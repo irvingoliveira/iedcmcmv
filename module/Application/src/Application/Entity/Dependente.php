@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Dependente")
  */
 class Dependente {
-    
+
     /**
      *
      * @var int
@@ -19,7 +19,7 @@ class Dependente {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $codigoDependente;
-    
+
     /**
      *
      * @var string
@@ -27,7 +27,7 @@ class Dependente {
      * @ORM\Column(type="string",length=200)
      */
     private $nome;
-    
+
     /**
      *
      * @var string
@@ -35,7 +35,7 @@ class Dependente {
      * @ORM\Column(type="string",length=14,unique=TRUE)
      */
     private $cpf;
-    
+
     /**
      *
      * @var DateTime
@@ -43,7 +43,7 @@ class Dependente {
      * @ORM\Column(type="date")
      */
     private $dataNascimento;
-    
+
     /**
      *
      * @var boolean
@@ -51,7 +51,7 @@ class Dependente {
      * @ORM\Column(type="boolean")
      */
     private $deficienteFisico;
-    
+
     /**
      *
      * @var float
@@ -59,7 +59,7 @@ class Dependente {
      * @ORM\Column(type="float")
      */
     private $renda;
-    
+
     /**
      *
      * @var Titular
@@ -77,7 +77,15 @@ class Dependente {
      * @ORM\JoinColumn(name="codigoTipoGrauDeParentesco", referencedColumnName="codigoTipoGrauDeParentesco", nullable=FALSE)
      */
     private $tipoGrauDeParentesco;
-    
+
+    /**
+     *
+     * @var boolean
+     * 
+     * @ORM\Column(type="boolean")
+     */
+    private $acolhimentoInstitucional;
+
     function __construct() {
         
     }
@@ -85,7 +93,7 @@ class Dependente {
     public function getCodigoDependente() {
         return $this->codigoDependente;
     }
-    
+
     public function getNome() {
         return $this->nome;
     }
@@ -125,7 +133,7 @@ class Dependente {
     public function setRenda($renda) {
         $this->renda = $renda;
     }
-    
+
     public function getTitular() {
         return $this->titular;
     }
@@ -140,6 +148,14 @@ class Dependente {
 
     public function setTipoGrauDeParentesco(TipoGrauDeParentesco $tipoGrauDeParentesco) {
         $this->tipoGrauDeParentesco = $tipoGrauDeParentesco;
+    }
+
+    public function getAcolhimentoInstitucional() {
+        return $this->acolhimentoInstitucional;
+    }
+
+    public function setAcolhimentoInstitucional($acolhimentoInstitucional) {
+        $this->acolhimentoInstitucional = $acolhimentoInstitucional;
     }
 
 }

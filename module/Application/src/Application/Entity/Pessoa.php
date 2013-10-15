@@ -4,7 +4,6 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * @ORM\MappedSuperclass
  */
@@ -16,7 +15,7 @@ abstract class Pessoa {
      * @ORM\Column(type="string",length=200)
      */
     private $nome;
-    
+
     /**
      *
      * @var Identidade
@@ -25,39 +24,36 @@ abstract class Pessoa {
      * @ORM\JoinColumn(name="codigoIdentidade", referencedColumnName="codigoIdentidade",nullable=FALSE)
      */
     private $identidade;
-    
+
     /**
      * @var string
      * 
      * @ORM\Column(type="string",length=14, unique=TRUE)
-     */    
+     */
     private $cpf;
-    
+
     /**
      * @var DateTime
      * 
      * @ORM\Column(type="date")
      */
-    
     private $dataNascimento;
-    
+
     /**
      *
      * @var boolean
      * 
      * @ORM\Column(type="boolean")
      */
-    
     private $deficienteFisico;
-    
+
     /**
      * @var string
      * 
      * @ORM\Column(type="string",length=12,nullable=TRUE, unique=TRUE)
-     */    
-
+     */
     private $nis;
-    
+
     /**
      *
      * @var TipoSexo
@@ -66,7 +62,7 @@ abstract class Pessoa {
      * @ORM\JoinColumn(name="codigoTipoSexo", referencedColumnName="codigoTipoSexo", nullable=FALSE)
      */
     private $tipoSexo;
-    
+
     /**
      *
      * @var Cidade
@@ -75,18 +71,26 @@ abstract class Pessoa {
      * @ORM\JoinColumn(name="naturalidade", referencedColumnName="codigoCidade", nullable=FALSE)
      */
     private $naturalidade;
-    
+
     /**
      * @var float
      * 
      * @ORM\Column(type="float")
      */
     private $renda;
-    
+
+    /**
+     *
+     * @var boolean
+     * 
+     * @ORM\Column(type="boolean")
+     */
+    private $acolhimentoInstitucional;
+
     function __construct() {
         
     }
-    
+
     public function getCodigoPessoa() {
         return $this->codigoPessoa;
     }
@@ -106,7 +110,7 @@ abstract class Pessoa {
     public function setIdentidade(Identidate $identidade) {
         $this->identidade = $identidade;
     }
-    
+
     public function getCpf() {
         return $this->cpf;
     }
@@ -130,7 +134,7 @@ abstract class Pessoa {
     public function setDeficienteFisico(bolean $deficienteFisico) {
         $this->deficienteFisico = $deficienteFisico;
     }
-    
+
     public function getNis() {
         return $this->nis;
     }
@@ -154,13 +158,21 @@ abstract class Pessoa {
     public function setTipoSexo(TipoSexo $tipoSexo) {
         $this->tipoSexo = $tipoSexo;
     }
-    
+
     public function getNaturalidade() {
         return $this->naturalidade;
     }
 
     public function setNaturalidade(Cidade $naturalidade) {
         $this->naturalidade = $naturalidade;
+    }
+
+    public function getAcolhimentoInstitucional() {
+        return $this->acolhimentoInstitucional;
+    }
+
+    public function setAcolhimentoInstitucional($acolhimentoInstitucional) {
+        $this->acolhimentoInstitucional = $acolhimentoInstitucional;
     }
 
 }

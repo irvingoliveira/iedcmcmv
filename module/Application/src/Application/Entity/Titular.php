@@ -76,22 +76,7 @@ class Titular extends Pessoa{
      * 
      * @ORM\Column(type="boolean")
      */
-    private $membroFamiliaPreso;
     
-    /**
-     *
-     * @var boolean
-     * 
-     * @ORM\Column(type="boolean")
-     */
-    private $membroFamiliaIdoso;
-    
-    /**
-     *
-     * @var boolean
-     * 
-     * @ORM\Column(type="boolean")
-     */
     private $imovel;
     
     /**
@@ -176,22 +161,6 @@ class Titular extends Pessoa{
 
     public function setTelefones($telefones) {
         $this->telefones = $telefones;
-    }
-
-    public function getMembroFamiliaPreso() {
-        return $this->membroFamiliaPreso;
-    }
-
-    public function setMembroFamiliaPreso($membroFamiliaPreso) {
-        $this->membroFamiliaPreso = $membroFamiliaPreso;
-    }
-
-    public function getMembroFamiliaIdoso() {
-        return $this->membroFamiliaIdoso;
-    }
-
-    public function setMembroFamiliaIdoso($membroFamiliaIdoso) {
-        $this->membroFamiliaIdoso = $membroFamiliaIdoso;
     }
 
     public function getImovel() {
