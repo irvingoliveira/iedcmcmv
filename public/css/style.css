@@ -1,5 +1,5 @@
 body {
-    padding-top: 60px;
+    padding-top: 5px;
     padding-bottom: 40px;
 }
 
@@ -28,6 +28,10 @@ body {
 
 .btn-success:active, .btn-success.active {
   background-color: #57a900;
+}
+
+div.container{
+    width: 960px;
 }
 
 div.container a.brand {
@@ -60,4 +64,29 @@ select{
 #adicionarDependente{
     float: right;
 
+}
+
+#err{
+    top: 50px;
+    left: 530px;
+    min-height: 10px;
+    width: 400px;
+    background-color: tomato;
+    position: fixed;
+    padding: 20px;
+}
+
+.invalid-input{
+    border-color: #f00;
+    background-color: #f99;
+}
+
+#help{
+    top: 135px;
+    left: 530px;
+    min-height: 10px;
+    width: 400px;
+    background-color: yellowgreen;
+    position: fixed;
+    padding: 20px;
 }

@@ -86,6 +86,7 @@ class IdentidadeConjugeFieldset extends Fieldset implements InputFilterProviderI
                     array(
                         'name' => 'Date',
                         'options' => array(
+                            'format' => 'd/m/Y',
                             'messages' => array(
                                 \Zend\Validator\Date::FALSEFORMAT => 'O campo "Data de emissão" foi preenchido de forma inválida.',
                                 \Zend\Validator\Date::INVALID => 'O campo "Data de emissão" foi preenchido de forma inválida.',
@@ -129,6 +130,7 @@ class IdentidadeConjugeFieldset extends Fieldset implements InputFilterProviderI
                     array(
                         'name' => 'Alpha',
                         'options' => array(
+                            'allowWhiteSpace' => true,
                             'messages' => array(
                                 \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'Não são permitidos números no campo "Nome"',
                             ),

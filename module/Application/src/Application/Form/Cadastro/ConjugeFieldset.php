@@ -124,6 +124,22 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
         
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'acolhimentoInstitucional',
+                'options'   =>  array(
+                    'label' =>  'O conjuge se encontra em acolhimento institucional?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'conjugeAcolhimentoInstitucional',
+                    'value' => '0',
+                )
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
                 'name'  =>  'deficienteFisico',
                 'options'   =>  array(
                     'label' =>  'Possui algum tipo de deficiência?',
@@ -146,9 +162,8 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
                 'attributes'    =>  array(
                     'id'    =>  'conjugeRenda',
-                    'value' => 0.0,
-                    'size' => '11',
-                    'maxlength' => '11',
+                    'size' => '10',
+                    'maxlength' => '10',
                 )
             )
         );
@@ -174,6 +189,7 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                     array(
                         'name' => 'Alpha',
                         'options' => array(
+                            'allowWhiteSpace' => true,
                             'messages' => array(
                                 \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'Não são permitidos números no campo "Nome"',
                             ),
@@ -215,6 +231,7 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                     array(
                         'name' => 'Date',
                         'options' => array(
+                            'format' => 'd/m/Y',
                             'messages' => array(
                                 \Zend\Validator\Date::FALSEFORMAT => 'O campo "Data de nascimento" foi preenchido de forma inválida.',
                                 \Zend\Validator\Date::INVALID => 'O campo "Data de nascimento" foi preenchido de forma inválida.' ,
@@ -302,6 +319,21 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                 ),
             ),
             
+            'acolhimentoInstitucional' => array(
+                'required' => false,
+                'validators' => array(
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack'  => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "O conjuge se encontra em acolhimento institucional?" inválida!' ,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
             'deficienteFisico' => array(
                 'required' => false,
                 'validators' => array(
@@ -310,7 +342,7 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                         'options' => array(
                             'haystack'  => array('0','1'),
                             'messages' => array(
-                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "Possui algum tipo de deficiência?" inválida!' ,
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "O conjuge se encontra em acolhimento institucional?" inválida!' ,
                             ),
                         ),
                     ),
@@ -329,14 +361,6 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!', 
                                 'stringLengthTooLong' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!' 
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'Float',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Float::NOT_FLOAT => 'O campo "Renda" está preenchido de forma inválida!',
                             ),
                         ),
                     ),

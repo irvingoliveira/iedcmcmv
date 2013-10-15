@@ -159,7 +159,7 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                     )
                 ),
                 'attributes'    =>  array(
-                    'id'    =>  'enderecoAreaDeRisco',
+                    'class'    =>  'enderecoAreaDeRisco',
                     'value' =>  '0',
                 )
         ));
@@ -282,14 +282,6 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                             ),
                         ),
                     ),
-                    array(
-                        'name' => 'Alnum',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Alnum::INVALID => 'Existem caracteres inválidos no campo "Complemento"!',
-                            ),
-                        ),
-                    ),
                 ),
                 'filters' => array(
                     array('name' => 'StripTags'),
@@ -318,14 +310,6 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Bairro" deve ter entre 3 e 200 caracteres!', 
                                 'stringLengthTooLong' => 'O campo "Bairro" deve ter entre 3 e 200 caracteres!' 
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'Alnum',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Alnum::INVALID => 'Existem caracteres inválidos no campo "Bairro"!',
                             ),
                         ),
                     ),

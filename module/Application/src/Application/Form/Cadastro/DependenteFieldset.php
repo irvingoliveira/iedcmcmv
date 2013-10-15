@@ -30,7 +30,8 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'class'    =>  'dependenteNome',
                     'size' => '50',
                     'maxlength' => '200',
-                    'onKeyDown' => 'validarDependenteNome()',
+                    'onBlur' => 'validarDependenteNome()',
+                    'onFocus' => 'helpDependenteNome()',
                 )
         ));
         
@@ -44,7 +45,8 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'class'    =>  'dependenteCpf',
                     'size' => '14',
                     'maxlength' => '14',
-                    'onKeyDown' => 'validarDependenteCpf()',
+                    'onBlur' => 'validarDependenteCpf()',
+                    'onFocus' => 'helpDependenteCpf()',
                 )
         ));
         
@@ -69,7 +71,8 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
             ),
             'attributes'    =>  array(
                 'class'    =>  'dependenteGrauDeParentesco',
-                'onKeyDown' => 'validarDependenteGrauDeParentesco()',
+                'onBlur' => 'validarDependenteGrauDeParentesco()',
+                'onFocus' => 'helpDependenteGrauDeParentesco()',
             ),
         ));
         
@@ -81,7 +84,27 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 ),
                 'attributes'    =>  array(
                     'class'    =>  'dependenteDataNascimento',
-                    'onKeyDown' => 'validarDependenteDataNascimento()',
+                    'onBlur' => 'validarDependenteDataNascimento()',
+                    'onFocus' => 'helpDependenteDataNascimento()',
+                )
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'acolhimentoInstitucional',
+                'options'   =>  array(
+                    'label' =>  'O familiar se encontra em acolhimento institucional?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'dependenteAcolhimentoInstitucional',
+                    'value' => '0',
+                    'onMouseOver' => 'helpDependenteAbrigoInstitucional()',
+                    'onMouseOut' => 'helpDependenteAbrigoInstitucionalOut()',
+                    'onBlur' => 'validarDependenteAbrigoInstitucional()',
                 )
         ));
         
@@ -98,7 +121,9 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 'attributes'    =>  array(
                     'class'    =>  'dependenteDeficienteFisico',
                     'value' =>  '0',
-                    'onKeyDown' => 'validarDependenteDeficienteFisico()',
+                    'onBlur' => 'validarDependenteDeficienteFisico()',
+                    'onMouseOver' => 'helpDependenteDeficienteFisico()',
+                    'onMouseOut' => 'helpDependenteDeficienteFisicoOut()',
                 )
         ));
         
@@ -110,8 +135,10 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 ),
                 'attributes'    =>  array(
                     'class'    =>  'dependenteRenda',
-                    'value' => 0.0,
-                    'onKeyDown' => 'validarDependenteRenda()',
+                    'onBlur' => 'validarDependenteRenda()',
+                    'onFocus' => 'helpDependenteRenda()',
+                    'size' => '10',
+                    'maxlength' => '10',
                 )
             )
         );
@@ -145,6 +172,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     array(
                         'name' => 'Alpha',
                         'options' => array(
+                            'allowWhiteSpace' => true,
                             'messages' => array(
                                 \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'Não são permitidos números no campo "Nome"',
                             ),
@@ -218,6 +246,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     array(
                         'name' => 'Date',
                         'options' => array(
+                            'format' => 'd/m/Y',
                             'messages' => array(
                                 \Zend\Validator\Date::FALSEFORMAT => 'O campo "Data de nascimento" foi preenchido de forma inválida.',
                                 \Zend\Validator\Date::INVALID => 'O campo "Data de nascimento" foi preenchido de forma inválida.' 
@@ -248,6 +277,29 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 'filters' => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
+                ),
+            ),
+            
+            'acolhimentoInstitucional' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "O familiar se encontra em acolhimento institucional?" não pode ser vazio.' 
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack' => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "O familiar se encontra em acolhimento institucional?" inválida!' ,
+                            ),
+                        ),
+                    ),
                 ),
             ),
             
@@ -294,14 +346,6 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!', 
                                 'stringLengthTooLong' => 'O campo "Renda" deve ter entre 1 e 10 dígitos!' 
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'Float',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Float::NOT_FLOAT => 'O campo "Renda" está preenchido de forma inválida!',
                             ),
                         ),
                     ),
