@@ -58,15 +58,8 @@ class Titular extends Pessoa{
      *
      * @var array
      * 
-     * @ORM\ManyToMany(targetEntity="Telefone", inversedBy="titulares")
-     * @ORM\JoinTable(name="TitularTemTelefone",
-     *                joinColumns={
-     *                      @ORM\JoinColumn(name="codigoTitular", 
-     *                                  referencedColumnName="codigoTitular")},
-     *                inverseJoinColumns={
-     *                      @ORM\JoinColumn(name="codigoTelefone",
-     *                                  referencedColumnName="codigoTelefone")}
-     * )
+     * @ORM\OneToMany(targetEntity="Telefone", mappedBy="titular", cascade={"persist"})
+     * 
      */
     private $telefones;
     

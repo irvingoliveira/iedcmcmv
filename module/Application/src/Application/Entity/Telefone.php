@@ -30,12 +30,12 @@ class Telefone {
     
     /**
      *
-     * @var array
+     * @var Titular
      * 
-     * @ORM\ManyToMany(targetEntity="Titular", mappedBy="telefones")
-     
+     * @ORM\ManyToOne(targetEntity="Titular", inversedBy="telefones")
+     * @ORM\JoinColumn(name="codigoTitular", referencedColumnName="codigoTitular")
      */
-    private $titulares;
+    private $titular;
     
     /**
      *
@@ -62,12 +62,12 @@ class Telefone {
         $this->numero = $numero;
     }
 
-    public function getTitulares() {
-        return $this->titulares;
+    public function getTitular() {
+        return $this->titular;
     }
 
-    public function setTitulares($titulares) {
-        $this->titulares = $titulares;
+    public function setTitular(Titular $titular) {
+        $this->titular = $titular;
     }
 
     public function getTipo() {
