@@ -205,10 +205,25 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     'value' => '0',
                 )
         ));
-        
         $this->add(array(
             'type'  =>  'Zend\Form\Element\Radio',
                 'name'  =>  'imovel',
+                'options'   =>  array(
+                    'label' =>  'Você tem imóvel(terreno, casa, apartamento) no seu nome?',
+                    'value_options' => array(
+                        '0' => 'Não',
+                        '1' => 'Sim'
+                    )
+                ),
+                'attributes'    =>  array(
+                    'class'    =>  'titularImovel',
+                    'value' => '0',
+                )
+        ));
+        
+        $this->add(array(
+            'type'  =>  'Zend\Form\Element\Radio',
+                'name'  =>  'financiamentoCasa',
                 'options'   =>  array(
                     'label' =>  'Você já tem ou teve financiamento de casa/apartamento?',
                     'value_options' => array(
@@ -217,7 +232,7 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                     )
                 ),
                 'attributes'    =>  array(
-                    'class'    =>  'titularImovel',
+                    'class'    =>  'titularFinanciamentoCasa',
                     'value' => '0',
                 )
         ));
@@ -572,6 +587,29 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
             ),
             
             'imovel' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "Você tem imóvel(terreno, casa, apartamento) no seu nome?" não pode ser vazio.' 
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'InArray',
+                        'options' => array(
+                            'haystack'  => array('0','1'),
+                            'messages' => array(
+                                \Zend\Validator\InArray::NOT_IN_ARRAY => 'Opção do campo "Você tem imóvel(terreno, casa, apartamento) no seu nome?" inválida!' ,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
+            'financiamentoCasa' => array(
                 'required' => true,
                 'validators' => array(
                     array(

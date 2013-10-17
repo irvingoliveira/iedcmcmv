@@ -114,7 +114,7 @@ class Dependente {
         return $this->dataNascimento;
     }
 
-    public function setDataNascimento(DateTime $dataNascimento) {
+    public function setDataNascimento(\DateTime $dataNascimento) {
         $this->dataNascimento = $dataNascimento;
     }
 

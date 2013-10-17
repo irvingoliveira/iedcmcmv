@@ -49,6 +49,11 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
                     $fieldset = new \Application\Form\Cadastro\TitularFieldset($objectManager);
                     return $fieldset;
                 },
+                'TelefoneFieldset' => function ($sm){
+                    $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new \Application\Form\Cadastro\TelefoneFieldset($objectManager);
+                    return $fieldset;
+                },
                 'IdentidadeTitularFieldset' => function ($sm){
                     $objectManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
                     $fieldset = new \Application\Form\Cadastro\IdentidadeTitularFieldset($objectManager);

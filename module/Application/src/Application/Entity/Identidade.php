@@ -76,7 +76,7 @@ class Identidade {
         return $this->dataEmissao;
     }
 
-    public function setDataEmissao(DateTime $dataEmissao) {
+    public function setDataEmissao(\DateTime $dataEmissao) {
         $this->dataEmissao = $dataEmissao;
     }
 

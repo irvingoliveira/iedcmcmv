@@ -227,7 +227,7 @@ $(document).ready(function() {
     $(".titularBolsaFamilia")
         .mouseover(function (){
             $("#help").fadeIn("fast")
-                      .text("Informe se o solicitante recebe Bolsa Familia.");
+                      .text("Informe se o solicitante recebe Bolsa Família.");
         })
         .mouseout(function (){
             $("#help").fadeOut("fast");
@@ -235,18 +235,36 @@ $(document).ready(function() {
         .rules("add", {
             required: true,
             messages: {
-                required: "É necessário informar se possui deficiência física"
+                required: "É necessário informar se possui Bolsa Família"
             }
         });
 
     $(".titularImovel")
         .mouseover(function (){
-            var msg = "<p>Informe se o solicitante tem ou já teve algum financiamento";
-            msg+= " de casa/apartamento.</p>";
+            var msg = "<p>Informe se o solicitante tem algum tipo de imóvel como";
+            msg+= " terreno, casa, apartamento, etc.</p>";
             msg+= " <p>Quem tem imóvel (terreno, casa, apartamento) em seu nome não";
             msg+= " tem direito ao Minha Casa Minha Vida. Os Agentes Financeiros";
             msg+= " fazem pesquisa para identificar os candidatos que pagam IPTU";
             msg+= " e tem imóveis em seu nome.</p>";
+            
+            $("#help").fadeIn("fast")
+                      .html(msg);
+        })
+        .mouseout(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+            required: true,
+            messages: {
+                required: "É necessário informar se possui imóvel"
+            }
+        });
+
+    $(".titularFinanciamentoCasa")
+        .mouseover(function (){
+            var msg = "<p>Informe se o solicitante tem ou já teve algum financiamento";
+            msg+= " de casa/apartamento.</p>";
             msg+= "<p>Quem já teve imóvel financiado pelo antigo Sistema Financeiro";
             msg+= " de Habitação, Banco Nacional da Habitação - BNH, ou recebeu";
             msg+= " imóvel do sistema de COHAB, mesmo que em outro estado da Federação";
@@ -262,7 +280,7 @@ $(document).ready(function() {
         .rules("add", {
             required: true,
             messages: {
-                required: "É necessário informar se possui deficiência física"
+                required: "É necessário informar se possui ou possuiu algum tipo de financiamento."
             }
         });
 
@@ -361,7 +379,95 @@ $(document).ready(function() {
             }
         });
 
+    /*
+     * Validação dos telefones 
+    */
+    $('.telefoneTipo')
+        .focus(function(){
+            $("#help").fadeIn("fast")
+                      .html("Selecione um tipo de telefone.");
+        })
+        .blur(function(){
+            $("#help").fadeOut("fast");
+        });
+    
+    $('.telefoneNumero')
+        .focus(function(){
+            $("#help").fadeIn("fast")
+                      .html("Preencha com um telefone de contato. (Somente números)");
+    });
+    
+    $('input[name="telefones[0][numero]"]').keydown(function(){
+        if($('select[name="telefones[0][tipoTelefone]"]').val() === "3"){
+            $('input[name="telefones[0][numero]"]')
+                .mask("(00)00000-0000")
+                .rules("add", {
+                    required: true,
+                    maxlength: 14,
+                    messages: {
+                        maxlength: 'O campo "Telefone" não é valido.'
+                }
+            });
+        }else{
+            $('input[name="telefones[0][numero]"]')
+                .mask("(00)0000-0000")
+                .rules("add", {
+                    required: true,
+                    maxlength: 13,
+                    messages: {
+                        maxlength: 'O campo "Telefone" não é valido.'
+                }
+            });
+        }
+    });
 
+    $('input[name="telefones[1][numero]"]').keydown(function(){
+        if($('select[name="telefones[1][tipoTelefone]"]').val() === "3"){
+            $('input[name="telefones[1][numero]"]')
+                .mask("(00)00000-0000")
+                .rules("add", {
+                    required: false,
+                    maxlength: 14,
+                    messages: {
+                        maxlength: 'O campo "Telefone" não é valido.'
+                }
+            });
+        }else{
+            $('input[name="telefones[1][numero]"]')
+                .mask("(00)0000-0000")
+                .rules("add", {
+                    required: true,
+                    maxlength: 13,
+                    messages: {
+                        maxlength: 'O campo "Telefone" não é valido.'
+                }
+            });
+        }
+    });
+    
+    $('input[name="telefones[2][numero]"]').keydown(function(){
+        if($('select[name="telefones[2][tipoTelefone]"]').val() === "3"){
+            $('input[name="telefones[2][numero]"]')
+                .mask("(00)00000-0000")
+                .rules("add", {
+                    required: false,
+                    maxlength: 14,
+                    messages: {
+                        maxlength: 'O campo "Telefone" não é valido.'
+                }
+            });
+        }else{
+            $('input[name="telefones[2][numero]"]')
+                .mask("(00)0000-0000")
+                .rules("add", {
+                    required: true,
+                    maxlength: 13,
+                    messages: {
+                        maxlength: 'O campo "Telefone" não é valido.'
+                }
+            });
+        }
+    });
     /*
      * Validação Fieldset conjuge
      */
@@ -712,7 +818,7 @@ $(document).ready(function() {
         });
 
     $("#enderecoNumero")
-        .mask('#', {maxlength: 10})
+        .mask('#', {maxlength: false})
         .focus(function (){
             $("#help").fadeIn("fast")
                       .text("Preencha o número da residência do solicitante.");
@@ -1009,7 +1115,7 @@ function helpDependenteRenda(){
 }
 
 function validarDependenteRenda(){
-    $(".dependenteRenda").mask("#.##0,00", {reverse: true, maxlength: false}).rules("add", {
+    $(".dependenteRenda").mask("##0,00", {reverse: true, maxlength: false}).rules("add", {
         required: true,
         minlength: 1,
         maxlength: 10,

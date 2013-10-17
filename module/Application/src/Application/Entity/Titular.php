@@ -24,7 +24,7 @@ class Titular extends Pessoa{
      *
      * @var int
      * 
-     * @ORM\Column(type="integer",unique=TRUE)
+     * @ORM\Column(type="integer",unique=TRUE, nullable=TRUE)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $protocolo;
@@ -49,7 +49,7 @@ class Titular extends Pessoa{
      *
      * @var Endereco
      * 
-     * @ORM\OneToOne(targetEntity="Endereco", inversedBy="titular")
+     * @ORM\OneToOne(targetEntity="Endereco", inversedBy="titular", cascade={"persist"})
      * @ORM\JoinColumn(name="codigoEndereco", referencedColumnName="codigoEndereco", nullable=FALSE)
      */
     private $endereco;
@@ -107,7 +107,7 @@ class Titular extends Pessoa{
      *
      * @var Conjuge
      * 
-     * @ORM\OneToOne(targetEntity="Conjuge", mappedBy="titular")
+     * @ORM\OneToOne(targetEntity="Conjuge", mappedBy="titular", cascade={"persist"})
      */
     private $conjuge;
     
@@ -115,7 +115,7 @@ class Titular extends Pessoa{
      *
      * @var array
      * 
-     * @ORM\OneToMany(targetEntity="Dependente", mappedBy="titular")
+     * @ORM\OneToMany(targetEntity="Dependente", mappedBy="titular", cascade={"persist"})
      */
     private $dependentes;
             
@@ -131,7 +131,7 @@ class Titular extends Pessoa{
         return $this->dataInscricao;
     }
 
-    public function setDataInscricao(DateTime $dataInscricao) {
+    public function setDataInscricao(\DateTime $dataInscricao) {
         $this->dataInscricao = $dataInscricao;
     }
    
@@ -207,8 +207,8 @@ class Titular extends Pessoa{
         return $this->dependentes;
     }
 
-    public function setDependentes($dependentes) {
-        $this->dependentes = $dependentes;
+    public function addDependente(Dependente $dependente) {
+        $this->dependentes[] = $dependente;
     }
 
 }

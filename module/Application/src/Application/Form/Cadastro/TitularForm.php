@@ -22,6 +22,21 @@ class TitularForm extends Form{
         ));
        
         $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'telefones',
+            'options' => array(
+                'label' => 'Telefones',
+                'count' => 3,
+                'should_create_template' => false,
+                'template_placeholder' => '__telefone__',
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'TelefoneFieldset'
+                ),
+            ),
+        ));
+        
+        $this->add(array(
             'name' => 'IdentidadeTitular',
             'type' => 'IdentidadeTitularFieldset',
             'options' => array(

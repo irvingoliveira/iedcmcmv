@@ -66,6 +66,11 @@ select{
 
 }
 
+#adicionarTelefone{
+    margin-left: 810px;
+    
+}
+
 #err{
     top: 50px;
     left: 530px;

@@ -20,7 +20,7 @@ abstract class Pessoa {
      *
      * @var Identidade
      * 
-     * @ORM\OneToOne(targetEntity="Identidade", inversedBy="pessoa")
+     * @ORM\OneToOne(targetEntity="Identidade", inversedBy="pessoa", cascade={"persist"})
      * @ORM\JoinColumn(name="codigoIdentidade", referencedColumnName="codigoIdentidade",nullable=FALSE)
      */
     private $identidade;
@@ -107,7 +107,7 @@ abstract class Pessoa {
         return $this->identidade;
     }
 
-    public function setIdentidade(Identidate $identidade) {
+    public function setIdentidade(Identidade $identidade) {
         $this->identidade = $identidade;
     }
 
@@ -131,7 +131,7 @@ abstract class Pessoa {
         return $this->deficienteFisico;
     }
 
-    public function setDeficienteFisico(bolean $deficienteFisico) {
+    public function setDeficienteFisico($deficienteFisico) {
         $this->deficienteFisico = $deficienteFisico;
     }
 
