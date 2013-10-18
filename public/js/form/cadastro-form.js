@@ -970,14 +970,19 @@ function helpDependenteNome() {
                   .text("Preencha o nome completo do dependente do solicitante.");
 }
 
+function dependenteNomeToUpper(){
+    $('.dependenteNome').each(function(){
+        $(this).val($(this).val().toUpperCase());
+    });
+}
+
 function validarDependenteNome() {
     $(".dependenteNome")
         .rules("add", {
-        required: true,
+        required: false,
         minlength: 3,
         maxlength: 200,
         messages: {
-            required: "O nome do Dependente é obrigatório.",
             minlength: "O nome do Dependente deve haver no mínimo três caracteres.",
             maxlength: "O nome do Dependente deve haver no máximo duzentos caracteres."
 
@@ -985,6 +990,7 @@ function validarDependenteNome() {
     });
     
     $("#help").fadeOut("fast");
+    dependenteNomeToUpper();
 }
 
 function helpDependenteCpf() {
@@ -994,11 +1000,10 @@ function helpDependenteCpf() {
 
 function validarDependenteCpf() {
     $('.dependenteCpf').mask('000.000.000-00',{reverse: true}).rules("add", {
-        required: true,
+        required: false,
         minlength: 14,
         maxlength: 14,
         messages: {
-            required: "O CPF do Dependente é obrigatório.",
             minlength: "O CPF do Dependente não é valido.",
             maxlength: "O CPF do Dependente não é valido."
 
@@ -1015,10 +1020,7 @@ function helpDependenteGrauDeParentesco() {
 
 function validarDependenteGrauDeParentesco(){
     $(".dependenteGrauDeParentesco").rules("add", {
-        required: true,
-        messages: {
-            required: "Informe o grau de parentesco do dependente."
-        }
+        required: false,
     });
     
     $("#help").fadeOut("fast");
@@ -1033,11 +1035,10 @@ function validarDependenteDataNascimento(){
     $(".dependenteDataNascimento")
         .mask('00/00/0000')
         .rules("add", {
-            required: true,
+            required: false,
             minlength: 10,
             maxlength: 10,
             messages: {
-                required: "A data de nascimento do Dependente é obrigatória.",
                 minlength: "A data de nascimento do Dependente não é valida.",
                 maxlength: "A data de nascimento do Dependente não é valida."
 
@@ -1064,10 +1065,7 @@ function helpDependenteAbrigoInstitucionalOut(){
 function validarDependenteAbrigoInstitucional(){
     $(".titularAcolhimentoInstitucional")
         .rules("add", {
-            required: true,
-            messages: {
-                required: "É necessário informar se o dependente se encontra em abrigo institucional."
-            }
+            required: false,
         });
 }
 
@@ -1092,11 +1090,7 @@ function helpDependenteDeficienteFisicoOut(){
 
 function validarDependenteDeficienteFisico(){
     $(".dependenteDeficienteFisico").rules("add", {
-        required: true,
-        messages: {
-            required: "É necessário informar se os dependentes possuem deficiência física"
-
-        }
+        required: false,
     });
     
     $("#help").fadeOut("fast");
@@ -1116,11 +1110,10 @@ function helpDependenteRenda(){
 
 function validarDependenteRenda(){
     $(".dependenteRenda").mask("##0,00", {reverse: true, maxlength: false}).rules("add", {
-        required: true,
+        required: false,
         minlength: 1,
         maxlength: 10,
         messages: {
-            required: "A renda do dependende é obrigatória.",
             minlength: 'O campo "renda do dependente" não é valido.',
             maxlength: 'O campo "renda do dependente" não é valido.'
 

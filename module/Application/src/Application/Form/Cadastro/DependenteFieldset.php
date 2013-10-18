@@ -30,7 +30,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'class'    =>  'dependenteNome',
                     'size' => '50',
                     'maxlength' => '200',
-                    'onBlur' => 'validarDependenteNome()',
+                    'onKeyDown' => 'validarDependenteNome()',
                     'onFocus' => 'helpDependenteNome()',
                 )
         ));
@@ -45,7 +45,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                     'class'    =>  'dependenteCpf',
                     'size' => '14',
                     'maxlength' => '14',
-                    'onBlur' => 'validarDependenteCpf()',
+                    'onKeyDown' => 'validarDependenteCpf()',
                     'onFocus' => 'helpDependenteCpf()',
                 )
         ));
@@ -84,7 +84,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 ),
                 'attributes'    =>  array(
                     'class'    =>  'dependenteDataNascimento',
-                    'onChange' => 'validarDependenteDataNascimento()',
+                    'onKeyDown' => 'validarDependenteDataNascimento()',
                     'onFocus' => 'helpDependenteDataNascimento()',
                 )
         ));
@@ -135,7 +135,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
                 ),
                 'attributes'    =>  array(
                     'class'    =>  'dependenteRenda',
-                    'onBlur' => 'validarDependenteRenda()',
+                    'onKeyDown' => 'validarDependenteRenda()',
                     'onFocus' => 'helpDependenteRenda()',
                     'size' => '10',
                     'maxlength' => '10',

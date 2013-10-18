@@ -66,7 +66,7 @@ class TelefoneFieldset extends Fieldset implements InputFilterProviderInterface{
     public function getInputFilterSpecification() {
         return array(
             'tipoTelefone' => array(
-                'required' => true,
+                'required' => false,
                 'validators' => array(
                     array(
                         'name' => 'NotEmpty',
@@ -90,7 +90,7 @@ class TelefoneFieldset extends Fieldset implements InputFilterProviderInterface{
             ),
             
             'numero' => array(
-                'required' => true,
+                'required' => false,
                 'validators' => array(
                     array(
                         'name' => 'NotEmpty',
