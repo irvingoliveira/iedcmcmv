@@ -1,7 +1,36 @@
 body {
-    padding-top: 5px;
+    top: 0px;
+    padding-top: 0px;
+    margin-top: 0px;
     padding-bottom: 40px;
     background: url('/img/bg.jpg') repeat;
+}
+
+#header{
+    background: url('/img/header.png');
+    height: 151px;
+}
+
+#content{
+    background-color: #fff;
+}
+
+#footer{
+    background-color: #13344e;
+    height: 80px;
+    color: #fff;
+    text-align: center;
+    font-size: 8pt;
+    padding:0px;
+}
+
+#footer p{
+    padding: 0;
+    margin: 2px;
+}
+
+#text-footer{
+    padding-top: 12px;
 }
 
 .zf-green {
@@ -43,6 +72,8 @@ div.container a.brand {
 
 fieldset{
     margin-top: 20px;
+    margin-left: 12px;
+    margin-right: 12px;
 }
 
 input{
@@ -60,21 +91,18 @@ select{
 
 #submit{
     margin-top: 30px;
+    margin-left: 10px; 
 }
 
 #adicionarDependente{
     float: right;
+    margin-right: 10px;
 
-}
-
-#adicionarTelefone{
-    margin-left: 810px;
-    
 }
 
 #err{
     top: 50px;
-    left: 530px;
+    left: 730px;
     min-height: 10px;
     width: 400px;
     background-color: tomato;
@@ -89,7 +117,7 @@ select{
 
 #help{
     top: 135px;
-    left: 530px;
+    left: 730px;
     min-height: 10px;
     width: 400px;
     background-color: yellowgreen;
