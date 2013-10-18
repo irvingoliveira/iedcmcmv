@@ -33,7 +33,7 @@ class Telefone {
      * @var Titular
      * 
      * @ORM\ManyToOne(targetEntity="Titular", inversedBy="telefones")
-     * @ORM\JoinColumn(name="codigoTitular", referencedColumnName="codigoTitular")
+     * @ORM\JoinColumn(name="codigoTitular", referencedColumnName="codigoTitular", nullable=FALSE)
      */
     private $titular;
     

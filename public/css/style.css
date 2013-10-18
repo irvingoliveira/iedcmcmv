@@ -1,6 +1,7 @@
 body {
     padding-top: 5px;
     padding-bottom: 40px;
+    background: url('/img/bg.jpg') repeat;
 }
 
 .zf-green {
