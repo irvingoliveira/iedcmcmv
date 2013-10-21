@@ -32,5 +32,21 @@
 </div>
 
 <?else:?>
-    
+    <div class="messages">
+        <?if($this->excpt):?>
+            <p>Ops, parece que ocorreu um erro!<br/> 
+                Tente novamente mais tarde.</p>
+        <?elseif($this->err_msg):?>
+        
+            <?foreach($this->err_msg as $msg):?>
+                <p><?=$msg?></p>
+            <?endforeach;?>
+        
+        <?elseif($this->sucesso == 1):?>
+            <p>Seu cadastro foi efetuado com sucesso. Seu número de protocolo é:</p>
+            <h1><?=$this->protocolo?></h1>
+            <p>Guarde ele com cuidado, por esta é a comprovação de que você se inscreveu 
+            no programa.</p>
+        <?endif;?>
+    </div>
 <?endif;?>

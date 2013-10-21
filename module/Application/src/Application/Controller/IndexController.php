@@ -213,13 +213,26 @@ class IndexController extends AbstractActionController
                     $titular->addDependente($dependente);
                 }
                 
+                try{
+                    $objectManager->persist($titular);
+                    $objectManager->flush();
+                    
+                    $this->gerarCsv($titular);
+                }  catch (\Exception $e){
+                    return array('excpt' => $e->getMessage());
+                }
                 
-                $objectManager->persist($titular);
-                $objectManager->flush();
+                $query = $objectManager->createQuery(
+                 "SELECT t.protocolo FROM Application\Entity\Titular t WHERE t.codigoTitular = {$titular->getCodigoTitular()}");
+
+                $result = $query->getResult();
                 
-                $this->gerarCsv($titular);
+                return array(
+                    'sucesso' => 1,
+                    'protocolo' => $result[0]['protocolo']
+                        );
             }else 
-               die(var_dump ($form->getMessages()));
+               return array('err_msg' => $form->getMessages());
         }               
     }
     
