@@ -250,19 +250,21 @@ class IndexController extends AbstractActionController
          
          $rendaTotal += $titular->getRenda();
          
-         $rendaTotal+= ($conjuge instanceof Conjuge)? $conjuge->getRenda(): 0;
+         $rendaTotal+= (isset($conjuge))? $conjuge->getRenda(): 0;
          
          /** Busca por deficientes**/
          
          $deficiente = FALSE;
-         foreach ($titular->getDependentes() as $dependente){
-             if($dependente->getDeficienteFisico()){
-                 $deficiente = TRUE;
-                 break;
-             }
+         if($titular->getDependentes()){
+            foreach ($titular->getDependentes() as $dependente){
+                if($dependente->getDeficienteFisico()){
+                    $deficiente = TRUE;
+                    break;
+                }
+            }
          }
          
-         $conjugeDeficiente = ($conjuge instanceof Conjuge)? 
+         $conjugeDeficiente = (isset($conjuge))? 
                  $conjuge->getDeficienteFisico():
                  NULL;
          
@@ -271,14 +273,16 @@ class IndexController extends AbstractActionController
          
          /** Busca por acolhimento institucional**/
          $acolhimento = FALSE;
-         foreach ($titular->getDependentes() as $dependente){
+         if($titular->getDependentes()){
+            foreach ($titular->getDependentes() as $dependente){
              if($dependente->getAcolhimentoInstitucional()){
                  $acolhimento = TRUE;
                  break;
              }
+            }
          }
          
-         $conjugeAcolhimentoInst = ($conjuge instanceof Conjuge)? 
+         $conjugeAcolhimentoInst = (isset($conjuge))? 
                  $conjuge->getAcolhimentoInstitucional():
                  NULL;
          
@@ -287,21 +291,23 @@ class IndexController extends AbstractActionController
          
          /** Busca por idosos **/
          $idoso = FALSE;
-         foreach ($titular->getDependentes() as $dependente){
-             $dataNascDependente = $dependente->getDataNascimento();
-             $intervalo = $dataNascDependente->diff(new \DateTime());
-             $idadeDependente = (int)$intervalo->format('%Y');
-             if($idadeDependente > 60){
-                 $idoso = TRUE;
-                 break;
-             }
+         if($titular->getDependentes()){
+            foreach ($titular->getDependentes() as $dependente){
+                $dataNascDependente = $dependente->getDataNascimento();
+                $intervalo = $dataNascDependente->diff(new \DateTime());
+                $idadeDependente = (int)$intervalo->format('%Y');
+                if($idadeDependente > 60){
+                    $idoso = TRUE;
+                    break;
+                }
+            }
          }
          
          $dataNascTitular = $titular->getDataNascimento();
          $intervalo = $dataNascTitular->diff(new \DateTime());
          $idadeTitular = (int)$intervalo->format('%Y');
          
-         if($conjuge instanceof Conjuge){
+         if(isset($conjuge)){
             $dataNascConjuge = $conjuge->getDataNascimento();
             $intervalo = $dataNascConjuge->diff(new \DateTime());
             $idadeConjuge = (int)$intervalo->format('%Y');
@@ -327,25 +333,25 @@ class IndexController extends AbstractActionController
              $titular->getIdentidade()->getOrgaoEmissor(),
              $titular->getCpf(),
              $titular->getNis(),
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getNome(): NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getDataNascimento()->format('d/m/Y'): NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $naturalidadeConjuge->getNome() : NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $naturalidadeConjuge->getEstado()->getNome() : NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getTipoSexo()->getNome() : NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getIdentidade()->getNumero() : NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getIdentidade()->getDataEmissao()->format('d/m/Y') : NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getIdentidade()->getOrgaoEmissor() : NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getCpf() : NULL,
-             ($conjuge instanceof Conjuge)?
+             (isset($conjuge))?
                 $conjuge->getNis() : NULL,
              $titular->getEndereco()->getTipoLogradouro()->getNome(),
              $titular->getEndereco()->getNomeLogradouro(),
