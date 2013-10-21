@@ -837,8 +837,8 @@
     },
     {
         "name": "symfony/console",
-        "version": "v2.3.5",
-        "version_normalized": "2.3.5.0",
+        "version": "v2.3.6",
+        "version_normalized": "2.3.6.0",
         "target-dir": "Symfony/Component/Console",
         "source": {
             "type": "git",
@@ -897,12 +897,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-            "reference": "9b9311311fdb562494f89e62eb4649d687b58364"
+            "reference": "081ea12e59e8a0ffe84b032e8e804d26d3b1d404"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/9b9311311fdb562494f89e62eb4649d687b58364",
-            "reference": "9b9311311fdb562494f89e62eb4649d687b58364",
+            "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/081ea12e59e8a0ffe84b032e8e804d26d3b1d404",
+            "reference": "081ea12e59e8a0ffe84b032e8e804d26d3b1d404",
             "shasum": ""
         },
         "require": {
@@ -918,7 +918,7 @@
             "bjyoungblood/bjy-profiler": "Version: dev-master, allows the usage of the (Zend) Db collector.",
             "ocramius/ocra-service-manager": "OcraServiceManager can help you track dependencies within your application."
         },
-        "time": "2013-07-08 19:52:34",
+        "time": "2013-10-17 08:56:09",
         "type": "zf-module",
         "installation-source": "source",
         "autoload": {

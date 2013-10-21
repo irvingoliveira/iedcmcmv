@@ -67,6 +67,21 @@ $(document).ready(function() {
         .focus(function (){
             $("#help").fadeIn("fast")
                       .text("Preencha o CPF do solicitande. (Somente números)");
+        }).blur(function (){
+            if($('#titularCpf').valid()===true){
+                var cpf = $(this).val();
+                $.post('/application/index/cpfunico',{cpf: cpf},function(data){
+                    if(data==="1"){
+                       alert('Este cpf já foi cadastrado!');
+                       $(this).val('');
+                    }else{
+                        if(!validaCpf(cpf))
+                            alert('O CPF do titular é inválido!');
+                        $(this).val('');
+                    }
+                });
+                                
+            }
         })
         .rules("add", {
             required: true,
@@ -502,6 +517,10 @@ $(document).ready(function() {
 
         .blur(function (){
             $("#help").fadeOut("fast");
+            var cpf = $(this).val();
+            if(!validaCpf(cpf))
+                alert("O CPF do conjuge não é válido!");
+            $(this).val("");
         })
         
         .rules("add", {
@@ -999,16 +1018,17 @@ function helpDependenteCpf() {
 }
 
 function validarDependenteCpf() {
-    $('.dependenteCpf').mask('000.000.000-00',{reverse: true}).rules("add", {
-        required: false,
-        minlength: 14,
-        maxlength: 14,
-        messages: {
-            minlength: "O CPF do Dependente não é valido.",
-            maxlength: "O CPF do Dependente não é valido."
-
-        }
-    });
+    $('.dependenteCpf')
+        .mask('000.000.000-00',{reverse: true})
+        .rules("add", {
+            required: false,
+            minlength: 14,
+            maxlength: 14,
+            messages: {
+                minlength: "O CPF do Dependente não é valido.",
+                maxlength: "O CPF do Dependente não é valido."
+            }
+        });
     
     $("#help").fadeOut("fast");
 }
@@ -1130,4 +1150,46 @@ function helpDependente(){
 
 function helpDependenteOut(){
         $("#help").fadeOut("fast");
+}
+
+function validaCpf(cpf){
+    cpf = cpf.replace(/[^\d]+/g,'');
+
+	if(cpf == '') return false;
+
+	// Elimina CPFs invalidos conhecidos
+	if (cpf.length != 11 || 
+		cpf == "00000000000" || 
+		cpf == "11111111111" || 
+		cpf == "22222222222" || 
+		cpf == "33333333333" || 
+		cpf == "44444444444" || 
+		cpf == "55555555555" || 
+		cpf == "66666666666" || 
+		cpf == "77777777777" || 
+		cpf == "88888888888" || 
+		cpf == "99999999999")
+		return false;
+	
+	// Valida 1o digito
+	add = 0;
+	for (i=0; i < 9; i ++)
+		add += parseInt(cpf.charAt(i)) * (10 - i);
+	rev = 11 - (add % 11);
+	if (rev == 10 || rev == 11)
+		rev = 0;
+	if (rev != parseInt(cpf.charAt(9)))
+		return false;
+	
+	// Valida 2o digito
+	add = 0;
+	for (i = 0; i < 10; i ++)
+		add += parseInt(cpf.charAt(i)) * (11 - i);
+	rev = 11 - (add % 11);
+	if (rev == 10 || rev == 11)
+		rev = 0;
+	if (rev != parseInt(cpf.charAt(10)))
+		return false;
+		
+	return true;
 }

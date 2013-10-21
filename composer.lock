@@ -707,7 +707,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.3.5",
+            "version": "v2.3.6",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
@@ -764,12 +764,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-                "reference": "9b9311311fdb562494f89e62eb4649d687b58364"
+                "reference": "081ea12e59e8a0ffe84b032e8e804d26d3b1d404"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/9b9311311fdb562494f89e62eb4649d687b58364",
-                "reference": "9b9311311fdb562494f89e62eb4649d687b58364",
+                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/081ea12e59e8a0ffe84b032e8e804d26d3b1d404",
+                "reference": "081ea12e59e8a0ffe84b032e8e804d26d3b1d404",
                 "shasum": ""
             },
             "require": {
@@ -817,7 +817,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2013-07-08 19:52:34"
+            "time": "2013-10-17 08:56:09"
         },
         {
             "name": "zendframework/zendframework",

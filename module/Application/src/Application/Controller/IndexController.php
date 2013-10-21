@@ -55,7 +55,12 @@ class IndexController extends AbstractActionController
                 
                 $titular->setAcolhimentoInstitucional($data['Titular']['acolhimentoInstitucional']);
                 $titular->setBolsaFamilia($data['Titular']['bolsaFamilia']);
-                $titular->setCpf($data['Titular']['cpf']);
+                
+                if(self::validaCpf($data['Titular']['cpf']))
+                    $titular->setCpf($data['Titular']['cpf']);
+                else 
+                    return array('err_msg' => 'Cpf do títular inválido!');
+                
                 
                 $dataInscricao = new \DateTime("now");
                 $dataInscricao->format('d/m/Y');
@@ -125,8 +130,12 @@ class IndexController extends AbstractActionController
                     $conjuge = new Conjuge();
                 
                     $conjuge->setAcolhimentoInstitucional($data['Conjuge']['acolhimentoInstitucional']);
-                    $conjuge->setCpf($data['Conjuge']['cpf']);
                     
+                    if(self::validaCpf($data['Conjuge']['cpf']))
+                        $conjuge->setCpf($data['Conjuge']['cpf']);
+                    else
+                        return array('err_msg' => 'Cpf do conjuge inválido!');
+                        
                     $dataNascimentoConjuge = new \DateTime();
                     $dataNascimentoConjuge->format('d/m/Y');
                     $dataNascimentoConjugeVals = explode("/", $data['Conjuge']['dataNascimento']);
@@ -408,7 +417,7 @@ class IndexController extends AbstractActionController
                      $dependente->getTitular()->getCodigoTitular(),
                      $dependente->getNome(),
                      $dependente->getTipoGrauDeParentesco()->getDescricao(),
-                     $deficiente->getCpf(),
+                     $dependente->getCpf(),
                      $dependente->getDataNascimento()->format("d/m/Y"),                     
                  );
              }
@@ -418,4 +427,50 @@ class IndexController extends AbstractActionController
             fclose($dependentesCsv);
          }
      }
+     
+     public function cpfUnicoAction(){
+         $request = $this->getRequest();
+         
+         if($request->isPost()){
+             $cpf = $request->getPost('cpf');
+             $objectManager = $this->getObjectManager();
+             $titular = $objectManager->getRepository('Application\Entity\Titular')
+                                      ->findOneBy(array('cpf' => $cpf));
+             
+             if($titular instanceof Titular){
+                 echo '1';
+                 die();
+             }
+         }    
+         
+         $this->redirect()->toUrl(
+                   'http://iedcmcmv.local/application/index/cadastro'
+                    );  
+     }
+     
+     public static function validaCpf($cpf){
+         $cpf = str_pad(ereg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
+	
+	// Verifica se nenhuma das sequências abaixo foi digitada, caso seja, retorna falso
+        if (strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999')
+	{
+            return false;
+        }
+	else
+	{   // Calcula os números para verificar se o CPF é verdadeiro
+            for ($t = 9; $t < 11; $t++) {
+                for ($d = 0, $c = 0; $c < $t; $c++) {
+                    $d += $cpf{$c} * (($t + 1) - $c);
+                }
+
+                $d = ((10 * $d) % 11) % 10;
+
+                if ($cpf{$c} != $d) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
 }
