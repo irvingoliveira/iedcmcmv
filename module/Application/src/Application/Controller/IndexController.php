@@ -247,7 +247,10 @@ class IndexController extends AbstractActionController
                  $rendaTotal += $dependente->getRenda();
              }
          }
-         $rendaTotal += $titular->getRenda()+$conjuge->getRenda();
+         
+         $rendaTotal += $titular->getRenda();
+         
+         $rendaTotal+= ($conjuge instanceof Conjuge)? $conjuge->getRenda(): 0;
          
          /** Busca por deficientes**/
          
