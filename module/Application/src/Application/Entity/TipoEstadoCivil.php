@@ -44,10 +44,6 @@ class TipoEstadoCivil {
         return $this->codigoTipoEstadoCivil;
     }
 
-    public function setCodigoTipoEstadoCivil(type $codigoTipoEstadoCivil) {
-        $this->codigoTipoEstadoCivil = $codigoTipoEstadoCivil;
-    }
-
     public function getDescricao() {
         return $this->descricao;
     }

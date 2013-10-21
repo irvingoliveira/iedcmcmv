@@ -223,11 +223,13 @@ class IndexController extends AbstractActionController
         }               
     }
     
-     private function gerarCsv(Titular $titular_c){
+     private function gerarCsv(Titular $titular){
          $objectManager = $this->getObjectManager();
-        
-         $titular = $objectManager->getRepository('Application\Entity\Titular')
-                              ->findOneBy(array("codigoTitular" => $titular_c->getCodigoTitular()));
+         
+         $query = $objectManager->createQuery(
+                 "SELECT t.protocolo FROM Application\Entity\Titular t WHERE t.codigoTitular = {$titular->getCodigoTitular()}");
+
+         $result = $query->getResult();
          
          $naturalidade = $objectManager->getRepository('Application\Entity\Cidade')
                                        ->findOneBy(array('codigoCidade' => $titular->getNaturalidade()));
@@ -318,7 +320,7 @@ class IndexController extends AbstractActionController
              $idoso = TRUE;
          
          $data = array(
-             $titular->getProtocolo(),
+             $result[0]['protocolo'],
              $titular->getCodigoTitular(),
              NULL,
              $titular->getDataInscricao()->format('d/m/Y'),
@@ -386,5 +388,21 @@ class IndexController extends AbstractActionController
          $titularCsv = fopen("dados/titular.csv", "a+");
          fputcsv($titularCsv, $data, ";");
          fclose($titularCsv);
+         
+         if($titular->getDependentes()){
+             foreach ($titular->getDependentes() as $dependente){
+                 $dataDependente = array(
+                     $dependente->getTitular()->getCodigoTitular(),
+                     $dependente->getNome(),
+                     $dependente->getTipoGrauDeParentesco()->getDescricao(),
+                     $deficiente->getCpf(),
+                     $dependente->getDataNascimento()->format("d/m/Y"),                     
+                 );
+             }
+             
+            $dependentesCsv = fopen("dados/dependente.csv", "a+");
+            fputcsv($dependentesCsv, $dataDependente, ";");
+            fclose($dependentesCsv);
+         }
      }
 }
