@@ -648,7 +648,7 @@ $(document).ready(function() {
     
         .focus(function (){
             $("#help").fadeIn("fast")
-                      .text("Preencha o número da carteira de identidade do solicitante.");
+                      .text("Preencha o número da carteira de identidade do solicitante.(Somente números)");
         })
         .blur(function (){
             $("#help").fadeOut("fast");
@@ -719,7 +719,7 @@ $(document).ready(function() {
     
         .focus(function (){
             $("#help").fadeIn("fast")
-                      .text("Preencha o número da carteira de identidade do conjuge.");
+                      .text("Preencha o número da carteira de identidade do conjuge. (Somente números)");
         })
         .blur(function (){
             $("#help").fadeOut("fast");
@@ -727,8 +727,8 @@ $(document).ready(function() {
 
         .rules("add", {
             required: false,
-            minlength: 12,
-            maxlength: 12,
+            minlength: 9,
+            maxlength: 15,
             messages: {
                 minlength: "O numero da identidade do conjuge não é valido.",
                 maxlength: "O numero da identidade do conjuge não é valido."

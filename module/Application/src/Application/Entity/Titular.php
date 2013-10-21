@@ -53,15 +53,6 @@ class Titular extends Pessoa{
      * @ORM\JoinColumn(name="codigoEndereco", referencedColumnName="codigoEndereco", nullable=FALSE)
      */
     private $endereco;
-
-    /**
-     *
-     * @var array
-     * 
-     * @ORM\OneToMany(targetEntity="Telefone", mappedBy="titular", cascade={"persist"})
-     * 
-     */
-    private $telefones;
     
     /**
      *
@@ -108,6 +99,15 @@ class Titular extends Pessoa{
      *
      * @var array
      * 
+     * @ORM\OneToMany(targetEntity="Telefone", mappedBy="titular", cascade={"persist"})
+     * 
+     */
+    private $telefones;
+    
+    /**
+     *
+     * @var array
+     * 
      * @ORM\OneToMany(targetEntity="Dependente", mappedBy="titular", cascade={"persist"})
      */
     private $dependentes;
@@ -148,14 +148,6 @@ class Titular extends Pessoa{
         $this->endereco = $endereco;
     }
 
-    public function getTelefones() {
-        return $this->telefones;
-    }
-
-    public function setTelefones($telefones) {
-        $this->telefones = $telefones;
-    }
-
     public function getImovel() {
         return $this->imovel;
     }
@@ -194,6 +186,14 @@ class Titular extends Pessoa{
 
     public function setConjuge(Conjuge $conjuge) {
         $this->conjuge = $conjuge;
+    }
+    
+    public function getTelefones() {
+        return $this->telefones;
+    }
+
+    public function addTelefone(Telefone $telefone) {
+        $this->telefones[] = $telefone;
     }
     
     public function getDependentes() {

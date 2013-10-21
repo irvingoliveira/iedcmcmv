@@ -207,7 +207,7 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 3,
+                            'min' => 1,
                             'max' => 200,
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Nome do logradouro" deve ter entre 3 e 200 caracteres!', 

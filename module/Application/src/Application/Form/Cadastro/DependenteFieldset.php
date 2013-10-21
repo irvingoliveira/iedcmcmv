@@ -187,7 +187,7 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
             ),
             
             'cpf' => array(
-                'required' => true,
+                'required' => false,
                 'validators' => array(
                     array(
                         'name' => 'NotEmpty',

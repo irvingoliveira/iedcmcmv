@@ -101,7 +101,7 @@ select{
 }
 
 #err{
-    top: 50px;
+    top: 170px;
     left: 730px;
     min-height: 10px;
     width: 400px;
@@ -116,7 +116,7 @@ select{
 }
 
 #help{
-    top: 135px;
+    top: 255px;
     left: 730px;
     min-height: 10px;
     width: 400px;

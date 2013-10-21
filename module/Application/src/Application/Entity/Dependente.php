@@ -32,7 +32,7 @@ class Dependente {
      *
      * @var string
      * 
-     * @ORM\Column(type="string",length=14,unique=TRUE)
+     * @ORM\Column(type="string",length=14,unique=TRUE,nullable=TRUE)
      */
     private $cpf;
 

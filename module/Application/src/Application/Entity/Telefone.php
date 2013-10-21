@@ -24,7 +24,7 @@ class Telefone {
      *
      * @var string
      * 
-     * @ORM\Column(type="string",length=14,unique=TRUE)
+     * @ORM\Column(type="string",length=14)
      */
     private $numero;
     
@@ -44,7 +44,7 @@ class Telefone {
      * @ORM\ManyToOne(targetEntity="TipoTelefone", inversedBy="telefones")
      * @ORM\JoinColumn(name="codigoTipoTelefone", referencedColumnName="codigoTipoTelefone", nullable=FALSE)
      */
-    private $tipo;
+    private $tipoTelefone;
     
     function __construct() {
         
@@ -70,12 +70,12 @@ class Telefone {
         $this->titular = $titular;
     }
 
-    public function getTipo() {
-        return $this->tipo;
+    public function getTipoTelefone() {
+        return $this->tipoTelefone;
     }
 
-    public function setTipo(TipoTelefone $tipo) {
-        $this->tipo = $tipo;
+    public function setTipoTelefone(TipoTelefone $tipoTelefone) {
+        $this->tipoTelefone = $tipoTelefone;
     }
 
 }

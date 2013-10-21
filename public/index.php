@@ -4,8 +4,8 @@
  * Apenas para desenvolvimento, comentar as duas linhas a seguir quando for 
  * para produção.
  */
-//ini_set('display_errors', true);
-//error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', true);
+error_reporting(E_ALL | E_STRICT);
 
 /**
  * This makes our life easier when dealing with paths. Everything is relative

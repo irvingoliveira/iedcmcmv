@@ -17,6 +17,7 @@ use Application\Entity\Conjuge;
 use Application\Entity\Identidade;
 use Application\Entity\Endereco;
 use Application\Entity\Dependente;
+use Application\Entity\Telefone;
 
 class IndexController extends AbstractActionController
 {
@@ -51,7 +52,7 @@ class IndexController extends AbstractActionController
                 $titular = new Titular();
                 $data = $form->getData();
                 $objectManager = $this->getObjectManager();
-                var_dump($data);
+                //var_dump($data);
                 
                 //die();
                 
@@ -92,6 +93,22 @@ class IndexController extends AbstractActionController
                                              ->findOneBy(array('codigoTipoSexo' => $data['Titular']['tipoSexo']));
                 $titular->setTipoSexo($tipoSexoTitular);
                 
+                foreach ($data['telefones'] as $dataTelefone){
+                    if($dataTelefone['numero']){
+                        $telefone = new Telefone();
+                    
+                        $tipoTelefone = $objectManager->getRepository('Application\Entity\TipoTelefone')
+                                                  ->findOneBy(array('codigoTipoTelefone' => $dataTelefone['tipoTelefone']));
+
+                        $telefone->setTipoTelefone($tipoTelefone);
+                        $telefone->setNumero($dataTelefone['numero']);
+                        $telefone->setTitular($titular);
+                        
+                        $titular->addTelefone($telefone);
+                        
+                    }
+                }
+
                 $identidadeTitular = new Identidade();
 
                 $dataEmissaoIdentidadeTitular = new \DateTime();
@@ -136,13 +153,17 @@ class IndexController extends AbstractActionController
                     $dataEmissaoIdentidadeConjuge->format('d/m/Y');
                     $dataEmissaoConjugeVals = explode("/", $data['IdentidadeConjuge']['dataEmissao']);
                 
-                    $identidadeConjuge->setDataEmissao($dataEmissaoIdentidadeConjuge->setDate($dataEmissaoConjugeVals[2], $dataEmissaoConjugeVals[1], $dataEmissaoConjugeVals[0]));
+                    $identidadeConjuge->setDataEmissao($dataEmissaoIdentidadeConjuge->setDate(
+                                                                                        $dataEmissaoConjugeVals[2], 
+                                                                                        $dataEmissaoConjugeVals[1], 
+                                                                                        $dataEmissaoConjugeVals[0]));
                 
                     $identidadeConjuge->setNumero($data['IdentidadeConjuge']['numero']);
                     $identidadeConjuge->setOrgaoEmissor($data['IdentidadeConjuge']['orgaoEmissor']);
                 
                     $conjuge->setIdentidade($identidadeConjuge);
-                
+                    $conjuge->setTitular($titular);
+                    
                     $titular->setConjuge($conjuge);
                 }
                 
@@ -172,7 +193,9 @@ class IndexController extends AbstractActionController
                     $dependente = new Dependente();
                     
                     $dependente->setAcolhimentoInstitucional($dataDependente['acolhimentoInstitucional']);
-                    $dependente->setCpf($dataDependente['cpf']);
+                    
+                    if(!$dataDependente['cpf']=="")
+                        $dependente->setCpf($dataDependente['cpf']);
                     
                     $dataNascimentoDependente = new \DateTime();
                     $dataNascimentoDependente->format('d/m/Y');
@@ -195,8 +218,22 @@ class IndexController extends AbstractActionController
                 $objectManager->persist($titular);
                 $objectManager->flush();
                 
+                $this->gerarCsv($titular);
             }else 
                die(var_dump ($form->getMessages()));
-        }
+        }               
     }
+    
+     private function gerarCsv(Titular $titular){
+         $data = array(
+             $titular->getProtocolo(),
+             $titular->getFinanciamentoCasa(),
+             NULL,
+             $titular->getDataInscricao(),
+             $titular->getNome(),
+             $titular->getDataNascimento(),
+             $titular->getNaturalidade(),
+             //$titular->
+         );
+     }
 }

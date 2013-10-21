@@ -65,8 +65,8 @@ class IdentidadeConjugeFieldset extends Fieldset implements InputFilterProviderI
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 12,
-                            'max' => 12,
+                            'min' => 9,
+                            'max' => 15,
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Número da identidade" deve ter entre exatamente 12 caracteres!', 
                                 'stringLengthTooLong' => 'O campo "Número da identidade" deve ter entre exatamente 12 caracteres!', 
