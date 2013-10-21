@@ -241,10 +241,12 @@ class IndexController extends AbstractActionController
          $telefones = $titular->getTelefones();
          
          $rendaTotal = 0;
-         foreach ($titular->getDependentes() as $dependente){
-             $rendaTotal += $dependente->getRenda();
-         }
          
+         if($titular->getDependentes()){
+            foreach ($titular->getDependentes() as $dependente){
+                 $rendaTotal += $dependente->getRenda();
+             }
+         }
          $rendaTotal += $titular->getRenda()+$conjuge->getRenda();
          
          /** Busca por deficientes**/
