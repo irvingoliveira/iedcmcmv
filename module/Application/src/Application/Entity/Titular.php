@@ -25,7 +25,6 @@ class Titular extends Pessoa{
      * @var int
      * 
      * @ORM\Column(type="integer",unique=TRUE, nullable=TRUE)
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $protocolo;
     

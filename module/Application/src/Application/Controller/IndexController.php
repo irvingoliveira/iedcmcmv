@@ -52,9 +52,6 @@ class IndexController extends AbstractActionController
                 $titular = new Titular();
                 $data = $form->getData();
                 $objectManager = $this->getObjectManager();
-                //var_dump($data);
-                
-                //die();
                 
                 $titular->setAcolhimentoInstitucional($data['Titular']['acolhimentoInstitucional']);
                 $titular->setBolsaFamilia($data['Titular']['bolsaFamilia']);
@@ -226,30 +223,157 @@ class IndexController extends AbstractActionController
         }               
     }
     
-     private function gerarCsv(Titular $titular){
+     private function gerarCsv(Titular $titular_c){
          $objectManager = $this->getObjectManager();
         
+         $titular = $objectManager->getRepository('Application\Entity\Titular')
+                              ->findOneBy(array("codigoTitular" => $titular_c->getCodigoTitular()));
+         
          $naturalidade = $objectManager->getRepository('Application\Entity\Cidade')
                                        ->findOneBy(array('codigoCidade' => $titular->getNaturalidade()));
          
+         if($titular->getConjuge() instanceof Conjuge){
+             $conjuge = $titular->getConjuge();
+             $naturalidadeConjuge = $objectManager->getRepository('Application\Entity\Cidade')
+                                                  ->findOneBy(array('codigoCidade' => $conjuge->getNaturalidade()));
+         }
+         
+         $telefones = $titular->getTelefones();
+         
+         $rendaTotal = 0;
+         foreach ($titular->getDependentes() as $dependente){
+             $rendaTotal += $dependente->getRenda();
+         }
+         
+         $rendaTotal += $titular->getRenda()+$conjuge->getRenda();
+         
+         /** Busca por deficientes**/
+         
+         $deficiente = FALSE;
+         foreach ($titular->getDependentes() as $dependente){
+             if($dependente->getDeficienteFisico()){
+                 $deficiente = TRUE;
+                 break;
+             }
+         }
+         
+         $conjugeDeficiente = ($conjuge instanceof Conjuge)? 
+                 $conjuge->getDeficienteFisico():
+                 NULL;
+         
+         if($conjugeDeficiente || $titular->getDeficienteFisico())
+             $deficiente = TRUE;
+         
+         /** Busca por acolhimento institucional**/
+         $acolhimento = FALSE;
+         foreach ($titular->getDependentes() as $dependente){
+             if($dependente->getAcolhimentoInstitucional()){
+                 $acolhimento = TRUE;
+                 break;
+             }
+         }
+         
+         $conjugeAcolhimentoInst = ($conjuge instanceof Conjuge)? 
+                 $conjuge->getAcolhimentoInstitucional():
+                 NULL;
+         
+         if($conjugeAcolhimentoInst || $titular->getAcolhimentoInstitucional())
+             $acolhimento = TRUE;
+         
+         /** Busca por idosos **/
+         $idoso = FALSE;
+         foreach ($titular->getDependentes() as $dependente){
+             $dataNascDependente = $dependente->getDataNascimento();
+             $intervalo = $dataNascDependente->diff(new \DateTime());
+             $idadeDependente = (int)$intervalo->format('%Y');
+             if($idadeDependente > 60){
+                 $idoso = TRUE;
+                 break;
+             }
+         }
+         
+         $dataNascTitular = $titular->getDataNascimento();
+         $intervalo = $dataNascTitular->diff(new \DateTime());
+         $idadeTitular = (int)$intervalo->format('%Y');
+         
+         if($conjuge instanceof Conjuge){
+            $dataNascConjuge = $conjuge->getDataNascimento();
+            $intervalo = $dataNascConjuge->diff(new \DateTime());
+            $idadeConjuge = (int)$intervalo->format('%Y');
+         }else
+             $idadeConjuge = 0;
+         
+         if($idadeConjuge > 60 || $idadeTitular > 60)
+             $idoso = TRUE;
+         
          $data = array(
              $titular->getProtocolo(),
-             $titular->getFinanciamentoCasa(),
+             $titular->getCodigoTitular(),
              NULL,
-             $titular->getDataInscricao(),
+             $titular->getDataInscricao()->format('d/m/Y'),
              $titular->getNome(),
-             $titular->getDataNascimento(),
-             $naturalidade,
+             $titular->getDataNascimento()->format('d/m/Y'),
+             $naturalidade->getNome(),
              $naturalidade->getEstado()->getNome(),
              $titular->getEstadoCivil()->getDescricao(),
              $titular->getTipoSexo()->getNome(),
              $titular->getIdentidade()->getNumero(),
-             $titular->getIdentidade()->getDataEmissao(),
+             $titular->getIdentidade()->getDataEmissao()->format('d/m/Y'),
              $titular->getIdentidade()->getOrgaoEmissor(),
              $titular->getCpf(),
              $titular->getNis(),
-             ($titular->getConjuge() instanceof Conjuge)?
-                $titular->getConjuge()->getNome(): NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getNome(): NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getDataNascimento()->format('d/m/Y'): NULL,
+             ($conjuge instanceof Conjuge)?
+                $naturalidadeConjuge->getNome() : NULL,
+             ($conjuge instanceof Conjuge)?
+                $naturalidadeConjuge->getEstado()->getNome() : NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getTipoSexo()->getNome() : NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getIdentidade()->getNumero() : NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getIdentidade()->getDataEmissao()->format('d/m/Y') : NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getIdentidade()->getOrgaoEmissor() : NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getCpf() : NULL,
+             ($conjuge instanceof Conjuge)?
+                $conjuge->getNis() : NULL,
+             $titular->getEndereco()->getTipoLogradouro()->getNome(),
+             $titular->getEndereco()->getNomeLogradouro(),
+             $titular->getEndereco()->getNumero(),
+             $titular->getEndereco()->getComplemento(),
+             $titular->getEndereco()->getComunidade(),
+             $titular->getEndereco()->getBairro(),
+             "Duque de Caxias",
+             "RJ",
+             $titular->getEndereco()->getDistrito()->getNome(),
+             $titular->getEndereco()->getCep(),
+             ($telefones[0]->getNumero())? $telefones[0]->getNumero() : NULL,
+             ($telefones[1]->getNumero())? $telefones[1]->getNumero() : NULL,
+             ($telefones[2]->getNumero())? $telefones[2]->getNumero() : NULL,
+             NULL,
+             $titular->getRenda(),
+             $conjuge->getRenda(),
+             NULL,
+             NULL,
+             NULL,
+             $rendaTotal,
+             $titular->getEndereco()->getAreaDeRisco(),
+             $titular->getMulherChefeDeFamilia(),
+             $deficiente,
+             $acolhimento,
+             $idoso,
+             $titular->getImovel(),
+             $titular->getFinanciamentoCasa(),
+             $titular->getBolsaFamilia(),
          );
+         
+         $titularCsv = fopen("dados/titular.csv", "a+");
+         fputcsv($titularCsv, $data, ";");
+         fclose($titularCsv);
      }
 }

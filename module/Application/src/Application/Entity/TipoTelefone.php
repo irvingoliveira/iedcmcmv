@@ -32,7 +32,7 @@ class TipoTelefone {
      *
      * @var array
      * 
-     * @ORM\OneToMany(targetEntity="Telefone", mappedBy="tipo")
+     * @ORM\OneToMany(targetEntity="Telefone", mappedBy="tipoTelefone")
      */
     private $telefones;
     

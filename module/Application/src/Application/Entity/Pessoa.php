@@ -91,10 +91,6 @@ abstract class Pessoa {
         
     }
 
-    public function getCodigoPessoa() {
-        return $this->codigoPessoa;
-    }
-
     public function getNome() {
         return $this->nome;
     }
