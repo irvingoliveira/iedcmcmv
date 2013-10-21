@@ -368,7 +368,7 @@ class IndexController extends AbstractActionController
              ($telefones[2]->getNumero())? $telefones[2]->getNumero() : NULL,
              NULL,
              $titular->getRenda(),
-             $conjuge->getRenda(),
+             (isset($conjuge))?$conjuge->getRenda():NULL,
              NULL,
              NULL,
              NULL,
