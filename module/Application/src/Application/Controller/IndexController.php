@@ -85,7 +85,9 @@ class IndexController extends AbstractActionController
                                              ->findOneBy(array('codigoCidade' => $data['Titular']['naturalidade']));
                 $titular->setNaturalidade($naturalidadeTitular);
 
-                $titular->setNis($data['Titular']['nis']);
+                if($data['Titular']['nis'] != "")
+                    $titular->setNis($data['Titular']['nis']);
+                
                 $titular->setNome($data['Titular']['nome']);
                 $titular->setRenda($data['Titular']['renda']);
                 
@@ -225,6 +227,11 @@ class IndexController extends AbstractActionController
     }
     
      private function gerarCsv(Titular $titular){
+         $objectManager = $this->getObjectManager();
+        
+         $naturalidade = $objectManager->getRepository('Application\Entity\Cidade')
+                                       ->findOneBy(array('codigoCidade' => $titular->getNaturalidade()));
+         
          $data = array(
              $titular->getProtocolo(),
              $titular->getFinanciamentoCasa(),
@@ -232,8 +239,17 @@ class IndexController extends AbstractActionController
              $titular->getDataInscricao(),
              $titular->getNome(),
              $titular->getDataNascimento(),
-             $titular->getNaturalidade(),
-             //$titular->
+             $naturalidade,
+             $naturalidade->getEstado()->getNome(),
+             $titular->getEstadoCivil()->getDescricao(),
+             $titular->getTipoSexo()->getNome(),
+             $titular->getIdentidade()->getNumero(),
+             $titular->getIdentidade()->getDataEmissao(),
+             $titular->getIdentidade()->getOrgaoEmissor(),
+             $titular->getCpf(),
+             $titular->getNis(),
+             ($titular->getConjuge() instanceof Conjuge)?
+                $titular->getConjuge()->getNome(): NULL,
          );
      }
 }
