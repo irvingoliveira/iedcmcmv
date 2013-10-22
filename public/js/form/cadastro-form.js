@@ -436,7 +436,7 @@ $(document).ready(function() {
             $('input[name="telefones[1][numero]"]')
                 .mask("(00)0000-0000")
                 .rules("add", {
-                    required: true,
+                    required: false,
                     maxlength: 13,
                     messages: {
                         maxlength: 'O campo "Telefone" não é valido.'
@@ -460,7 +460,7 @@ $(document).ready(function() {
             $('input[name="telefones[2][numero]"]')
                 .mask("(00)0000-0000")
                 .rules("add", {
-                    required: true,
+                    required: false,
                     maxlength: 13,
                     messages: {
                         maxlength: 'O campo "Telefone" não é valido.'
