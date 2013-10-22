@@ -254,14 +254,6 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                             ),
                         ),
                     ),
-                    array(
-                        'name' => 'Int',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Int::NOT_INT => 'Só são permitidos números inteiros no campo "Numero"!',
-                            ),
-                        ),
-                    ),
                 ),
                 'filters' => array(
                     array('name' => 'StripTags'),

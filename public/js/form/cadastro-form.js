@@ -382,6 +382,9 @@ $(document).ready(function() {
         })
         .blur(function (){
             $("#help").fadeOut("fast");
+            if($(this).val() === ""){
+                $(this).val(0);
+            }
         })
         .rules("add", {
             required: true,
@@ -516,11 +519,13 @@ $(document).ready(function() {
         })
 
         .blur(function (){
-            $("#help").fadeOut("fast");
-            var cpf = $(this).val();
-            if(!validaCpf(cpf))
+            var cpfConjuge = $(this).val();
+            if(!validaCpf(cpfConjuge)){
                 alert("O CPF do conjuge não é válido!");
-            $(this).val("");
+                $(this).val("");
+            }
+          
+            $("#help").fadeOut("fast");
         })
         
         .rules("add", {
@@ -528,8 +533,8 @@ $(document).ready(function() {
             minlength: 14,
             maxlength: 14,
             messages: {
-                minlength: "O CPF do conjuge não é valido.",
-                maxlength: "O CPF do conjuge não é valido."
+                minlength: "O CPF do conjuge possui tamanho inválido.",
+                maxlength: "O CPF do conjuge possui tamanho inválido."
 
             }
         });
@@ -645,6 +650,9 @@ $(document).ready(function() {
         })
         .blur(function (){
             $("#help").fadeOut("fast");
+            if($(this).val() === ""){
+                $(this).val(0);
+            }
         })
         
         .rules("add", {

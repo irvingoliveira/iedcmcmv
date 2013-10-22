@@ -387,9 +387,9 @@ class IndexController extends AbstractActionController
              "RJ",
              $titular->getEndereco()->getDistrito()->getNome(),
              $titular->getEndereco()->getCep(),
-             ($telefones[0]->getNumero())? $telefones[0]->getNumero() : NULL,
-             ($telefones[1]->getNumero())? $telefones[1]->getNumero() : NULL,
-             ($telefones[2]->getNumero())? $telefones[2]->getNumero() : NULL,
+             ($telefones[0] instanceof Telefone)? $telefones[0]->getNumero() : NULL,
+             ($telefones[1] instanceof Telefone)? $telefones[1]->getNumero() : NULL,
+             ($telefones[2] instanceof Telefone)? $telefones[2]->getNumero() : NULL,
              NULL,
              $titular->getRenda(),
              (isset($conjuge))?$conjuge->getRenda():NULL,
@@ -417,7 +417,7 @@ class IndexController extends AbstractActionController
                      $dependente->getTitular()->getCodigoTitular(),
                      $dependente->getNome(),
                      $dependente->getTipoGrauDeParentesco()->getDescricao(),
-                     $dependente->getCpf(),
+                     ($dependente->getCpf())? $dependente->getCpf() : 0,
                      $dependente->getDataNascimento()->format("d/m/Y"),                     
                  );
              }
@@ -449,7 +449,7 @@ class IndexController extends AbstractActionController
      }
      
      public static function validaCpf($cpf){
-         $cpf = str_pad(ereg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
+         $cpf = str_pad(preg_replace('#[^0-9]#', '', $cpf), 11, '0', STR_PAD_LEFT);
 	
 	// Verifica se nenhuma das sequências abaixo foi digitada, caso seja, retorna falso
         if (strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999')

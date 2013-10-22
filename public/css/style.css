@@ -124,3 +124,7 @@ select{
     position: fixed;
     padding: 20px;
 }
+
+.messages{
+    text-align: center;
+}
