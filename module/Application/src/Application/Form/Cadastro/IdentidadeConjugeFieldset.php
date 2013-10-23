@@ -25,7 +25,7 @@ class IdentidadeConjugeFieldset extends Fieldset implements InputFilterProviderI
                 'attributes'    =>  array(
                     'id'    =>  'identidadeConjugeNumero',
                     'size' => '12',
-                    'maxlength' => '12',
+                    'maxlength' => '15',
                 )
         ));
         
@@ -65,7 +65,7 @@ class IdentidadeConjugeFieldset extends Fieldset implements InputFilterProviderI
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 9,
+                            'min' => 6,
                             'max' => 15,
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Número da identidade" deve ter entre exatamente 12 caracteres!', 
@@ -119,7 +119,7 @@ class IdentidadeConjugeFieldset extends Fieldset implements InputFilterProviderI
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 3,
+                            'min' => 2,
                             'max' => 200,
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Orgão emissor" deve ter entre 3 e 200 caracteres!', 

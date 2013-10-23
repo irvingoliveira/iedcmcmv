@@ -294,15 +294,6 @@ class TitularFieldset extends Fieldset implements InputFilterProviderInterface{
                             ),
                         ),
                     ),
-                    array(
-                        'name' => 'Alpha',
-                        'options' => array(
-                            'allowWhiteSpace' => true,
-                            'messages' => array(
-                                \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'Não são permitidos números no campo "Nome"',
-                            ),
-                        ),
-                    ),
                 ),
                 'filters' => array(
                     array('name' => 'StripTags'),

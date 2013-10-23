@@ -215,14 +215,6 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                             ),
                         ),
                     ),
-                    array(
-                        'name' => 'Alnum',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Alnum::INVALID => 'Existem caracteres inválidos no campo "Nome do logradouro"!',
-                            ),
-                        ),
-                    ),
                 ),
                 'filters' => array(
                     array('name' => 'StripTags'),
@@ -323,14 +315,6 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
                             'max' => 200,
                             'messages' => array(
                                 'stringLengthTooLong' => 'O campo "Comunidade" deve ter no máximo 200 caracteres!' 
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'Alnum',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\I18n\Validator\Alnum::INVALID => 'Existem caracteres inválidos no campo "Comunidade"!',
                             ),
                         ),
                     ),

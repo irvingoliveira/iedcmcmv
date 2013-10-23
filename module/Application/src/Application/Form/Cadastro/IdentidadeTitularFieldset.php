@@ -25,7 +25,7 @@ class IdentidadeTitularFieldset extends Fieldset implements InputFilterProviderI
                 'attributes'    =>  array(
                     'id'    =>  'identidadeTitularNumero',
                     'size' => '12',
-                    'maxlength' => '12',
+                    'maxlength' => '15',
                 )
         ));
         
@@ -73,7 +73,7 @@ class IdentidadeTitularFieldset extends Fieldset implements InputFilterProviderI
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 9,
+                            'min' => 6,
                             'max' => 15,
                             'messages' => array(
                                 'stringLengthTooShort' => 'O campo "Número da identidade" deve ter exatamente 12 caracteres!', 

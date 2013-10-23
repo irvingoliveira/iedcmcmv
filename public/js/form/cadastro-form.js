@@ -78,6 +78,7 @@ $(document).ready(function() {
                         if(!validaCpf(cpf))
                             alert('O CPF do titular é inválido!');
                         $(this).val('');
+                        $(this).invalid();
                     }
                 });
                                 
@@ -523,6 +524,7 @@ $(document).ready(function() {
             if(!validaCpf(cpfConjuge)){
                 alert("O CPF do conjuge não é válido!");
                 $(this).val("");
+                $(this).invalid();
             }
           
             $("#help").fadeOut("fast");
@@ -612,7 +614,7 @@ $(document).ready(function() {
         
         .focus(function (){
             var msg = "<p>Informe o NIS do solicitante. </p>";
-            msg+= "<p> O NIS é o Número de Identificação Social. Aqueles que";
+            msg+= "<p> O NIS é o Número de dadeficação Social. Aqueles que";
             msg+= " tem acesso a qualquer programa do Governo Federal, como";
             msg+= " Bolsa Família, devem preencher esse número na ficha de";
             msg+= " inscrição. Aqueles que ainda não possuem o NIS e trabalham";
@@ -683,7 +685,7 @@ $(document).ready(function() {
         
         .rules("add", {
             required: true,
-            minlength: 9,
+            minlength: 6,
             maxlength: 15,
             messages: {
                 required: "A identidade do titular é obrigatório.",
@@ -728,7 +730,7 @@ $(document).ready(function() {
         })
         .rules("add", {
             required: true,
-            minlength: 5,
+            minlength: 2,
             maxlength: 200,
             messages: {
                 required: "O orgão emissor da Identidade é obrigatório.",
@@ -754,7 +756,7 @@ $(document).ready(function() {
 
         .rules("add", {
             required: false,
-            minlength: 9,
+            minlength: 6,
             maxlength: 15,
             messages: {
                 minlength: "O numero da identidade do conjuge não é valido.",
@@ -795,7 +797,7 @@ $(document).ready(function() {
         })
         .rules("add", {
         required: false,
-        minlength: 5,
+        minlength: 2,
         maxlength: 200,
         messages: {
             minlength: "O orgão emissor da identidade do conjuge não é valido.",
@@ -962,8 +964,7 @@ $(document).ready(function() {
 
     $(".enderecoAreaDeRisco")
         .mouseover(function (){
-            var msg = "<p>Informe se o endereço que o solicitante reside é área de risco.</p>";
-            msg+= "<p>Considera-se como família residente em área de risco aquelas";
+            var msg = "<p>Considera-se como família residente em área de risco aquelas";
             msg+= " que moram em áreas que apresentam risco geológico ou de insalubridade,";
             msg+= " tais como erosão, solapamento, queda e rolamento de blocos de";
             msg+= " rocha, eventos de inundação, taludes, barrancos, áreas declivosas,";
@@ -972,6 +973,8 @@ $(document).ready(function() {
             msg+= " poluídas, observando-se legislação ambiental específica, de";
             msg+= " acordo com o Plano Municipal de Redução de Riscos, Plano Diretor";
             msg+= " ou determinação da Defesa Civil de Duque de Caxias.";
+            msg+= " Aos moradores de áreas de risco poderá ser exigida a doação"; 
+            msg+= "do seu imóvel para possibilitar a sua demolição.</p>";
             
             $("#help").fadeIn("fast")
                       .html(msg);
