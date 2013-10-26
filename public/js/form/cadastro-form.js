@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    
+    $("#termo").change(function(){
+        if($(this).prop("checked"))
+            $("#inscrevase").removeAttr("disabled","disabled");
+        else
+            $("#inscrevase").attr("disabled","disabled");
+    });
+    
     $("#err").hide();
     $("#help").hide();
     
@@ -67,29 +75,25 @@ $(document).ready(function() {
         .focus(function (){
             $("#help").fadeIn("fast")
                       .text("Preencha o CPF do solicitande. (Somente números)");
-        }).blur(function (){
-            if($('#titularCpf').valid()===true){
-                var cpf = $(this).val();
-                $.post('/application/index/cpfunico',{cpf: cpf},function(data){
-                    if(data==="1"){
-                       alert('Este cpf já foi cadastrado!');
-                       $(this).val('');
-                    }else{
-                        if(!validaCpf(cpf))
-                            alert('O CPF do titular é inválido!');
-                        $(this).val('');
-                        $(this).invalid();
-                    }
-                });
-                                
-            }
+        })
+        .blur(function (){
+            var cpf = $(this).val();
+            $.post('/application/index/cpfunico',{cpf: cpf},function(data){
+                if(data==="1"){
+                    alert('Este cpf já foi cadastrado!');
+                    $("#titularCpf").val("");
+                }
+               
+            });
         })
         .rules("add", {
             required: true,
+            cpf: "cpf",
             minlength: 14,
             maxlength: 14,
             messages: {
                 required: "O CPF do Titular é obrigatório.",
+                cpf: "O CPF do titular é inválido!",
                 minlength: "O CPF do Titular não é valido.",
                 maxlength: "O CPF do Titular não é valido."
 
@@ -112,10 +116,12 @@ $(document).ready(function() {
             required: true,
             minlength: 10,
             maxlength: 10,
+            dateNascBR: true,
             messages: {
                 required: "A data de nascimento do Titular é obrigatório.",
                 minlength: "A data de nascimento do Titular não é valida.",
-                maxlength: "A data de nascimento do Titular não é valida."
+                maxlength: "A data de nascimento do Titular não é valida.",
+                dateNascBR: "Data de nascimento do titular inválida!",
 
             }
         });
@@ -354,7 +360,17 @@ $(document).ready(function() {
         })
         
         .mask('0000000000-0')
-        
+
+        .blur(function (){
+            var nis = $(this).val();
+            $.post('/application/index/nisunico',{nis: nis},function(data){
+                if(data==="1"){
+                    alert('Um titular com este número de NIS já foi cadastrado!');
+                    $("#titularNis").val("");
+                }
+               
+            });
+        })
         .rules("add", {
             required: false,
             minlength: 12,
@@ -413,7 +429,7 @@ $(document).ready(function() {
     $('.telefoneNumero')
         .focus(function(){
             $("#help").fadeIn("fast")
-                      .html("Preencha com um telefone de contato. (Somente números)");
+                      .html("Preencha o DDD+telefone. (Somente números)");
     });
     
     $('input[name="telefones[0][numero]"]').keydown(function(){
@@ -501,7 +517,7 @@ $(document).ready(function() {
             $("#help").fadeOut("fast");
         })
         .rules("add", {
-            required: false,
+            required: true,
             minlength: 3,
             maxlength: 200,
             messages: {
@@ -518,23 +534,21 @@ $(document).ready(function() {
             $("#help").fadeIn("fast")
                       .text("Preencha o CPF do conjuge. (Somente números!)");
         })
-
         .blur(function (){
-            var cpfConjuge = $(this).val();
-            if(!validaCpf(cpfConjuge)){
-                alert("O CPF do conjuge não é válido!");
+            if($(this).val() === $("#titularCpf").val()){
+                alert("O CPF do conjuge não pode ser igual ao do titular.")
                 $(this).val("");
-                $(this).invalid();
             }
-          
             $("#help").fadeOut("fast");
         })
         
         .rules("add", {
-            required: false,
+            required: true,
+            cpf: "cpf",
             minlength: 14,
             maxlength: 14,
             messages: {
+                cpf: "cpf",
                 minlength: "O CPF do conjuge possui tamanho inválido.",
                 maxlength: "O CPF do conjuge possui tamanho inválido."
 
@@ -556,15 +570,53 @@ $(document).ready(function() {
 
         .rules("add", {
             required: false,
+            dateBR: true,
             minlength: 10,
             maxlength: 10,
             messages: {
+                dateBR: "Data de nascimento do conjuge inválida",
                 minlength: "A data de nascimento do conjuge não é valida.",
                 maxlength: "A data de nascimento do conjuge não é valida."
 
             }
         });
 
+     $("#conjugeNaturalidade")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                .text("Selecione em que cidade o conjuge do solicitante nasceu.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+        
+            required: true,
+           
+            messages: {
+                required: "A naturalidade do Conjuge é obrigatório.",
+           
+            }
+        });
+
+     $("#conjugeSexo")
+        .focus(function (){
+            $("#help").fadeIn("fast")
+                .text("Selecione o sexo do conjuge.");
+        })
+        .blur(function (){
+            $("#help").fadeOut("fast");
+        })
+        .rules("add", {
+        
+            required: true,
+           
+            messages: {
+                required: "O sexo do conjuge é obrigatório.",
+           
+            }
+        });    
+    
     $(".conjugeAcolhimentoInstitucional")
         .mouseover(function (){
             var msg = "<p>Informe se o conjuge se encontra em abrigo ";
@@ -618,7 +670,7 @@ $(document).ready(function() {
             msg+= " tem acesso a qualquer programa do Governo Federal, como";
             msg+= " Bolsa Família, devem preencher esse número na ficha de";
             msg+= " inscrição. Aqueles que ainda não possuem o NIS e trabalham";
-            msg+= " com carteira assinada, devem utilizar o número do PIS.</p>";
+            msg+= " com carteira assinada, devem preencher com número do PIS.</p>";
             
             $("#help").fadeIn("fast")
                       .html(msg);
@@ -658,7 +710,7 @@ $(document).ready(function() {
         })
         
         .rules("add", {
-            required: false,
+            required: true,
             minlength: 1,
             maxlength: 10,
             messages: {
@@ -680,6 +732,15 @@ $(document).ready(function() {
                       .text("Preencha o número da carteira de identidade do solicitante.(Somente números)");
         })
         .blur(function (){
+            var rg = $(this).val();
+            $.post('/application/index/rgunico',{rg: rg},function(data){
+                if(data==="1"){
+                    alert('Um solicitante com este número de identidade já foi cadastrado!');
+                    $("#identidadeTitularNumero").val("");
+                }
+               
+            });
+            
             $("#help").fadeOut("fast");
         })
         
@@ -710,9 +771,11 @@ $(document).ready(function() {
                 
         .rules("add", {
             required: true,
+            dateBR: true,
             minlength: 10,
             maxlength: 10,
             messages: {
+                dateBR: "Data de emissão da identidade do titulat inválida.",
                 required: "A data de emissão da Identidade é obrigatório.",
                 minlength: "A data de emissão da Identidade não é valida.",
                 maxlength: "A data de emissão da Identidade não é valida."
@@ -745,7 +808,6 @@ $(document).ready(function() {
      */
 
     $("#identidadeConjugeNumero")
-    
         .focus(function (){
             $("#help").fadeIn("fast")
                       .text("Preencha o número da carteira de identidade do conjuge. (Somente números)");
@@ -755,7 +817,7 @@ $(document).ready(function() {
         })
 
         .rules("add", {
-            required: false,
+            required: true,
             minlength: 6,
             maxlength: 15,
             messages: {
@@ -774,14 +836,17 @@ $(document).ready(function() {
         })
         
         .blur(function (){
+    
             $("#help").fadeOut("fast");
         })
         
         .rules("add", {
-        required: false,
+        required: true,
+        dateBR: true,
         minlength: 10,
         maxlength: 10,
         messages: {
+            dateBR: "Data de emissão da identidade do conjuge inválida.",
             minlength: "A data de emissão da identidade do conjuge não é valida.",
             maxlength: "A data de emissão da Identidade do conjuge não é valida."
         }
@@ -796,7 +861,7 @@ $(document).ready(function() {
             $("#help").fadeOut("fast");
         })
         .rules("add", {
-        required: false,
+        required: true,
         minlength: 2,
         maxlength: 200,
         messages: {
@@ -856,7 +921,7 @@ $(document).ready(function() {
             $("#help").fadeOut("fast");
         })
         .rules("add", {
-        required: true,
+        required: false,
         minlength: 0,
         maxlength: 10,        
         messages: {
@@ -1033,9 +1098,11 @@ function validarDependenteCpf() {
         .mask('000.000.000-00',{reverse: true})
         .rules("add", {
             required: false,
+            cpf: "cpf",
             minlength: 14,
             maxlength: 14,
             messages: {
+                cpf: "O cpf do dependente é inválido!",
                 minlength: "O CPF do Dependente não é valido.",
                 maxlength: "O CPF do Dependente não é valido."
             }
@@ -1062,14 +1129,21 @@ function helpDependenteDataNascimento() {
                   .text("Preencha a data de nascimento do dependente.");
 }
 
+function mascararDependenteDataNascimento(){
+    $(".dependenteDataNascimento")
+        .mask('00/00/0000');
+}
+
 function validarDependenteDataNascimento(){
     $(".dependenteDataNascimento")
         .mask('00/00/0000')
         .rules("add", {
             required: false,
+            dateBR: true,
             minlength: 10,
             maxlength: 10,
             messages: {
+                dateBR: "Data de nascimento do dependente inválida.",
                 minlength: "A data de nascimento do Dependente não é valida.",
                 maxlength: "A data de nascimento do Dependente não é valida."
 
@@ -1161,46 +1235,4 @@ function helpDependente(){
 
 function helpDependenteOut(){
         $("#help").fadeOut("fast");
-}
-
-function validaCpf(cpf){
-    cpf = cpf.replace(/[^\d]+/g,'');
-
-	if(cpf == '') return false;
-
-	// Elimina CPFs invalidos conhecidos
-	if (cpf.length != 11 || 
-		cpf == "00000000000" || 
-		cpf == "11111111111" || 
-		cpf == "22222222222" || 
-		cpf == "33333333333" || 
-		cpf == "44444444444" || 
-		cpf == "55555555555" || 
-		cpf == "66666666666" || 
-		cpf == "77777777777" || 
-		cpf == "88888888888" || 
-		cpf == "99999999999")
-		return false;
-	
-	// Valida 1o digito
-	add = 0;
-	for (i=0; i < 9; i ++)
-		add += parseInt(cpf.charAt(i)) * (10 - i);
-	rev = 11 - (add % 11);
-	if (rev == 10 || rev == 11)
-		rev = 0;
-	if (rev != parseInt(cpf.charAt(9)))
-		return false;
-	
-	// Valida 2o digito
-	add = 0;
-	for (i = 0; i < 10; i ++)
-		add += parseInt(cpf.charAt(i)) * (11 - i);
-	rev = 11 - (add % 11);
-	if (rev == 10 || rev == 11)
-		rev = 0;
-	if (rev != parseInt(cpf.charAt(10)))
-		return false;
-		
-	return true;
 }

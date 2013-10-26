@@ -224,16 +224,8 @@ class EnderecoFieldset extends Fieldset implements InputFilterProviderInterface{
             ),
             
             'numero' => array(
-                'required' => true,
+                'required' => false,
                 'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => 'O campo "Numero" não pode ser vazio.' 
-                            ),
-                        ),
-                    ),
                     array(
                         'name' => 'StringLength',
                         'options' => array(

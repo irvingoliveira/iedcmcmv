@@ -30,7 +30,7 @@ class IdentidadeConjugeFieldset extends Fieldset implements InputFilterProviderI
         ));
         
         $this->add(array(
-        'type'  =>  'Zend\Form\Element\Date',
+        'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'dataEmissao',
                 'options'   =>  array(
                     'label' =>  'Data de Emissão:',

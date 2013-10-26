@@ -24,6 +24,10 @@ body {
     padding:0px;
 }
 
+#footer a{
+    color: #f9f2f4;
+}
+
 #footer p{
     padding: 0;
     margin: 2px;
@@ -74,19 +78,26 @@ fieldset{
     margin-top: 20px;
     margin-left: 12px;
     margin-right: 12px;
+    margin-bottom: 10px;
 }
 
 input{
     display: block;
+    margin-bottom: 10px;
+}
+
+input[type='radio']{
+    display: inline;
 }
 
 label{
-    display: inherit;
+    display: inline;
     margin-top: 5px;
 }
 
 select{
     display: block;
+    margin-bottom: 10px;
 }
 
 #submit{

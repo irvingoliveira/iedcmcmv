@@ -77,13 +77,14 @@ class DependenteFieldset extends Fieldset implements InputFilterProviderInterfac
         ));
         
         $this->add(array(
-            'type'  =>  'Zend\Form\Element\Date',
+            'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'dataNascimento',
                 'options'   =>  array(
                     'label' =>  'Data de nascimento:',
                 ),
                 'attributes'    =>  array(
                     'class'    =>  'dependenteDataNascimento',
+                    'onKeyUp' => 'mascararDependenteDataNascimento()',
                     'onBlur' => 'validarDependenteDataNascimento()',
                     'onFocus' => 'helpDependenteDataNascimento()',
                 )

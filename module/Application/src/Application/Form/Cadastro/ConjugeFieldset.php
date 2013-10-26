@@ -49,7 +49,7 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
         );
         
         $this->add(array(
-                'type'  =>  'Zend\Form\Element\Date',
+                'type'  =>  'Zend\Form\Element\Text',
                 'name'  =>  'dataNascimento',
                 'options'   =>  array(
                     'label' =>  'Data de nascimento:',
@@ -74,27 +74,43 @@ class ConjugeFieldset extends Fieldset implements InputFilterProviderInterface{
             )
         );
          
+        $estados = $objectManager->getRepository('Application\Entity\Estado')
+                                    ->findAll();
+        
+        foreach ($estados as $estado){
+            foreach ($estado->getCidades() as $cidade){
+                $cidades[$cidade->getCodigoCidade()] = $cidade->getNome();
+            }
+            
+            $naturalidades[] = array(
+                'label' => $estado->getNome(),
+                'options' => $cidades
+            );
+            unset($cidades);
+        }
+        
         $this->add(array(
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
             'name' => 'naturalidade',
             'options' => array(
                 'label' =>  'Naturalidade:',
                 'object_manager' => $objectManager,
-                'empty_option'    => '--- Escolha uma cidade ---',
+//                'empty_option'    => '--- Escolha uma cidade ---',
                 'target_class'   => 'Application\Entity\Cidade',
                 'property'       => 'nome',
-                'is_method'      => true,
-                'find_method'    => array(
-                    'name'   => 'findBy',
-                    'params' => array(
-                        'criteria' => array(),
-                        'orderBy'  => array('nome' => 'ASC'),
-                    ),
-                ),
-
+                'value_options' => $naturalidades
+//                'is_method'      => true,
+//                'find_method'    => array(
+//                    'name'   => 'findBy',
+//                    'params' => array(
+//                        'criteria' => array(),
+//                        'orderBy'  => array('nome' => 'ASC'),
+//                    ),
+//                ),
             ),
             'attributes'    =>  array(
                 'id'    =>  'conjugeNaturalidade',
+                'size'  =>  8,
             ),
         ));
         

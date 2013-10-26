@@ -146,8 +146,9 @@ class IndexController extends AbstractActionController
                     $naturalidadeConjuge = $objectManager->getRepository('Application\Entity\Cidade')
                                              ->findOneBy(array('codigoCidade' => $data['Conjuge']['naturalidade']));
                     $conjuge->setNaturalidade($naturalidadeConjuge);
-                
-                    $conjuge->setNis($data['Conjuge']['nis']);
+                    
+                    if($data['Conjuge']['nis']!='')
+                        $conjuge->setNis($data['Conjuge']['nis']);
                     $conjuge->setNome($data['Conjuge']['nome']);
                     $conjuge->setRenda($data['Conjuge']['renda']);
                     
@@ -155,21 +156,24 @@ class IndexController extends AbstractActionController
                                              ->findOneBy(array('codigoTipoSexo' => $data['Conjuge']['tipoSexo']));
                     $conjuge->setTipoSexo($tipoSexoConjuge);
                 
-                    $identidadeConjuge = new Identidade();
+                    if($data['IdentidadeConjuge']){
+                        $identidadeConjuge = new Identidade();
                 
-                    $dataEmissaoIdentidadeConjuge = new \DateTime();
-                    $dataEmissaoIdentidadeConjuge->format('d/m/Y');
-                    $dataEmissaoConjugeVals = explode("/", $data['IdentidadeConjuge']['dataEmissao']);
-                
-                    $identidadeConjuge->setDataEmissao($dataEmissaoIdentidadeConjuge->setDate(
+                        $dataEmissaoIdentidadeConjuge = new \DateTime();
+                        $dataEmissaoIdentidadeConjuge->format('d/m/Y');
+                        $dataEmissaoConjugeVals = explode("/", $data['IdentidadeConjuge']['dataEmissao']);
+                        
+                        $identidadeConjuge->setDataEmissao($dataEmissaoIdentidadeConjuge->setDate(
                                                                                         $dataEmissaoConjugeVals[2], 
                                                                                         $dataEmissaoConjugeVals[1], 
                                                                                         $dataEmissaoConjugeVals[0]));
                 
-                    $identidadeConjuge->setNumero($data['IdentidadeConjuge']['numero']);
-                    $identidadeConjuge->setOrgaoEmissor($data['IdentidadeConjuge']['orgaoEmissor']);
+                        $identidadeConjuge->setNumero($data['IdentidadeConjuge']['numero']);
+                        $identidadeConjuge->setOrgaoEmissor($data['IdentidadeConjuge']['orgaoEmissor']);
                 
-                    $conjuge->setIdentidade($identidadeConjuge);
+                        $conjuge->setIdentidade($identidadeConjuge);
+                    }
+                    
                     $conjuge->setTitular($titular);
                     
                     $titular->setConjuge($conjuge);
@@ -188,7 +192,8 @@ class IndexController extends AbstractActionController
                 $endereco->setDistrito($distrito);
                 
                 $endereco->setNomeLogradouro($data['Endereco']['nomeLogradouro']);
-                $endereco->setNumero($data['Endereco']['numero']);
+                $endereco->setNumero(($data['Endereco']['numero'])? 
+                                        ($data['Endereco']['numero']): 0);
                 
                 $tipoLogradouro = $objectManager->getRepository('Application\Entity\TipoLogradouro')
                                           ->findOneBy(array("codigoTipoLogradouro" => $data['Endereco']['tipoLogradouro']));
@@ -375,7 +380,7 @@ class IndexController extends AbstractActionController
                 $conjuge->getIdentidade()->getOrgaoEmissor() : NULL,
              (isset($conjuge))?
                 $conjuge->getCpf() : NULL,
-             (isset($conjuge))?
+             ((isset($conjuge)) && ($conjuge->getNis() != ''))?
                 $conjuge->getNis() : NULL,
              $titular->getEndereco()->getTipoLogradouro()->getNome(),
              $titular->getEndereco()->getNomeLogradouro(),
@@ -399,9 +404,9 @@ class IndexController extends AbstractActionController
              $rendaTotal,
              $titular->getEndereco()->getAreaDeRisco(),
              $titular->getMulherChefeDeFamilia(),
-             $deficiente,
-             $acolhimento,
-             $idoso,
+             ($deficiente)?1:0,
+             ($acolhimento)?1:0,
+             ($idoso)?1:0,
              $titular->getImovel(),
              $titular->getFinanciamentoCasa(),
              $titular->getBolsaFamilia(),
@@ -414,7 +419,7 @@ class IndexController extends AbstractActionController
          if($titular->getDependentes()){
              foreach ($titular->getDependentes() as $dependente){
                  $dataDependente = array(
-                     $dependente->getTitular()->getCodigoTitular(),
+                     $dependente->getTitular()->getProtocolo(),
                      $dependente->getNome(),
                      $dependente->getTipoGrauDeParentesco()->getDescricao(),
                      ($dependente->getCpf())? $dependente->getCpf() : 0,
@@ -438,6 +443,49 @@ class IndexController extends AbstractActionController
                                       ->findOneBy(array('cpf' => $cpf));
              
              if($titular instanceof Titular){
+                 echo '1';
+                 die();
+             }
+         }    
+         
+         $this->redirect()->toUrl(
+                   'http://iedcmcmv.local/application/index/cadastro'
+                    );  
+     }
+     
+     public function nisUnicoAction(){
+         $request = $this->getRequest();
+         
+         if($request->isPost()){
+             $nis = $request->getPost('nis');
+             $objectManager = $this->getObjectManager();
+             
+             if($nis!=""){
+                $titular = $objectManager->getRepository('Application\Entity\Titular')
+                                         ->findOneBy(array('nis' => $nis));
+             }
+             
+             if($titular instanceof Titular){
+                 echo '1';
+                 die();
+             }
+         }    
+         
+         $this->redirect()->toUrl(
+                   'http://iedcmcmv.local/application/index/cadastro'
+                    );  
+     }
+     
+     public function rgUnicoAction(){
+         $request = $this->getRequest();
+         
+         if($request->isPost()){
+             $rg = $request->getPost('rg');
+             $objectManager = $this->getObjectManager();
+             $identidade = $objectManager->getRepository('Application\Entity\Identidade')
+                                      ->findOneBy(array('numero' => $rg));
+             
+             if($identidade instanceof Identidade){
                  echo '1';
                  die();
              }
