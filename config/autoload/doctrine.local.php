@@ -6,10 +6,10 @@ return array(
       'orm_default' => array(
         'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
         'params' => array(
-          'host'     => '10.0.0.249',
+          'host'     => '',
           'port'     => '3306',
-          'user'     => 'iedcmcmv',
-          'password' => '@$iedcmcmvq1w2e3r4#%',
+          'user'     => '',
+          'password' => '',
           'dbname'   => 'iedcmcmv',
           'charset'  => 'utf8',
         )
