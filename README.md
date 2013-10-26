@@ -1,61 +1,28 @@
-ZendSkeletonApplication
-=======================
+IEDCMCMV - Interface de Entrada de Dados Cadastrais do Minha Casa Minha Vida
+============================================================================
 
-Introduction
+Introdução
 ------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+Esta é uma aplicação simples, que visa facilitar a vida do cidadão
+que pretende se cadastrar no programa minha casa minha vida. Trata-se de 
+um formulário simples, que tem por objetivo facilitar a triagem
+dos cidadões que podem participar do Minha Casa Minha Vida. Ela foi
+desenvolvida para a Secretaria Municipal de Planejamento, Habitação e Urbanismo
+de Duque de Caxias - RJ.
 
-
-Installation
+Instalação
 ------------
+Você pode usar o GIT para clonar a aplicação:
 
-Using Composer (recommended)
-----------------------------
-The recommended way to get a working copy of this project is to clone the repository
-and use `composer` to install dependencies using the `create-project` command:
-
-    curl -s https://getcomposer.org/installer | php --
-    php composer.phar create-project -sdev --repository-url="https://packages.zendframework.com" zendframework/skeleton-application path/to/install
-
-Alternately, clone the repository and manually invoke `composer` using the shipped
-`composer.phar`:
-
-    cd my/project/dir
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git
-    cd ZendSkeletonApplication
-    php composer.phar self-update
-    php composer.phar install
-
-(The `self-update` directive is to ensure you have an up-to-date `composer.phar`
-available.)
-
-Another alternative for downloading the project is to grab it via `curl`, and
-then pass it to `tar`:
-
-    cd my/project/dir
-    curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
-
-You would then invoke `composer` to install dependencies per the previous
-example.
-
-Using Git submodules
---------------------
-Alternatively, you can install using native git submodules:
-
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
+    git clone https://github.com/irvingoliveira/iedcmcmv.git --recursive
 
 Virtual Host
 ------------
-Afterwards, set up a virtual host to point to the public/ directory of the
-project and you should be ready to go!
+Após clonar, deve-se criar um Virtual Host apontando para a pasta /public da aplicação.
 
-Alternatively — if you are using PHP 5.4 or above — you may start the internal PHP cli-server in the public
-directory:
+Alternativamente — se você está usando PHP 5.4 ou mais — você pode iniciar um servidor cli PHP interno no diretório /public:
 
     cd public
     php -S 0.0.0.0:8080 index.php
 
-This will start the cli-server on port 8080, and bind it to all network
-interfaces.
+Com isso irá iniciar um servidor PHP interno na porta 8080, e será acessível em todas interfaces de rede.
